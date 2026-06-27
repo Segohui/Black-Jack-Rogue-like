@@ -8,14 +8,17 @@ import blackjack.core.cards.Hand;
 import blackjack.core.cards.HandEvaluator;
 import blackjack.core.cards.Stack;
 
-public class Player {
+public class Player implements CombatEntity {
+    // get a copy of the deck when combat starts
+    // if the deck is empty, get another copy
     private final BasicDeck deck = new BasicDeck();
     private final Stack stack = new Stack(deck);
     private final Hand hand = new Hand();
     private final HandEvaluator handEvaluator = new HandEvaluator();
+    private int hp;
 
     public Player() {
-        deck.resetToDefaultCards();
+        this.hp = 5;
     }
 
     public Card drawCardToHand() {
@@ -28,7 +31,12 @@ public class Player {
         return handEvaluator.calculateSum(hand.getCards());
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
+    public void resetPlayer() {
+        stack.resetStack();
+        hand.resetHand();
     }
+
+    public boolean isPlayerControlled() { return true; }
+    public List<Card> getCards() { return hand.getCards(); }
+    public int getHp() { return hp; }
 }
