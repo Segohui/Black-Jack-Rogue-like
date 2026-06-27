@@ -1,9 +1,15 @@
-package blackjack.core;
+package blackjack.entity;
 
 import java.util.List;
 
+import blackjack.core.cards.BasicDeck;
+import blackjack.core.cards.Card;
+import blackjack.core.cards.Hand;
+import blackjack.core.cards.HandEvaluator;
+import blackjack.core.cards.Stack;
+
 public class Player {
-    private final Deck deck = new Deck();
+    private final BasicDeck deck = new BasicDeck();
     private final Stack stack = new Stack(deck);
     private final Hand hand = new Hand();
     private final HandEvaluator handEvaluator = new HandEvaluator();
@@ -12,8 +18,8 @@ public class Player {
         deck.resetToDefaultCards();
     }
 
-    public PlayingCard drawCardToHand() {
-        PlayingCard card = stack.takeCard();
+    public Card drawCardToHand() {
+        Card card = stack.takeCard();
         hand.addCard(card);
         return card;
     }
@@ -22,7 +28,7 @@ public class Player {
         return handEvaluator.calculateSum(hand.getCards());
     }
 
-    public List<PlayingCard> getCards() {
+    public List<Card> getCards() {
         return hand.getCards();
     }
 }

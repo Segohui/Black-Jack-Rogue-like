@@ -1,13 +1,13 @@
-package blackjack.core;
+package blackjack.core.cards;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    private final List<PlayingCard> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
-    public void addCard(PlayingCard card) {
+    public void addCard(Card card) {
         cards.add(card);
     }
 
@@ -15,7 +15,7 @@ public class Hand {
         cards.clear();
     }
 
-    public List<PlayingCard> getCards() {
+    public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
 }

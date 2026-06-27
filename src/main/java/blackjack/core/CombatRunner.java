@@ -2,7 +2,10 @@ package blackjack.core;
 
 import java.util.List;
 
-public class BlackjackGame {
+import blackjack.core.cards.Card;
+import blackjack.entity.Player;
+
+public class CombatRunner {
     private final Signal housePlayed = new Signal();
     private final Signal gameOver = new Signal();
 
@@ -50,8 +53,8 @@ public class BlackjackGame {
         }
     }
 
-    public PlayingCard playerHit() {
-        PlayingCard card = player.drawCardToHand();
+    public Card playerHit() {
+        Card card = player.drawCardToHand();
         processMove();
         return card;
     }
@@ -84,11 +87,11 @@ public class BlackjackGame {
         housePlayed.connect(runnable);
     }
 
-    public List<PlayingCard> getPlayerCards() {
+    public List<Card> getPlayerCards() {
         return player.getCards();
     }
 
-    public List<PlayingCard> getHouseCards() {
+    public List<Card> getHouseCards() {
         return house.getCards();
     }
 

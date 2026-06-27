@@ -1,4 +1,4 @@
-package blackjack.core;
+package blackjack.core.cards.enums;
 
 public enum Rank {
     RANK_2,

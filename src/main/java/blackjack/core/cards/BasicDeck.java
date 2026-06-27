@@ -1,11 +1,14 @@
-package blackjack.core;
+package blackjack.core.cards;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Deck {
+import blackjack.core.cards.enums.Rank;
+import blackjack.core.cards.enums.Suit;
+
+public class BasicDeck {
     private final PlayingCardFactory cardFactory = new PlayingCardFactory();
-    private final List<PlayingCard> cards = new ArrayList<>();
+    private final List<Card> cards = new ArrayList<>();
 
     public void resetToDefaultCards() {
         cards.clear();
@@ -16,10 +19,10 @@ public class Deck {
         }
     }
 
-    public List<PlayingCard> copyCards() {
-        List<PlayingCard> copy = new ArrayList<>();
-        for (PlayingCard card : cards) {
-            copy.add(new PlayingCard(card));
+    public List<Card> copyCards() {
+        List<Card> copy = new ArrayList<>();
+        for (Card card : cards) {
+            copy.add(new Card(card));
         }
         return copy;
     }

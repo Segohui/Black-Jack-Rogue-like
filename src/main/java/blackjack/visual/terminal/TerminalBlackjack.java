@@ -2,12 +2,12 @@ package blackjack.visual.terminal;
 
 import java.util.List;
 
-import blackjack.core.BlackjackGame;
-import blackjack.core.PlayingCard;
+import blackjack.core.CombatRunner;
+import blackjack.core.cards.Card;
 import blackjack.visual.InputOutput;
 
 public class TerminalBlackjack {
-    private final BlackjackGame blackjackGame = new BlackjackGame();
+    private final CombatRunner blackjackGame = new CombatRunner();
     private final InputOutput io;
 
     public TerminalBlackjack(InputOutput io) {
@@ -62,16 +62,16 @@ public class TerminalBlackjack {
     private void updateView() {
         clearScreen();
         io.printMessage("-----------------------------");
-        List<PlayingCard> houseCards = blackjackGame.getHouseCards();
+        List<Card> houseCards = blackjackGame.getHouseCards();
         io.printMessage("House's hand (" + blackjackGame.calculateHouseSum() + "): ");
         printHand(houseCards);
-        List<PlayingCard> playerCards = blackjackGame.getPlayerCards();
+        List<Card> playerCards = blackjackGame.getPlayerCards();
         io.printMessage("Player's hand (" + blackjackGame.calculatePlayerSum() + "): ");
         printHand(playerCards);
     }
 
-    private void printHand(List<PlayingCard> cards) {
-        for (PlayingCard card : cards) {
+    private void printHand(List<Card> cards) {
+        for (Card card : cards) {
             System.out.print("%s %s | ".formatted(card.getRank().toString(),
                     card.getSuit().toString()));
         }

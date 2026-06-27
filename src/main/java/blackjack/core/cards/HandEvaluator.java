@@ -1,8 +1,10 @@
-package blackjack.core;
+package blackjack.core.cards;
 
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
+
+import blackjack.core.cards.enums.Rank;
 
 public class HandEvaluator {
     private final Map<Rank, Integer> rankValues = new EnumMap<>(Rank.class);
@@ -23,10 +25,10 @@ public class HandEvaluator {
         rankValues.put(Rank.RANK_K, 10);
     }
 
-    public int calculateSum(List<PlayingCard> cards) {
+    public int calculateSum(List<Card> cards) {
         int sum = 0;
         int aces = 0;
-        for (PlayingCard card : cards) {
+        for (Card card : cards) {
             Rank rank = card.getRank();
             if (rank == Rank.RANK_A) {
                 aces++;

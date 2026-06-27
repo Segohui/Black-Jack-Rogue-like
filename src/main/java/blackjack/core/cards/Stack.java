@@ -1,13 +1,13 @@
-package blackjack.core;
+package blackjack.core.cards;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Stack {
-    private final Deck deck;
-    private List<PlayingCard> cards;
+    private final BasicDeck deck;
+    private List<Card> cards;
 
-    public Stack(Deck deck) {
+    public Stack(BasicDeck deck) {
         this.deck = deck;
         cards = deck.copyCards();
         Collections.shuffle(cards);
@@ -18,7 +18,7 @@ public class Stack {
         Collections.shuffle(cards);
     }
 
-    public PlayingCard takeCard() {
+    public Card takeCard() {
         if (cards.isEmpty()) {
             resetStack();
         }
