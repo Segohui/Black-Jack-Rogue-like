@@ -3,53 +3,58 @@ package blackjack.core;
 import java.util.List;
 
 import blackjack.core.cards.Card;
-import blackjack.entity.Player;
+import blackjack.entity.CombatEntity;
 
 public class CombatRunner {
-    private final Signal housePlayed = new Signal();
+    // maybe initialize observers outside of combatRunner
+    private final Signal enemyPlayed = new Signal();
     private final Signal gameOver = new Signal();
 
-    private Player player;
-    private Player house;
+    private final CombatEntity player;
+    private CombatEntity enemy;
     private int playerWins = 0;
-    private int houseWins = 0;
-    private Player lastWinner = null;
+    private int enemyWins = 0;
+    private CombatEntity lastWinner = null;
 
-    public void startRound() {
-        player = new Player();
-        house = new Player();
-        house.drawCardToHand();
-        house.drawCardToHand();
+    public CombatRunner(CombatEntity player) {
+        this.player = player;
+    }
+
+    public void startRound(CombatEntity enemy) {
+        this.enemy = enemy;
+        
+        enemy.drawCardToHand();
+        enemy.drawCardToHand();
         player.drawCardToHand();
         player.drawCardToHand();
     }
 
     public void processMove() {
         int playerSum = calculatePlayerSum();
-        int houseSum = calculateHouseSum();
-        if (playerSum == 21 && houseSum == 21) {
+        int enemySum = calculateEnemySum();
+        if (playerSum == 21 && enemySum == 21) {
             lastWinner = null;
             gameOver.emit();
-        } else if (playerSum == 21 || houseSum > 21) {
+        } else if (playerSum == 21 || enemySum > 21) {
             playerWins++;
             lastWinner = player;
             gameOver.emit();
-        } else if (houseSum == 21 || playerSum > 21) {
-            houseWins++;
-            lastWinner = house;
+        } else if (enemySum == 21 || playerSum > 21) {
+            enemyWins++;
+            lastWinner = enemy;
             gameOver.emit();
-        } else if (houseSum < 17) {
-            house.drawCardToHand();
-            houseSum = calculateHouseSum();
-            if (houseSum > 21) {
+        } else if (enemySum < 17) {
+            enemy.drawCardToHand();
+            enemySum = calculateEnemySum();
+            if (enemySum > 21) {
                 playerWins++;
                 lastWinner = player;
                 gameOver.emit();
                 return;
             }
-            housePlayed.emit();
+            enemyPlayed.emit();
         } else {
-            housePlayed.emit();
+            enemyPlayed.emit();
         }
     }
 
@@ -67,39 +72,39 @@ public class CombatRunner {
         return player.calculateSum();
     }
 
-    public int calculateHouseSum() {
-        return house.calculateSum();
+    public int calculateEnemySum() {
+        return enemy.calculateSum();
     }
 
     public int getPlayerWins() {
         return playerWins;
     }
 
-    public int getHouseWins() {
-        return houseWins;
+    public int getEnemyWins() {
+        return enemyWins;
     }
 
     public void gameOverConnect(Runnable runnable) {
         gameOver.connect(runnable);
     }
 
-    public void housePlayedConnect(Runnable runnable) {
-        housePlayed.connect(runnable);
+    public void enemyPlayedConnect(Runnable runnable) {
+        enemyPlayed.connect(runnable);
     }
 
     public List<Card> getPlayerCards() {
         return player.getCards();
     }
 
-    public List<Card> getHouseCards() {
-        return house.getCards();
+    public List<Card> getEnemyCards() {
+        return enemy.getCards();
     }
 
     public String getLastWinner() {
         if (lastWinner.equals(player)) {
             return "player";
-        } else if (lastWinner.equals(house)) {
-            return "house";
+        } else if (lastWinner.equals(enemy)) {
+            return "enemy";
         }
         return "tie";
     }
