@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Stack {
     private final Deck deck;
-    private List<Card> cards;
+    private List<PlayingCard> cards;
 
     public Stack(Deck deck) {
         this.deck = deck;
@@ -18,7 +18,7 @@ public class Stack {
         Collections.shuffle(cards);
     }
 
-    public Card takeCard() {
+    public PlayingCard takeCard() {
         if (cards.isEmpty()) {
             resetStack();
         }

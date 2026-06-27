@@ -23,10 +23,10 @@ public class HandEvaluator {
         rankValues.put(Rank.RANK_K, 10);
     }
 
-    public int calculateSum(List<Card> cards) {
+    public int calculateSum(List<PlayingCard> cards) {
         int sum = 0;
         int aces = 0;
-        for (Card card : cards) {
+        for (PlayingCard card : cards) {
             Rank rank = card.getRank();
             if (rank == Rank.RANK_A) {
                 aces++;

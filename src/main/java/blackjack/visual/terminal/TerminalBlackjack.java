@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import blackjack.core.BlackjackGame;
-import blackjack.core.Card;
+import blackjack.core.PlayingCard;
 
 public class TerminalBlackjack {
     private final BlackjackGame blackjackGame = new BlackjackGame();
@@ -64,16 +64,16 @@ public class TerminalBlackjack {
     private void updateView() {
         clearScreen();
         System.out.println("-----------------------------");
-        List<Card> houseCards = blackjackGame.getHouseCards();
+        List<PlayingCard> houseCards = blackjackGame.getHouseCards();
         System.out.print("House hand (%d): ".formatted(blackjackGame.calculateHouseSum()));
         printHand(houseCards);
-        List<Card> playerCards = blackjackGame.getPlayerCards();
+        List<PlayingCard> playerCards = blackjackGame.getPlayerCards();
         System.out.print("Player hand (%d): ".formatted(blackjackGame.calculatePlayerSum()));
         printHand(playerCards);
     }
 
-    private void printHand(List<Card> cards) {
-        for (Card card : cards) {
+    private void printHand(List<PlayingCard> cards) {
+        for (PlayingCard card : cards) {
             System.out.print("%s %s | ".formatted(card.getRank().toString(),
                     card.getSuit().toString()));
         }

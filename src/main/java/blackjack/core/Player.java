@@ -12,8 +12,8 @@ public class Player {
         deck.resetToDefaultCards();
     }
 
-    public Card drawCardToHand() {
-        Card card = stack.takeCard();
+    public PlayingCard drawCardToHand() {
+        PlayingCard card = stack.takeCard();
         hand.addCard(card);
         return card;
     }
@@ -22,7 +22,7 @@ public class Player {
         return handEvaluator.calculateSum(hand.getCards());
     }
 
-    public List<Card> getCards() {
+    public List<PlayingCard> getCards() {
         return hand.getCards();
     }
 }

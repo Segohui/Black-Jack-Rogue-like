@@ -50,8 +50,8 @@ public class BlackjackGame {
         }
     }
 
-    public Card playerHit() {
-        Card card = player.drawCardToHand();
+    public PlayingCard playerHit() {
+        PlayingCard card = player.drawCardToHand();
         processMove();
         return card;
     }
@@ -84,11 +84,11 @@ public class BlackjackGame {
         housePlayed.connect(runnable);
     }
 
-    public List<Card> getPlayerCards() {
+    public List<PlayingCard> getPlayerCards() {
         return player.getCards();
     }
 
-    public List<Card> getHouseCards() {
+    public List<PlayingCard> getHouseCards() {
         return house.getCards();
     }
 

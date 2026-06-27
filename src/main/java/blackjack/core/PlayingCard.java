@@ -1,6 +1,6 @@
 package blackjack.core;
 
-public class PlayingCard implements Card {
+public class PlayingCard {
     private Rank rank;
     private Suit suit;
 
@@ -9,7 +9,7 @@ public class PlayingCard implements Card {
         this.suit = suit;
     }
 
-    public PlayingCard(Card card) {
+    public PlayingCard(PlayingCard card) {
         this.rank = card.getRank();
         this.suit = card.getSuit();
     }

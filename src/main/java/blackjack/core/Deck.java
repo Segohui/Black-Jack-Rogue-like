@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Deck {
-    private final CardFactory cardFactory = new PlayingCardFactory();
-    private final List<Card> cards = new ArrayList<>();
+    private final PlayingCardFactory cardFactory = new PlayingCardFactory();
+    private final List<PlayingCard> cards = new ArrayList<>();
 
     public void resetToDefaultCards() {
         cards.clear();
@@ -16,9 +16,9 @@ public class Deck {
         }
     }
 
-    public List<Card> copyCards() {
-        List<Card> copy = new ArrayList<>();
-        for (Card card : cards) {
+    public List<PlayingCard> copyCards() {
+        List<PlayingCard> copy = new ArrayList<>();
+        for (PlayingCard card : cards) {
             copy.add(new PlayingCard(card));
         }
         return copy;

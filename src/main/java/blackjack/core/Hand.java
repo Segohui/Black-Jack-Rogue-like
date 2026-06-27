@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hand {
-    private final List<Card> cards = new ArrayList<>();
+    private final List<PlayingCard> cards = new ArrayList<>();
 
-    public void addCard(Card card) {
+    public void addCard(PlayingCard card) {
         cards.add(card);
     }
 
@@ -15,7 +15,7 @@ public class Hand {
         cards.clear();
     }
 
-    public List<Card> getCards() {
+    public List<PlayingCard> getCards() {
         return Collections.unmodifiableList(cards);
     }
 }
