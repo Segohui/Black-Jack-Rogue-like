@@ -1,15 +1,17 @@
 package blackjack.visual.terminal;
 
 import java.util.List;
-import java.util.Scanner;
 
 import blackjack.core.BlackjackGame;
 import blackjack.core.PlayingCard;
+import blackjack.visual.InputOutput;
 
 public class TerminalBlackjack {
     private final BlackjackGame blackjackGame = new BlackjackGame();
+    private final InputOutput io;
 
-    public TerminalBlackjack() {
+    public TerminalBlackjack(InputOutput io) {
+        this.io = io;
         blackjackGame.gameOverConnect(this::onGameOver);
         blackjackGame.housePlayedConnect(this::onHousePlayed);
     }
@@ -21,20 +23,17 @@ public class TerminalBlackjack {
     }
 
     private void takeNextMove() {
-        try (Scanner sc = new Scanner(System.in)) {
-            boolean validMove = false;
-            while (!validMove) {
-                // TODO: fix this throwin an error when restarting round for whatever reason
-                String move = sc.nextLine().strip().toLowerCase();
-                switch (move) {
-                    case "hit" -> {
-                        blackjackGame.playerHit();
-                        validMove = true;
-                    }
-                    case "stand" -> {
-                        blackjackGame.playerStand();
-                        validMove = true;
-                    }
+        boolean validMove = false;
+        while (!validMove) {
+            String move = io.getInput();
+            switch (move) {
+                case "hit" -> {
+                    blackjackGame.playerHit();
+                    validMove = true;
+                }
+                case "stand" -> {
+                    blackjackGame.playerStand();
+                    validMove = true;
                 }
             }
         }
@@ -47,28 +46,27 @@ public class TerminalBlackjack {
 
     private void onGameOver() {
         updateView();
-        System.out.println("Game over!");
-        System.out.println("winner: " + blackjackGame.getLastWinner());
-        System.out.println("-----------------");
-        System.out.println("house wins count: " + blackjackGame.getHouseWins());
-        System.out.println("player wins count: " + blackjackGame.getPlayerWins());
-        System.out.println("-----------------");
-        System.out.println();
-        System.out.println("Enter to proceed...");
-        try (Scanner sc = new Scanner(System.in)) {
-            sc.nextLine();
-        }
+        io.printMessage("Game over!");
+        io.printMessage("winner: " + blackjackGame.getLastWinner());
+        io.printMessage("-----------------");
+        io.printMessage("house wins count: " + blackjackGame.getHouseWins());
+        io.printMessage("player wins count: " + blackjackGame.getPlayerWins());
+        io.printMessage("-----------------");
+        io.printMessage("");
+        io.printMessage("Enter to proceed...");
+        io.getInput();
+
         startRound();
     }
 
     private void updateView() {
         clearScreen();
-        System.out.println("-----------------------------");
+        io.printMessage("-----------------------------");
         List<PlayingCard> houseCards = blackjackGame.getHouseCards();
-        System.out.print("House hand (%d): ".formatted(blackjackGame.calculateHouseSum()));
+        io.printMessage("House's hand (" + blackjackGame.calculateHouseSum() + "): ");
         printHand(houseCards);
         List<PlayingCard> playerCards = blackjackGame.getPlayerCards();
-        System.out.print("Player hand (%d): ".formatted(blackjackGame.calculatePlayerSum()));
+        io.printMessage("Player's hand (" + blackjackGame.calculatePlayerSum() + "): ");
         printHand(playerCards);
     }
 
@@ -77,7 +75,7 @@ public class TerminalBlackjack {
             System.out.print("%s %s | ".formatted(card.getRank().toString(),
                     card.getSuit().toString()));
         }
-        System.out.println();
+        io.printMessage("");
     }
 
     private void clearScreen() {
