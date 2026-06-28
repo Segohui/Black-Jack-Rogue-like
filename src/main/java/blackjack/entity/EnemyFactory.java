@@ -47,25 +47,25 @@ public class EnemyFactory {
 
     private Enemy generateSafeEnemy(float multiplier) {
         int baseHp = 30;
-        int standValue = 15;
+        int standThreshold = 6;
         String name = "Jonas";
 
-        return new Enemy(Math.round(baseHp * multiplier), standValue, name);
+        return new Enemy(Math.round(baseHp * multiplier), standThreshold, name);
     }
 
     private Enemy generateModerateEnemy(float multiplier) {
         int baseHp = 50;
-        int standValue = 17;
+        int standThreshold = 4;
         String name = "Malaquias";
 
-        return new Enemy(Math.round(baseHp * multiplier), standValue, name);
+        return new Enemy(Math.round(baseHp * multiplier), standThreshold, name);
     }
 
     private Enemy generateAggressiveEnemy(float multiplier) {
         int baseHp = 70;
-        int standValue = 19;
+        int standThreshold = 3;
         String name = "Amélia";
 
-        return new Enemy(Math.round(baseHp * multiplier), standValue, name);
+        return new Enemy(Math.round(baseHp * multiplier), standThreshold, name);
     }
 }

@@ -14,12 +14,12 @@ public class Enemy implements CombatEntity {
     private final Hand hand = new Hand();
     private final HandEvaluator handEvaluator = new HandEvaluator();
     private int hp;
-    private int standValue;
+    private int standThreshold;
     private final String name;
 
-    public Enemy(int hp, int standValue, String name) {
+    public Enemy(int hp, int standThreshold, String name) {
         this.hp = hp;
-        this.standValue = standValue;
+        this.standThreshold = standThreshold;
         this.name = name;
     }
 
@@ -40,6 +40,6 @@ public class Enemy implements CombatEntity {
     public boolean isPlayerControlled() { return false; }
     public List<Card> getCards() { return hand.getCards(); }
     public int getHp() { return hp; }
-    public int getStandValue() { return standValue; }
+    public int getStandThreshold() { return standThreshold; }
     public String getName() { return name; }
 }
