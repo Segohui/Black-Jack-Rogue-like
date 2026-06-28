@@ -15,9 +15,11 @@ public class Player implements CombatEntity {
     private final Stack stack = new Stack(deck);
     private final Hand hand = new Hand();
     private final HandEvaluator handEvaluator = new HandEvaluator();
+    private final String name;
     private int hp;
 
-    public Player() {
+    public Player(String name) {
+        this.name = name;
         this.hp = 5;
     }
 
@@ -31,12 +33,17 @@ public class Player implements CombatEntity {
         return handEvaluator.calculateSum(hand.getCards());
     }
 
-    public void resetPlayer() {
+    public void resetPlayerCards() {
         stack.resetStack();
         hand.resetHand();
+    }
+
+    public void takeDamage() {
+        
     }
 
     public boolean isPlayerControlled() { return true; }
     public List<Card> getCards() { return hand.getCards(); }
     public int getHp() { return hp; }
+    public String getName() { return name; }
 }

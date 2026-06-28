@@ -15,10 +15,12 @@ public class Enemy implements CombatEntity {
     private final HandEvaluator handEvaluator = new HandEvaluator();
     private int hp;
     private int standValue;
+    private final String name;
 
-    public Enemy(int hp, int standValue) {
+    public Enemy(int hp, int standValue, String name) {
         this.hp = hp;
         this.standValue = standValue;
+        this.name = name;
     }
 
     public Card drawCardToHand() {
@@ -30,9 +32,14 @@ public class Enemy implements CombatEntity {
     public int calculateSum() {
         return handEvaluator.calculateSum(hand.getCards());
     }
+
+    public void takeDamage() {
+        
+    }
     
     public boolean isPlayerControlled() { return false; }
     public List<Card> getCards() { return hand.getCards(); }
     public int getHp() { return hp; }
     public int getStandValue() { return standValue; }
+    public String getName() { return name; }
 }
