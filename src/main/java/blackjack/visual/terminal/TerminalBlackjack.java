@@ -4,27 +4,28 @@ import java.util.List;
 
 import blackjack.core.CombatRunner;
 import blackjack.core.cards.Card;
-import blackjack.entity.CombatEntity;
+import blackjack.entity.Enemy;
+import blackjack.entity.Player;
 import blackjack.visual.InputOutput;
 
 public class TerminalBlackjack {
     private final CombatRunner combatRunner;
     private final InputOutput io;
 
-    public TerminalBlackjack(CombatEntity player, CombatRunner combatRunner, InputOutput io) {
+    public TerminalBlackjack(InputOutput io, Player player) {
         this.io = io;
-        this.combatRunner = combatRunner;
+        this.combatRunner = new CombatRunner(player);
         combatRunner.gameOverConnect(this::onGameOver);
-        combatRunner.enemyPlayedConnect(this::onHousePlayed);
+        combatRunner.nextTurnConnect(this::nextTurn);
     }
 
-    public void startCombat(CombatEntity enemy) {
+    public void runCombat(Player player, Enemy enemy) {
         combatRunner.startRound(enemy);
         updateView();
-        takeNextMove();
+        takePlayerTurn();
     }
 
-    private void takeNextMove() {
+    private void takePlayerTurn() {
         boolean validMove = false;
         while (!validMove) {
             String move = io.getInput();
@@ -41,32 +42,31 @@ public class TerminalBlackjack {
         }
     }
 
-    private void onHousePlayed() {
+    private void nextTurn() {
         updateView();
-        takeNextMove();
+        takePlayerTurn();
     }
 
     private void onGameOver() {
         updateView();
         io.printMessage("Game over!");
-        io.printMessage("winner: " + combatRunner.getLastWinner());
-        io.printDivider(10);
-        io.printMessage("house wins count: " + combatRunner.getEnemyWins());
-        io.printMessage("player wins count: " + combatRunner.getPlayerWins());
-        io.printDivider(10);
+        io.printMessage("winner: " + combatRunner.getLastWinnerName());
+        io.printDivider(15);
+        io.printMessage("win count: " + combatRunner.getPlayerWins());
+        io.printMessage("lost count: " + combatRunner.getEnemyWins());
+        io.printDivider(15);
         io.printMessage("");
         io.printMessage("Enter to proceed...");
         io.getInput();
     }
 
     private void updateView() {
-        clearScreen();
-        io.printDivider(20);
+        io.printDivider(30);
         List<Card> houseCards = combatRunner.getEnemyCards();
-        io.printMessage("House's hand (" + combatRunner.calculateEnemySum() + "): ");
+        io.printMessage(combatRunner.getEnemyName() + " 's hand (" + combatRunner.calculateEnemySum() + "): ");
         printHand(houseCards);
         List<Card> playerCards = combatRunner.getPlayerCards();
-        io.printMessage("Player's hand (" + combatRunner.calculatePlayerSum() + "): ");
+        io.printMessage(combatRunner.getPlayerName() + " 's hand (" + combatRunner.calculatePlayerSum() + "): ");
         printHand(playerCards);
     }
 
@@ -76,10 +76,5 @@ public class TerminalBlackjack {
                     card.getSuit().toString()));
         }
         io.printMessage("");
-    }
-
-    private void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
     }
 }
