@@ -67,7 +67,7 @@ public class BlackjackController {
 
     private List<String> convertToNames(List<Card> cards) {
         return cards.stream()
-                .map(card -> card.getRank().toString() + " | " + card.getSuit().toString())
+                .map(card -> card.toString())
                 .toList();
     }
 }
