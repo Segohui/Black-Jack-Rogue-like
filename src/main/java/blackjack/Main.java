@@ -2,7 +2,7 @@ package blackjack;
 
 import java.util.List;
 
-import blackjack.core.BlackjackController;
+import blackjack.controller.BlackjackController;
 import blackjack.core.BlackjackCore;
 import blackjack.entity.Enemy;
 import blackjack.entity.EnemyFactory;
@@ -14,9 +14,9 @@ public class Main {
     public static void main(String[] args) {
         InputOutput io = new InputOutput();
         Player player = new Player("Player");
-        BlackjackViewTerminal view = new BlackjackViewTerminal(io);
         BlackjackCore core = new BlackjackCore(player);
-        BlackjackController controller = new BlackjackController(view, core);
+        BlackjackController controller = new BlackjackController(core);
+        BlackjackViewTerminal view = new BlackjackViewTerminal(io, controller);
 
         EnemyFactory enemyFactory = new EnemyFactory();
 
@@ -28,6 +28,7 @@ public class Main {
                 io.printMessage("Enemy " + count);
                 count++;
                 controller.startCombat(enemy);
+                view.takePlayerTurn();
                 player.resetPlayerCards();
                 // add shop here
             }
