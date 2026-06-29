@@ -11,7 +11,7 @@ public class Hand {
         cards.add(card);
     }
 
-    public void clear() {
+    public void resetHand() {
         cards.clear();
     }
 

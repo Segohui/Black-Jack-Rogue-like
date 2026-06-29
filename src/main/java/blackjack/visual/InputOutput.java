@@ -1,6 +1,6 @@
 package blackjack.visual;
 
-import java.util.NoSuchElementException;
+import java.util.List;
 import java.util.Scanner;
 
 public class InputOutput {
@@ -11,16 +11,8 @@ public class InputOutput {
     }
 
     public String getInput() {
-        try {
-            String line = scanner.nextLine().strip();
-            return line;
-        } catch (IllegalStateException e) {
-            printError(e.getMessage());
-        } catch (NoSuchElementException e) {
-            printError(e.getMessage());
-        }
-
-        return null;
+        String line = scanner.nextLine().strip();
+        return line;
     }
 
     public void printError(String message) {
@@ -29,5 +21,21 @@ public class InputOutput {
 
     public void printMessage(String message) {
         System.out.println(message);
+    }
+
+    public void printDivider(int size) {
+        printMessage("-".repeat(size));
+    }
+
+    public void printHand(List<String> cardNames) {
+        for (String card : cardNames) {
+            printMessage(card + " ");
+        }
+        printMessage("");
+    }
+
+    public void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }

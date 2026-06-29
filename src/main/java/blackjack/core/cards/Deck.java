@@ -6,20 +6,22 @@ import java.util.List;
 import blackjack.core.cards.enums.Rank;
 import blackjack.core.cards.enums.Suit;
 
-public class BasicDeck {
-    private final PlayingCardFactory cardFactory = new PlayingCardFactory();
-    private final List<Card> cards = new ArrayList<>();
+public class Deck {
+    private final List<Card> cards;
 
-    public void resetToDefaultCards() {
-        cards.clear();
+    public Deck() {
+        PlayingCardFactory cardFactory = new PlayingCardFactory();
+        List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {
             for (Rank rank : Rank.values()) {
                 cards.add(cardFactory.createCard(rank, suit));
             }
         }
+
+        this.cards = cards;
     }
 
-    public List<Card> copyCards() {
+    public List<Card> copyBasicDeck() {
         List<Card> copy = new ArrayList<>();
         for (Card card : cards) {
             copy.add(new Card(card));

@@ -2,20 +2,23 @@ package blackjack.entity;
 
 import java.util.List;
 
-import blackjack.core.cards.BasicDeck;
+import blackjack.core.cards.Deck;
 import blackjack.core.cards.Card;
 import blackjack.core.cards.Hand;
 import blackjack.core.cards.HandEvaluator;
 import blackjack.core.cards.Stack;
 
-public class Player {
-    private final BasicDeck deck = new BasicDeck();
+public class Player implements CombatEntity {
+    private final Deck deck = new Deck();
     private final Stack stack = new Stack(deck);
     private final Hand hand = new Hand();
     private final HandEvaluator handEvaluator = new HandEvaluator();
+    private final String name;
+    private int hp;
 
-    public Player() {
-        deck.resetToDefaultCards();
+    public Player(String name) {
+        this.name = name;
+        this.hp = 5;
     }
 
     public Card drawCardToHand() {
@@ -28,7 +31,17 @@ public class Player {
         return handEvaluator.calculateSum(hand.getCards());
     }
 
-    public List<Card> getCards() {
-        return hand.getCards();
+    public void resetPlayerCards() {
+        stack.resetStack();
+        hand.resetHand();
     }
+
+    public void takeDamage() {
+        
+    }
+
+    public boolean isPlayerControlled() { return true; }
+    public List<Card> getCards() { return hand.getCards(); }
+    public int getHp() { return hp; }
+    public String getName() { return name; }
 }
