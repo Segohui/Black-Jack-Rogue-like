@@ -6,10 +6,10 @@ import java.util.List;
 import blackjack.core.cards.enums.Rank;
 import blackjack.core.cards.enums.Suit;
 
-public class BasicDeck {
+public class Deck {
     private final List<Card> cards;
 
-    public BasicDeck() {
+    public Deck() {
         PlayingCardFactory cardFactory = new PlayingCardFactory();
         List<Card> cards = new ArrayList<>();
         for (Suit suit : Suit.values()) {

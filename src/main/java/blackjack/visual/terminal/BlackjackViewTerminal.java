@@ -31,7 +31,7 @@ public class BlackjackViewTerminal {
         io.printMessage("winner: " + result.winnerName());
         io.printDivider(15);
         io.printMessage("win count: " + result.playerWins());
-        io.printMessage("lost count: " + result.playerLoses());
+        io.printMessage("lost count: " + result.playerLosses());
         io.printDivider(15);
         io.printMessage("");
         io.printMessage("Enter to proceed...");

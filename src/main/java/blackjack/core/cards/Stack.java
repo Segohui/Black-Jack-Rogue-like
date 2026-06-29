@@ -1,22 +1,20 @@
 package blackjack.core.cards;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Stack {
     private List<Card> cards;
-    private List<Card> discardPile;
+    private final Deck deck;
 
-    public Stack(BasicDeck deck) {
+    public Stack(Deck deck) {
         this.cards = deck.copyBasicDeck();
-        this.discardPile = new ArrayList<>();
+        this.deck = deck;
         Collections.shuffle(cards);
     }
 
     public void resetStack() {
-        cards.addAll(discardPile);
-        discardPile.clear();
+        cards = deck.copyBasicDeck();
         Collections.shuffle(cards);
     }
 
@@ -26,7 +24,6 @@ public class Stack {
         }
 
         Card drawnCard = cards.removeLast();
-        discardPile.add(drawnCard);
         return drawnCard;
     }
 

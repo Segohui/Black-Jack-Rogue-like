@@ -16,7 +16,7 @@ public class BlackjackCore {
     private CombatEntity lastWinner;
 
     private int playerWins = 0;
-    private int playerLoses = 0;
+    private int playerLosses = 0;
     private int globalStand = 21; // may change with power ups
     private boolean playerStand = false;
 
@@ -86,7 +86,7 @@ public class BlackjackCore {
         this.lastWinner = winner;
         if (winner != null) {
             if (winner.isPlayerControlled()) playerWins++;
-            else playerLoses++;
+            else playerLosses++;
         }
         gameOver.emit();
     }
@@ -108,7 +108,7 @@ public class BlackjackCore {
     public List<Card> getPlayerCards() { return player.getCards(); }
     public List<Card> getEnemyCards() { return enemy.getCards(); }
     public int getPlayerWins() { return playerWins; }
-    public int getPlayerLoses() { return playerLoses; }
+    public int getPlayerLoses() { return playerLosses; }
     public CombatEntity getLastWinner() { return lastWinner; }
     public boolean getPlayerStand() { return playerStand; }
     public int getGlobalStand() { return globalStand; }
