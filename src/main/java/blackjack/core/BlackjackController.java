@@ -54,8 +54,8 @@ public class BlackjackController {
     }
 
     private void updateView() {
-        List<String> enemyCardsStr = convertToNames(core.getEnemyCards());
-        List<String> playerCardsStr = convertToNames(core.getPlayerCards());
+        List<String> enemyCardsStr = convertCardsToNames(core.getEnemyCards());
+        List<String> playerCardsStr = convertCardsToNames(core.getPlayerCards());
 
         EntityStateData enemyData = new EntityStateData(
                 core.getEnemyName(), core.calculateEnemySum(), enemyCardsStr);
@@ -65,7 +65,7 @@ public class BlackjackController {
         view.entitiesHandsScreen(enemyData, playerData);
     }
 
-    private List<String> convertToNames(List<Card> cards) {
+    private List<String> convertCardsToNames(List<Card> cards) {
         return cards.stream()
                 .map(card -> card.toString())
                 .toList();
