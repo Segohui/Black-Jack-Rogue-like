@@ -4,7 +4,7 @@ import java.util.List;
 
 import blackjack.core.BlackjackCore;
 import blackjack.core.cards.Card;
-import blackjack.dto.CombatResultData;
+import blackjack.dto.DamageEventData;
 import blackjack.dto.EntityStateData;
 import blackjack.entity.Enemy;
 
@@ -16,39 +16,46 @@ public class BlackjackController {
     }
 
     public void startCombat(Enemy enemy) {
-        core.startRound(enemy);
+            core.startRound(enemy);
     }
 
-    public void gameOverConnect(Runnable runnable) {
-        core.gameOverConnect(runnable);
+    public void roundOverConnect(Runnable runnable) {
+        core.roundOverConnect(runnable);
     }
 
     public void nextTurnConnect(Runnable runnable) {
         core.nextTurnConnect(runnable);
     }
 
-    public CombatResultData getCombatResult() {
-        return new CombatResultData(getLastWinnerName(),
-                core.getPlayerWins(), core.getPlayerLoses());
+    public void gameOverConnect(Runnable runnable) {
+        core.gameOverConnect(runnable);
+    }
+
+    public void takeDamageConnect(Runnable runnable) {
+        core.takeDamageConnect(runnable);
     }
 
     public EntityStateData getEnemyData() {
         return new EntityStateData(core.getEnemyName(),
                 core.calculateEnemySum(),
-                convertCardsToNames(core.getEnemyCards()));
+                convertCardsToNames(core.getEnemyCards()), core.getEnemyCurrentHp());
     }
 
     public EntityStateData getPlayerData() {
         return new EntityStateData(core.getPlayerName(),
                 core.calculatePlayerSum(),
-                convertCardsToNames(core.getPlayerCards()));
+                convertCardsToNames(core.getPlayerCards()), core.getPlayerCurrentHp());
     }
 
-    public String getLastWinnerName() {
-        if (core.getLastWinner() == null) {
+    public DamageEventData getDamageEvent() {
+        return core.getLastDamageEvent();
+    }
+
+    public String getWinnerName() {
+        if (core.getWinner() == null) {
             return "no one (tie)";
         }
-        return core.getLastWinner().getName();
+        return core.getWinner().getName();
     }
 
     public void playerHit() {

@@ -1,7 +1,7 @@
 package blackjack.visual.terminal;
 
 import blackjack.controller.BlackjackController;
-import blackjack.dto.CombatResultData;
+import blackjack.dto.DamageEventData;
 import blackjack.dto.EntityStateData;
 import blackjack.visual.InputOutput;
 
@@ -12,40 +12,52 @@ public class BlackjackViewTerminal {
     public BlackjackViewTerminal(InputOutput io, BlackjackController controller) {
         this.io = io;
         this.controller = controller;
-        controller.gameOverConnect(this::onGameOver);
+        controller.roundOverConnect(this::onRoundOver);
         controller.nextTurnConnect(this::takePlayerTurn);
+        controller.takeDamageConnect(this::onTakeDamage);
+        controller.gameOverConnect(this::onGameOver);
     }
 
     public String readPlayerInput() {
-        io.printMessage("type 'hit' or 'stand': ");
+        io.printUpdate("type 'hit' or 'stand': ");
         return io.getInput().strip().toLowerCase();
     }
 
     public void entitiesHandsScreen(EntityStateData enemyData, EntityStateData playerData) {
-        io.printDivider(30);
-        
+        io.printDivider(15);
         io.printMessage(enemyData.name() + " 's hand (" + enemyData.currentSum() + "): ");
+        io.printMessage("Hp: " + enemyData.hp());
         io.printHand(enemyData.cardNames()); 
-        
+        io.printDivider(15);
         io.printMessage(playerData.name() + " 's hand (" + playerData.currentSum() + "): ");
+        io.printMessage("Hp: " + playerData.hp());
         io.printHand(playerData.cardNames());
+        io.printDivider(15);
     }
 
-    public void gameEndScreen(CombatResultData result) {
-        io.printMessage("Game over!");
-        io.printMessage("winner: " + result.winnerName());
+    public void roundOverScreen(String winnerName) {
+        io.printLine();
+        io.printUpdate("Round winner: " + winnerName);
         io.printDivider(15);
-        io.printMessage("win count: " + result.playerWins());
-        io.printMessage("lost count: " + result.playerLosses());
-        io.printDivider(15);
-        io.printMessage("");
-        io.printMessage("Enter to proceed...");
-        io.getInput();
+        io.enterToProceed();
+    }
+
+    public void gameOverScreen(String winnerName) {
+        io.printLine();
+        io.printHeader("Game End", 15);
+        io.printUpdate("Winner: " + winnerName);
+        io.printUpdate("Money gained: ");
+        io.enterToProceed();
+    }
+
+    public void takeDamageScreen(DamageEventData damageEventData) {
+        handRefresh();
+        io.printUpdate(damageEventData.targetName() + " took " + damageEventData.damage() + " points of damage");
     }
 
     public void takePlayerTurn() {
         while (true) {
-            entitiesHandsScreen(controller.getEnemyData(), controller.getPlayerData());
+            handRefresh();
             String input = readPlayerInput();
             if (input.equals("hit")) {
                 controller.playerHit();
@@ -59,8 +71,19 @@ public class BlackjackViewTerminal {
         }
     }
 
+    private void onRoundOver() {
+        roundOverScreen(controller.getWinnerName());
+    }
+
     private void onGameOver() {
+        gameOverScreen(controller.getWinnerName());
+    }
+
+    private void onTakeDamage() {
+        takeDamageScreen(controller.getDamageEvent());
+    }
+
+    private void handRefresh() {
         entitiesHandsScreen(controller.getEnemyData(), controller.getPlayerData());
-        gameEndScreen(controller.getCombatResult());
     }
 }

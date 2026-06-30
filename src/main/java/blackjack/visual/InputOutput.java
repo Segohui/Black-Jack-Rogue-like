@@ -23,6 +23,17 @@ public class InputOutput {
         System.out.println(message);
     }
 
+    public void printUpdate(String message) {
+        System.out.println("> " + message);
+    }
+
+    public void printHeader(String message, int size) {
+        System.out.println("=".repeat(size));
+        printMessage("| " + message + "| ");
+        System.out.println("=".repeat(size));
+
+    }
+
     public void printDivider(int size) {
         printMessage("-".repeat(size));
     }
@@ -32,6 +43,15 @@ public class InputOutput {
             printMessage(card + " ");
         }
         printMessage("");
+    }
+
+    public void printLine() {
+        printMessage("");
+    }
+
+    public void enterToProceed() {
+        printMessage("\nEnter to proceed...");
+        getInput();
     }
 
     public void clearScreen() {

@@ -28,8 +28,11 @@ public class Main {
                 io.printMessage("Enemy " + count);
                 count++;
                 controller.startCombat(enemy);
-                view.takePlayerTurn();
-                player.resetPlayerCards();
+                if (!player.isAlive()) {
+                    io.printMessage("Game Over! You're trash lol");
+                    return;
+                }
+                player.resetPlayer();
                 // add shop here
             }
 
