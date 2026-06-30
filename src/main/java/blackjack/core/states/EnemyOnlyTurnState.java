@@ -1,12 +1,14 @@
 package blackjack.core.states;
 
 import blackjack.core.BlackjackCore;
+import blackjack.core.states.helper.DrawCardHelper;
 import blackjack.entity.components.BehaviorComponent;
 import blackjack.entity.components.DeckComponent;
 
 public class EnemyOnlyTurnState implements State {
     private final DeckComponent deckComponent;
     private final BehaviorComponent behaviorComponent;
+    private final DrawCardHelper drawCardHelper = new DrawCardHelper();
 
     public EnemyOnlyTurnState(DeckComponent deckComponent, BehaviorComponent behaviorComponent) {
         this.deckComponent = deckComponent;
@@ -19,13 +21,16 @@ public class EnemyOnlyTurnState implements State {
         int enemyLimit = behaviorComponent.calculateStandValue(globalStand);
 
         if (handSum < enemyLimit) {
-            deckComponent.drawCardToHand(1);
+            drawCardHelper.enemyDrawCard(deckComponent, core, 1);
             handSum = deckComponent.calculateHandSum();
 
             core.activateEnemyOnlyTurnState();
-        } else {
-            core.emitEnemyStand();
-            core.activateEndTurnState();
         }
+        
+        if (handSum <= globalStand || handSum >= enemyLimit) {
+            core.emitEnemyStand();
+        }
+        
+        core.activateEndTurnState();
     }
 }

@@ -1,10 +1,12 @@
 package blackjack.core.states;
 
 import blackjack.core.BlackjackCore;
+import blackjack.core.states.helper.DrawCardHelper;
 import blackjack.entity.components.DeckComponent;
 
 public class PlayerTurnState implements State {
     private final DeckComponent deckComponent;
+    private final DrawCardHelper drawCardHelper = new DrawCardHelper();
 
     public PlayerTurnState(DeckComponent deckComponent) {
         this.deckComponent = deckComponent;
@@ -22,7 +24,7 @@ public class PlayerTurnState implements State {
 
     @Override
     public void hit(BlackjackCore core) {
-        deckComponent.drawCardToHand(1);
+        drawCardHelper.playerDrawCard(deckComponent, core, 1);
 
         int handSum = deckComponent.calculateHandSum();
 

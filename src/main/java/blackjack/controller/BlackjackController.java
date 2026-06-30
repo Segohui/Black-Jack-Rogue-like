@@ -4,6 +4,7 @@ import java.util.List;
 
 import blackjack.core.BlackjackCore;
 import blackjack.core.cards.Card;
+import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
 import blackjack.dto.EntityStateData;
 import blackjack.entity.Enemy;
@@ -39,6 +40,10 @@ public class BlackjackController {
         core.enemyStandConnect(runnable);
     }
 
+    public void drawCardConnect(Runnable runnable) {
+        core.drawCardConnect(runnable);
+    }
+
     public EntityStateData getEnemyData() {
         return new EntityStateData(core.getEnemyName(),
                 core.calculateEnemySum(),
@@ -60,6 +65,10 @@ public class BlackjackController {
             return "no one (tie)";
         }
         return core.getWinner().getName();
+    }
+
+    public CardDrawEventData getDrawnCardEvent() {
+        return core.getLastDrawnCardEvent();
     }
 
     public void playerHit() {

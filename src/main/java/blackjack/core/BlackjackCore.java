@@ -5,6 +5,7 @@ import java.util.List;
 import blackjack.core.cards.Card;
 import blackjack.core.states.State;
 import blackjack.core.states.StateFactory;
+import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
 import blackjack.entity.CombatEntity;
 import blackjack.entity.Enemy;
@@ -16,11 +17,13 @@ public class BlackjackCore {
     private final Signal gameOver = new Signal();
     private final Signal takeDamage = new Signal();
     private final Signal enemyStand = new Signal();
+    private final Signal drawCard = new Signal();
 
     private final Player player;
     private Enemy enemy;
     private CombatEntity winner;
     private DamageEventData lastDamageEvent;
+    private CardDrawEventData lastCardDrawEvent;
     private State state;
     private StateFactory stateFactory;
     private int globalStand = 21; // may change with power ups
@@ -50,6 +53,14 @@ public class BlackjackCore {
 
     public int calculateEnemySum() {
         return enemy.getDeckComponent().calculateHandSum();
+    }
+
+    public void registerPlayerCardDraw(Card card) {
+        this.lastCardDrawEvent = new CardDrawEventData(card.toString(), getPlayerName());
+    }
+
+    public void registerEnemyCardDraw(Card card) {
+        this.lastCardDrawEvent = new CardDrawEventData(card.toString(), getEnemyName());
     }
 
     public void registerPlayerTurnWin(int damage) {
@@ -113,12 +124,14 @@ public class BlackjackCore {
     public void gameOverConnect(Runnable runnable) { gameOver.connect(runnable); }
     public void takeDamageConnect(Runnable runnable) { takeDamage.connect(runnable); }
     public void enemyStandConnect(Runnable runnable) { enemyStand.connect(runnable); }
+    public void drawCardConnect(Runnable runnable) { drawCard.connect(runnable); }
 
     public void emitRoundOver() { roundOver.emit(); }
     public void emitNextTurn() { nextTurn.emit(); }
     public void emitGameOver() { gameOver.emit(); }
     public void emitTakeDamage() { takeDamage.emit(); }
     public void emitEnemyStand() { enemyStand.emit(); }
+    public void emitDrawCard() { drawCard.emit(); }
 
     public Player getPlayer() { return player; }
     public Enemy getEnemy() { return enemy; }
@@ -129,6 +142,7 @@ public class BlackjackCore {
     public List<Card> getPlayerCards() { return player.getDeckComponent().getCards(); }
     public List<Card> getEnemyCards() { return enemy.getDeckComponent().getCards(); }
     public CombatEntity getWinner() { return winner; }
-    public DamageEventData getLastDamageEvent() {return lastDamageEvent; }
+    public DamageEventData getLastDamageEvent() { return lastDamageEvent; }
+    public CardDrawEventData getLastDrawnCardEvent() { return lastCardDrawEvent; }
     public int getGlobalStand() { return globalStand; }
 }
