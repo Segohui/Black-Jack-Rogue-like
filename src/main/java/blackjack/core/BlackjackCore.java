@@ -3,6 +3,8 @@ package blackjack.core;
 import java.util.List;
 
 import blackjack.core.cards.Card;
+import blackjack.core.states.State;
+import blackjack.core.states.StateFactory;
 import blackjack.dto.DamageEventData;
 import blackjack.entity.CombatEntity;
 import blackjack.entity.Enemy;
@@ -13,131 +15,120 @@ public class BlackjackCore {
     private final Signal roundOver = new Signal();
     private final Signal gameOver = new Signal();
     private final Signal takeDamage = new Signal();
+    private final Signal enemyStand = new Signal();
 
     private final Player player;
     private Enemy enemy;
     private CombatEntity winner;
     private DamageEventData lastDamageEvent;
-
+    private State state;
+    private StateFactory stateFactory;
     private int globalStand = 21; // may change with power ups
-    private boolean playerStand = false;
 
     public BlackjackCore(Player player) {
         this.player = player;
     }
 
-    public void startRound(Enemy enemy) {
+    public void startCombat(Enemy enemy) {
         this.enemy = enemy;
-        this.playerStand = false;
-        this.winner = null;
-
-        enemy.resetHand();
-        player.resetHand();
-        
-        enemy.drawCardToHand();
-        enemy.drawCardToHand();
-        player.drawCardToHand();
-        player.drawCardToHand();
-
-        nextTurn.emit();
+        this.lastDamageEvent = null;
+        this.stateFactory = new StateFactory(player, enemy);
+        activateStartRoundState();
     }
 
     public void playerHit() {
-        player.drawCardToHand();
-        processMove();
+        state.hit(this);
     }
 
     public void playerStand() {
-        this.playerStand = true;
-        processMove();
-    }
-
-    private void processMove() {
-        int playerSum = player.calculateSum();
-        int enemySum = enemy.calculateSum();
-
-        if (playerSum > globalStand) {
-            endRound(enemy, player, enemySum);
-            return;
-        }
-
-        int enemyLimit = globalStand - enemy.getStandThreshold();
-
-        if (playerStand) {
-            while (enemySum < enemyLimit) {
-                enemy.drawCardToHand();
-                enemySum = enemy.calculateSum();
-            }
-
-            if (enemySum > globalStand) {
-                endRound(player, enemy, playerSum);
-            } else {
-                evaluateWinner(playerSum, enemySum);
-            }
-        } else {
-            if (enemySum < enemyLimit) {
-                enemy.drawCardToHand();
-                enemySum = calculateEnemySum();
-
-                if (enemySum > globalStand) {
-                    endRound(player, enemy, playerSum);
-                    return;
-                }
-            }
-            
-            nextTurn.emit();
-        }
-    }
-
-    private void evaluateWinner(int playerSum, int enemySum) {
-        if (playerSum > enemySum) {
-            endRound(player, enemy, playerSum);
-        } else if (enemySum > playerSum) {
-            endRound(enemy, player, enemySum);
-        } else {
-            endRound(null, null, 0);
-        }
-    }
-
-    private void endRound(CombatEntity winner, CombatEntity loser, int damage) {
-        this.winner = winner;
-        if (winner != null && loser != null) {
-            loser.takeDamage(damage);
-            this.lastDamageEvent = new DamageEventData(loser.getName(), damage);
-            takeDamage.emit();
-        }
-
-        if (!player.isAlive() || !enemy.isAlive()) {
-            gameOver.emit();
-            return;
-        }
-
-        roundOver.emit();
-        startRound(enemy);
+        state.stand(this);
     }
 
     public int calculatePlayerSum() {
-        return player.calculateSum();
+        return player.getDeckComponent().calculateHandSum();
     }
 
     public int calculateEnemySum() {
-        return enemy.calculateSum();
+        return enemy.getDeckComponent().calculateHandSum();
+    }
+
+    public void registerPlayerTurnWin(int damage) {
+        createDamageEvent(getEnemyName(), damage);
+        this.winner = player;
+    }
+
+    public void registerEnemyTurnWin(int damage) {
+        createDamageEvent(getPlayerName(), damage);
+        this.winner = enemy;
+    }
+
+    public void registerPlayerGameWin() {
+        this.winner = player;
+    }
+
+    public void registerEnemyGameWin() {
+        this.winner = enemy;
+    }
+
+    public void createDamageEvent(String targetName, int damage) {
+        lastDamageEvent = new DamageEventData(targetName, damage);
+    }
+
+    // maybe find a better way to activate states and the other repetitive stuff
+    private void transitionTo(State newState) {
+        this.state = newState;
+        this.state.handle(this);
+    }
+
+    public void activateStartRoundState() { 
+        transitionTo(stateFactory.createStartRoundState());
+    }
+
+    public void activatePlayerTurnState() { 
+        transitionTo(stateFactory.createPlayerTurnState()); 
+    }
+
+    public void activatePlayerOnlyTurnState() { 
+        transitionTo(stateFactory.createPlayerOnlyState());
+    }
+
+    public void activateEnemyTurnState() { 
+        transitionTo(stateFactory.createEnemyTurnState()); 
+    }
+
+    public void activateEnemyOnlyTurnState() { 
+        transitionTo(stateFactory.createEnemyOnlyState()); 
+    }
+
+    public void activateEndTurnState() { 
+        transitionTo(stateFactory.createEndTurnState());
+    }
+
+    public void activateEndGameState() { 
+        transitionTo(stateFactory.createEndGameState());
     }
 
     public void roundOverConnect(Runnable runnable) { roundOver.connect(runnable); }
     public void nextTurnConnect(Runnable runnable) { nextTurn.connect(runnable); }
     public void gameOverConnect(Runnable runnable) { gameOver.connect(runnable); }
     public void takeDamageConnect(Runnable runnable) { takeDamage.connect(runnable); }
+    public void enemyStandConnect(Runnable runnable) { enemyStand.connect(runnable); }
+
+    public void emitRoundOver() { roundOver.emit(); }
+    public void emitNextTurn() { nextTurn.emit(); }
+    public void emitGameOver() { gameOver.emit(); }
+    public void emitTakeDamage() { takeDamage.emit(); }
+    public void emitEnemyStand() { enemyStand.emit(); }
+
     public Player getPlayer() { return player; }
     public Enemy getEnemy() { return enemy; }
     public String getPlayerName() { return player.getName(); }
     public String getEnemyName() { return enemy.getName(); }
-    public int getPlayerCurrentHp() { return player.getCurrentHp(); }
-    public int getEnemyCurrentHp() { return enemy.getCurrentHp(); }
-    public List<Card> getPlayerCards() { return player.getCards(); }
-    public List<Card> getEnemyCards() { return enemy.getCards(); }
+    public int getPlayerCurrentHp() { return player.getHealthComponent().getCurrentHp(); }
+    public int getEnemyCurrentHp() { return enemy.getHealthComponent().getCurrentHp(); }
+    public List<Card> getPlayerCards() { return player.getDeckComponent().getCards(); }
+    public List<Card> getEnemyCards() { return enemy.getDeckComponent().getCards(); }
     public CombatEntity getWinner() { return winner; }
     public DamageEventData getLastDamageEvent() {return lastDamageEvent; }
-    public boolean getPlayerStand() { return playerStand; }
     public int getGlobalStand() { return globalStand; }
 }

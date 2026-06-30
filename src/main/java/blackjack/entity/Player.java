@@ -1,76 +1,34 @@
 package blackjack.entity;
 
-import java.util.List;
-
-import blackjack.core.cards.Deck;
-import blackjack.core.cards.Card;
-import blackjack.core.cards.Hand;
-import blackjack.core.cards.HandEvaluator;
-import blackjack.core.cards.Stack;
+import blackjack.entity.components.DeckComponent;
+import blackjack.entity.components.HealthComponent;
 
 public class Player implements CombatEntity {
-    private final Deck deck = new Deck();
-    private final Stack stack = new Stack(deck);
-    private final Hand hand = new Hand();
-    private final HandEvaluator handEvaluator = new HandEvaluator();
+    private final DeckComponent deckComponent;
+    private final HealthComponent healthComponent;
     private final String name;
-    private int maxHp = 30;
-    private int currentHp;
 
     public Player(String name) {
         this.name = name;
-        this.currentHp = maxHp;
+        this.deckComponent = new DeckComponent();
+        this.healthComponent = new HealthComponent(30);
     }
 
     public void resetPlayer() {
-        hand.resetHand();
-        stack.resetStack();
-        this.currentHp = maxHp;
-    }
-
-    @Override
-    public void resetHand() {
-        hand.resetHand();
-    }
-
-    @Override
-    public Card drawCardToHand() {
-        Card card = stack.takeCard();
-        hand.addCard(card);
-        return card;
-    }
-
-    @Override
-    public int calculateSum() {
-        return handEvaluator.calculateSum(hand.getCards());
-    }
-
-    @Override
-    public boolean isAlive() {
-        if (this.currentHp > 0) {
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public void takeDamage(int damage) {
-        this.currentHp -= damage;
+        deckComponent.resetHand();
+        deckComponent.resetStack();
+        healthComponent.resetHp();
     }
 
     @Override
     public boolean isPlayerControlled() { return true; }
-    
-    @Override
-    public List<Card> getCards() { return hand.getCards(); }
-    
-    @Override
-    public int getCurrentHp() { return currentHp; }
-    
-    @Override
-    public int getMaxHp() { return maxHp; }
-    
+
     @Override
     public String getName() { return name; }
+
+    @Override
+    public DeckComponent getDeckComponent() { return deckComponent; }
+
+    @Override
+    public HealthComponent getHealthComponent() { return healthComponent; }
 }

@@ -16,7 +16,7 @@ public class BlackjackController {
     }
 
     public void startCombat(Enemy enemy) {
-            core.startRound(enemy);
+            core.startCombat(enemy);
     }
 
     public void roundOverConnect(Runnable runnable) {
@@ -33,6 +33,10 @@ public class BlackjackController {
 
     public void takeDamageConnect(Runnable runnable) {
         core.takeDamageConnect(runnable);
+    }
+
+    public void enemyStandConnect(Runnable runnable) {
+        core.enemyStandConnect(runnable);
     }
 
     public EntityStateData getEnemyData() {

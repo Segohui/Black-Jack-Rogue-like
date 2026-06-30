@@ -28,7 +28,7 @@ public class Main {
                 io.printMessage("Enemy " + count);
                 count++;
                 controller.startCombat(enemy);
-                if (!player.isAlive()) {
+                if (!player.getHealthComponent().isAlive()) {
                     io.printMessage("Game Over! You're trash lol");
                     return;
                 }

@@ -16,6 +16,7 @@ public class BlackjackViewTerminal {
         controller.nextTurnConnect(this::takePlayerTurn);
         controller.takeDamageConnect(this::onTakeDamage);
         controller.gameOverConnect(this::onGameOver);
+        controller.enemyStandConnect(this::enemyStand);
     }
 
     public String readPlayerInput() {
@@ -69,6 +70,12 @@ public class BlackjackViewTerminal {
             
             break;
         }
+    }
+
+    public void enemyStand() {
+        io.printLine();
+        io.printUpdate("Enemy Stand");
+        io.enterToProceed();
     }
 
     private void onRoundOver() {
