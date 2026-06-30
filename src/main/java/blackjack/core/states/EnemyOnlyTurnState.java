@@ -23,14 +23,19 @@ public class EnemyOnlyTurnState implements State {
         if (handSum < enemyLimit) {
             drawCardHelper.enemyDrawCard(deckComponent, core, 1);
             handSum = deckComponent.calculateHandSum();
+            
+            if (handSum > globalStand) {
+                core.activateEndTurnState();
+                return;
+            }
 
             core.activateEnemyOnlyTurnState();
+        } else {
+            if (handSum <= globalStand && handSum >= enemyLimit) {
+                core.emitEnemyStand();
+            }
+            
+            core.activateEndTurnState();
         }
-        
-        if (handSum <= globalStand || handSum >= enemyLimit) {
-            core.emitEnemyStand();
-        }
-        
-        core.activateEndTurnState();
     }
 }

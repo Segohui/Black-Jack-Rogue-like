@@ -8,6 +8,7 @@ import java.util.function.Function;
 
 public class EnemyFactory {
     private final EnumMap<EnemyType, Function<Float, Enemy>> enemyTypes;
+    private int hpReference = 10;
 
     public EnemyFactory() {
         this.enemyTypes = new EnumMap<>(EnemyType.class);
@@ -46,7 +47,7 @@ public class EnemyFactory {
     }
 
     private Enemy generateSafeEnemy(float multiplier) {
-        int baseHp = 30;
+        int baseHp = calculateHp(3, multiplier);
         int standThreshold = 6;
         String name = "Jonas";
 
@@ -54,7 +55,7 @@ public class EnemyFactory {
     }
 
     private Enemy generateModerateEnemy(float multiplier) {
-        int baseHp = 50;
+        int baseHp = calculateHp(5, multiplier);
         int standThreshold = 4;
         String name = "Malaquias";
 
@@ -62,10 +63,14 @@ public class EnemyFactory {
     }
 
     private Enemy generateAggressiveEnemy(float multiplier) {
-        int baseHp = 70;
+        int baseHp = calculateHp(7, multiplier);
         int standThreshold = 3;
         String name = "Amélia";
 
         return new Enemy(Math.round(baseHp * multiplier), standThreshold, name);
+    }
+
+    private int calculateHp(float behaviorMultiplier, float multiplier) {
+        return Math.round(hpReference * behaviorMultiplier * multiplier);
     }
 }

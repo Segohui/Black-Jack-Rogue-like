@@ -16,13 +16,14 @@ public class EndGameState implements State {
     public void handle(BlackjackCore core) {
         if (!playerHealthComponent.isAlive()) {
             core.registerEnemyGameWin();
-            return;
+        } else {
+            playerHealthComponent.resetHp();
+            playerDeckComponent.resetHand();
+            playerDeckComponent.resetStack();
+
+            core.registerPlayerGameWin();
         }
 
-        playerHealthComponent.resetHp();
-        playerDeckComponent.resetHand();
-        playerDeckComponent.resetStack();
-
-        core.registerPlayerGameWin();
+        core.emitGameOver();
     }
 }

@@ -17,7 +17,7 @@ public class BlackjackController {
     }
 
     public void startCombat(Enemy enemy) {
-            core.startCombat(enemy);
+        core.startCombat(enemy);
     }
 
     public void roundOverConnect(Runnable runnable) {

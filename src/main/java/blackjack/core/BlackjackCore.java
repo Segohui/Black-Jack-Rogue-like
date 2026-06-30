@@ -20,23 +20,33 @@ public class BlackjackCore {
     private final Signal drawCard = new Signal();
 
     private final Player player;
+    private int globalStand = 21; // may change with power ups
+
     private Enemy enemy;
+    private StateFactory stateFactory;
     private CombatEntity winner;
     private DamageEventData lastDamageEvent;
     private CardDrawEventData lastCardDrawEvent;
     private State state;
-    private StateFactory stateFactory;
-    private int globalStand = 21; // may change with power ups
 
     public BlackjackCore(Player player) {
         this.player = player;
     }
 
     public void startCombat(Enemy enemy) {
+        resetCore();
         this.enemy = enemy;
-        this.lastDamageEvent = null;
         this.stateFactory = new StateFactory(player, enemy);
         activateStartRoundState();
+    }
+
+    public void resetCore() {
+        this.lastDamageEvent = null;
+        this.lastCardDrawEvent = null;
+        this.state = null;
+        this.winner = null;
+        this.enemy = null;
+        this.stateFactory = null;
     }
 
     public void playerHit() {

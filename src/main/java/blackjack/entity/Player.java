@@ -11,7 +11,7 @@ public class Player implements CombatEntity {
     public Player(String name) {
         this.name = name;
         this.deckComponent = new DeckComponent();
-        this.healthComponent = new HealthComponent(30);
+        this.healthComponent = new HealthComponent(50);
     }
 
     public void resetPlayer() {
