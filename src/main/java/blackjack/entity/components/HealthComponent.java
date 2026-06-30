@@ -15,7 +15,7 @@ public class HealthComponent {
             throw new IllegalArgumentException("Damage taken cannot be negative");
         }
 
-        this.currentHp -= damage;
+        this.currentHp = Math.max(currentHp - damage, 0);
     }
     
     public void heal(int heal) {
