@@ -14,34 +14,63 @@ public class Player implements CombatEntity {
     private final Hand hand = new Hand();
     private final HandEvaluator handEvaluator = new HandEvaluator();
     private final String name;
-    private int hp;
+    private int maxHp = 30;
+    private int currentHp;
 
     public Player(String name) {
         this.name = name;
-        this.hp = 5;
+        this.currentHp = maxHp;
     }
 
+    public void resetPlayer() {
+        hand.resetHand();
+        stack.resetStack();
+        this.currentHp = maxHp;
+    }
+
+    @Override
+    public void resetHand() {
+        hand.resetHand();
+    }
+
+    @Override
     public Card drawCardToHand() {
         Card card = stack.takeCard();
         hand.addCard(card);
         return card;
     }
 
+    @Override
     public int calculateSum() {
         return handEvaluator.calculateSum(hand.getCards());
     }
 
-    public void resetPlayerCards() {
-        stack.resetStack();
-        hand.resetHand();
+    @Override
+    public boolean isAlive() {
+        if (this.currentHp > 0) {
+            return true;
+        }
+
+        return false;
     }
 
-    public void takeDamage() {
-        
+    @Override
+    public void takeDamage(int damage) {
+        this.currentHp -= damage;
     }
 
+    @Override
     public boolean isPlayerControlled() { return true; }
+    
+    @Override
     public List<Card> getCards() { return hand.getCards(); }
-    public int getHp() { return hp; }
+    
+    @Override
+    public int getCurrentHp() { return currentHp; }
+    
+    @Override
+    public int getMaxHp() { return maxHp; }
+    
+    @Override
     public String getName() { return name; }
 }

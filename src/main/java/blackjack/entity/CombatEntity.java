@@ -8,8 +8,11 @@ public interface CombatEntity {
     int calculateSum();
     Card drawCardToHand();
     boolean isPlayerControlled();
-    int getHp();
+    int getCurrentHp();
+    int getMaxHp();
     List<Card> getCards();
     String getName();
-    void takeDamage();
+    void takeDamage(int damage);
+    boolean isAlive();
+    void resetHand();
 }
