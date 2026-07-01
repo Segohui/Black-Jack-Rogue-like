@@ -65,6 +65,10 @@ public class BlackjackCore {
         return enemy.getDeckComponent().calculateHandSum();
     }
 
+    public void resetWinner() {
+        this.winner = null;
+    }
+
     public void registerPlayerCardDraw(Card card) {
         this.lastCardDrawEvent = new CardDrawEventData(card.toString(), getPlayerName());
     }

@@ -21,7 +21,7 @@ public class Main {
         EnemyFactory enemyFactory = new EnemyFactory();
 
         while (true) {
-            List<Enemy> enemies = enemyFactory.generateThreeRandomEnemy((float) 0.2);
+            List<Enemy> enemies = enemyFactory.generateThreeRandomEnemy((float) 1);
 
             int count = 1;
             for (Enemy enemy : enemies) {

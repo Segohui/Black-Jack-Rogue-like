@@ -24,6 +24,7 @@ public class EndTurnState implements State {
 
         if (playerSum == enemySum) {
             endTurn(core);
+            
             return;
         }
 
@@ -50,6 +51,7 @@ public class EndTurnState implements State {
 
     private void endTurn(BlackjackCore core) {
         core.emitRoundOver();
+        core.resetWinner();
         enemyDeckComponent.resetHand();
         playerDeckComponent.resetHand();
         core.activateStartRoundState();

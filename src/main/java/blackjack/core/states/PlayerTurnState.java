@@ -6,25 +6,18 @@ import blackjack.entity.components.DeckComponent;
 
 public class PlayerTurnState implements State {
     private final DeckComponent deckComponent;
-    private final DrawCardHelper drawCardHelper = new DrawCardHelper();
 
     public PlayerTurnState(DeckComponent deckComponent) {
         this.deckComponent = deckComponent;
     }
 
     public void handle(BlackjackCore core) {
-        int handSum = deckComponent.calculateHandSum();
-
-        if (handSum > core.getGlobalStand()) {
-            core.activateEndTurnState();
-        }
-
         core.emitNextTurn();
     }
 
     @Override
     public void hit(BlackjackCore core) {
-        drawCardHelper.playerDrawCard(deckComponent, core, 1);
+        DrawCardHelper.playerDrawCard(deckComponent, core, 1);
 
         int handSum = deckComponent.calculateHandSum();
 

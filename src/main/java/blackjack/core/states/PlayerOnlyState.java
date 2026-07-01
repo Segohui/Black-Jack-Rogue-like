@@ -6,7 +6,6 @@ import blackjack.entity.components.DeckComponent;
 
 public class PlayerOnlyState implements State {
     private final DeckComponent deckComponent;
-    private final DrawCardHelper drawCardHelper = new DrawCardHelper();
 
     public PlayerOnlyState(DeckComponent deckComponent) {
         this.deckComponent = deckComponent;
@@ -24,7 +23,7 @@ public class PlayerOnlyState implements State {
 
     @Override
     public void hit(BlackjackCore core) {
-        drawCardHelper.playerDrawCard(deckComponent, core, 1);
+        DrawCardHelper.playerDrawCard(deckComponent, core, 1);
 
         int handSum = deckComponent.calculateHandSum();
 
