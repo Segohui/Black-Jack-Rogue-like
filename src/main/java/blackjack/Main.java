@@ -21,14 +21,14 @@ public class Main {
         EnemyFactory enemyFactory = new EnemyFactory();
 
         while (true) {
-            List<Enemy> enemies = enemyFactory.generateThreeRandomEnemy(1);
+            List<Enemy> enemies = enemyFactory.generateThreeRandomEnemy((float) 1);
 
             int count = 1;
             for (Enemy enemy : enemies) {
                 io.printMessage("Enemy " + count);
                 count++;
                 controller.startCombat(enemy);
-                if (!player.isAlive()) {
+                if (!player.getHealthComponent().isAlive()) {
                     io.printMessage("Game Over! You're trash lol");
                     return;
                 }

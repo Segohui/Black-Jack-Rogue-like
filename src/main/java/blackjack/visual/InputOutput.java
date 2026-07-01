@@ -38,6 +38,10 @@ public class InputOutput {
         printMessage("-".repeat(size));
     }
 
+    public void printDivider() {
+        printMessage("-".repeat(15));
+    }
+
     public void printHand(List<String> cardNames) {
         for (String card : cardNames) {
             printMessage(card + " ");

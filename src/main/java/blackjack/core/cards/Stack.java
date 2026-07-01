@@ -13,14 +13,14 @@ public class Stack {
         Collections.shuffle(cards);
     }
 
-    public void resetStack() {
+    public void reset() {
         cards = deck.copyBasicDeck();
         Collections.shuffle(cards);
     }
 
     public Card takeCard() {
         if (cards.isEmpty()) {
-            resetStack();
+            reset();
         }
 
         Card drawnCard = cards.removeLast();
