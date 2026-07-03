@@ -1,104 +1,67 @@
 package blackjack.visual.terminal;
 
 import blackjack.controller.BlackjackController;
-import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
-import blackjack.dto.EntityStateData;
 import blackjack.visual.InputOutput;
+import blackjack.visual.terminal.screens.ScreenFactory;
+import blackjack.visual.terminal.screens.Screen;
 
 public class BlackjackViewTerminal {
+    private final ScreenFactory screenFactory;
+    private final NotificationRenderer notifications;
     private final InputOutput io;
     private final BlackjackController controller;
 
     public BlackjackViewTerminal(InputOutput io, BlackjackController controller) {
         this.io = io;
         this.controller = controller;
-        controller.roundOverConnect(this::onRoundOver);
-        controller.nextTurnConnect(this::takePlayerTurn);
+        this.screenFactory = new ScreenFactory(io, controller);
+        this.notifications = new NotificationRenderer(io);
+        
+        // Notifications
         controller.takeDamageConnect(this::onTakeDamage);
-        controller.gameOverConnect(this::onGameOver);
-        controller.enemyStandConnect(this::enemyStand);
+        controller.enemyStandConnect(this::onEnemyStand);
+
+        // Screens
         controller.drawCardConnect(this::onDrawCard);
+        controller.roundOverConnect(this::onRoundOver);
+        controller.playerTurnConnect(this::onPlayerTurn);
+        controller.combatOverConnect(this::onCombatOver);
     }
 
-    public String readPlayerInput() {
-        io.printUpdate("type 'hit' or 'stand': ");
-        return io.getInput().strip().toLowerCase();
+    private void navigateToScreen(Screen newScreen) {
+        io.clearScreen();
+        newScreen.render();
     }
 
-    public void entityHandScreen(EntityStateData entityData) {
-        io.printMessage(entityData.name() + " 's hand (" + entityData.currentSum() + "): ");
-        io.printMessage("Hp: " + entityData.hp());
-        io.printHand(entityData.cardNames());
+    // Notifications
+    private void onTakeDamage() {
+        DamageEventData damageEvent = controller.getDamageEvent();
+        String message = damageEvent.targetName() + " took " + damageEvent.damage() + " damage!";
+
+        notifications.showPopup(message);
     }
 
-    public void roundOverScreen(String winnerName) {
-        io.printLine();
-        io.printUpdate("Round winner: " + winnerName);
-        io.enterToProceed();
+    private void onEnemyStand() {
+        String message = "Enemy Stand!";
+        
+        notifications.showPopup(message);
     }
 
-    public void gameOverScreen(String winnerName) {
-        io.printLine();
-        io.printHeader("Game End", 15);
-        io.printUpdate("Winner: " + winnerName);
-        io.printUpdate("Money gained: ");
-        io.enterToProceed();
-    }
-
-    public void takeDamageScreen(DamageEventData damageEventData) {
-        handRefresh();
-        io.printUpdate(damageEventData.targetName() + " took " + damageEventData.damage() + " points of damage");
-    }
-
-    public void drawCardScreen(CardDrawEventData cardDraw) {
-        io.printUpdate(cardDraw.entityName() + " drew: " + cardDraw.cardName());
-        io.enterToProceed();
-    }
-
-    public void takePlayerTurn() {
-        while (true) {
-            handRefresh();
-            String input = readPlayerInput();
-            if (input.equals("hit")) {
-                controller.playerHit();
-            } else if (input.equals("stand")) {
-                controller.playerStand();
-            } else {
-                continue;
-            }
-            
-            break;
-        }
-    }
-
-    public void enemyStand() {
-        io.printLine();
-        io.printUpdate("Enemy Stand");
-        io.enterToProceed();
-    }
-
+    // Screens
     private void onDrawCard() {
-        drawCardScreen(controller.getDrawnCardEvent());
+        navigateToScreen(screenFactory.createCardDrawScreen());
     }
 
     private void onRoundOver() {
-        roundOverScreen(controller.getWinnerName());
+        navigateToScreen(screenFactory.createRoundOverScreen());
     }
 
-    private void onGameOver() {
-        gameOverScreen(controller.getWinnerName());
+    private void onCombatOver() {
+        navigateToScreen(screenFactory.createCombatOverScreen());
     }
 
-    private void onTakeDamage() {
-        takeDamageScreen(controller.getDamageEvent());
-    }
-
-    private void handRefresh() {
-        io.printDivider();
-        entityHandScreen(controller.getEnemyData());
-        io.printDivider();
-        entityHandScreen(controller.getPlayerData());
-        io.printDivider();
+    private void onPlayerTurn() {
+        navigateToScreen(screenFactory.createPlayerTurnScreen());
     }
 }

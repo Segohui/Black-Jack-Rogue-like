@@ -3,6 +3,8 @@ package blackjack.visual;
 import java.util.List;
 import java.util.Scanner;
 
+import blackjack.dto.EntityStateData;
+
 public class InputOutput {
     private final Scanner scanner;
 
@@ -11,7 +13,14 @@ public class InputOutput {
     }
 
     public String getInput() {
-        String line = scanner.nextLine().strip();
+        System.out.print("> ");
+        String line = scanner.nextLine();
+        return line;
+    }
+
+    public String getCleanInput() {
+        System.out.print("> ");
+        String line = scanner.nextLine().strip().toLowerCase();
         return line;
     }
 
@@ -24,29 +33,34 @@ public class InputOutput {
     }
 
     public void printUpdate(String message) {
-        System.out.println("> " + message);
+        printMessage("> " + message);
     }
 
     public void printHeader(String message, int size) {
-        System.out.println("=".repeat(size));
-        printMessage("| " + message + "| ");
-        System.out.println("=".repeat(size));
-
+        printDivider("=", size);
+        printMessage("| " + message + " |");
+        printDivider("=", size);
     }
 
-    public void printDivider(int size) {
-        printMessage("-".repeat(size));
+    public void printDivider(String divider, int size) {
+        printMessage(divider.repeat(size));
     }
 
-    public void printDivider() {
-        printMessage("-".repeat(15));
+    public void printDivider(String divider) {
+        printMessage(divider.repeat(20));
     }
 
     public void printHand(List<String> cardNames) {
-        for (String card : cardNames) {
-            printMessage(card + " ");
+        for (String cardName : cardNames) {
+            printMessage(cardName + " ");
         }
         printMessage("");
+    }
+
+    public void printEntityState(EntityStateData entityData) {
+        printMessage(entityData.name() + " 's hand (" + entityData.currentSum() + "): ");
+        printMessage("Hp: " + entityData.hp());
+        printHand(entityData.cardNames());
     }
 
     public void printLine() {
@@ -59,7 +73,8 @@ public class InputOutput {
     }
 
     public void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+        for (int i = 0; i < 50; i++) {
+            printMessage("");
+        }
     }
 }
