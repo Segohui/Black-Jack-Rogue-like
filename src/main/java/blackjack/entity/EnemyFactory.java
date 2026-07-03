@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 
+import blackjack.entity.behaviors.ThresholdBehavior;
+
 public class EnemyFactory {
-    private final EnumMap<EnemyType, Function<Float, Enemy>> enemyTypes;
+    private final EnumMap<EnemyType, Function<Float, AIRecord>> enemyTypes;
     private int hpReference = 10;
 
     public EnemyFactory() {
@@ -17,57 +19,63 @@ public class EnemyFactory {
         enemyTypes.put(EnemyType.AGGRESSIVE, this::generateAggressiveEnemy);
     }
 
-    public Enemy generateSpecificEnemy(float multiplier, EnemyType type) {
-        Function<Float, Enemy> enemyGenerator = enemyTypes.get(type);
+    public AIRecord generateSpecificEnemy(float multiplier, EnemyType type) {
+        Function<Float, AIRecord> enemyGenerator = enemyTypes.get(type);
         return enemyGenerator.apply(multiplier);
     }
 
-    public Enemy generateRandomEnemy(float multiplier) {
+    public AIRecord generateRandomEnemy(float multiplier) {
         int randomIndex = ThreadLocalRandom.current().nextInt(EnemyType.values().length);
         EnemyType type = EnemyType.values()[randomIndex];
 
-        Function<Float, Enemy> enemyGenerator = enemyTypes.get(type);
+        Function<Float, AIRecord> enemyGenerator = enemyTypes.get(type);
     
         return enemyGenerator.apply(multiplier);
     }
 
-    public List<Enemy> generateThreeRandomEnemy(float multiplier) {
-        List<Enemy> enemies = new ArrayList<>();
+    public List<AIRecord> generateThreeRandomEnemy(float multiplier) {
+        List<AIRecord> enemies = new ArrayList<>();
         
         for (int i = 0; i < 3; i++) {
             int randomIndex = ThreadLocalRandom.current().nextInt(EnemyType.values().length);
             EnemyType type = EnemyType.values()[randomIndex];
 
-            Function<Float, Enemy> enemyGenerator = enemyTypes.get(type);
-            Enemy enemy = enemyGenerator.apply(multiplier);
+            Function<Float, AIRecord> enemyGenerator = enemyTypes.get(type);
+            AIRecord enemy = enemyGenerator.apply(multiplier);
             enemies.add(enemy);
         }
         
         return enemies;
     }
 
-    private Enemy generateSafeEnemy(float multiplier) {
+    private AIRecord generateSafeEnemy(float multiplier) {
         int baseHp = calculateHp(3, multiplier);
         int standThreshold = 6;
         String name = "Jonas";
 
-        return new Enemy(Math.round(baseHp * multiplier), standThreshold, name);
+        Entity enemy = new CombatEntity(name, Math.round(baseHp * multiplier));
+        Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
+        return new AIRecord(enemy, behavior);
     }
 
-    private Enemy generateModerateEnemy(float multiplier) {
+    private AIRecord generateModerateEnemy(float multiplier) {
         int baseHp = calculateHp(5, multiplier);
         int standThreshold = 4;
         String name = "Malaquias";
 
-        return new Enemy(Math.round(baseHp * multiplier), standThreshold, name);
+        Entity enemy = new CombatEntity(name, Math.round(baseHp * multiplier));
+        Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
+        return new AIRecord(enemy, behavior);
     }
 
-    private Enemy generateAggressiveEnemy(float multiplier) {
+    private AIRecord generateAggressiveEnemy(float multiplier) {
         int baseHp = calculateHp(7, multiplier);
         int standThreshold = 3;
         String name = "Amélia";
 
-        return new Enemy(Math.round(baseHp * multiplier), standThreshold, name);
+        Entity enemy = new CombatEntity(name, Math.round(baseHp * multiplier));
+        Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
+        return new AIRecord(enemy, behavior);
     }
 
     private int calculateHp(float behaviorMultiplier, float multiplier) {

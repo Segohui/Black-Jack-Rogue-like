@@ -1,26 +1,21 @@
 package blackjack.core.states;
 
 import blackjack.core.BlackjackCore;
-import blackjack.entity.components.DeckComponent;
-import blackjack.entity.components.HealthComponent;
+import blackjack.entity.Entity;
 
 public class EndGameState implements State {
-    private final HealthComponent playerHealthComponent;
-    private final DeckComponent playerDeckComponent;
+    private final Entity player;
 
-    public EndGameState(HealthComponent playerHealthComponent, DeckComponent playerDeckComponent) {
-        this.playerHealthComponent = playerHealthComponent;
-        this.playerDeckComponent = playerDeckComponent;
+    public EndGameState(Entity player) {
+        this.player = player;
     }
 
+    @Override
     public void handle(BlackjackCore core) {
-        if (!playerHealthComponent.isAlive()) {
+        if (!player.isAlive()) {
             core.registerEnemyGameWin();
         } else {
-            playerHealthComponent.resetHp();
-            playerDeckComponent.resetHand();
-            playerDeckComponent.resetStack();
-
+            player.battleReset();
             core.registerPlayerGameWin();
         }
 

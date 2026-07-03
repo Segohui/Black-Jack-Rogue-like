@@ -7,7 +7,7 @@ import blackjack.core.cards.Card;
 import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
 import blackjack.dto.EntityStateData;
-import blackjack.entity.Enemy;
+import blackjack.entity.AIRecord;
 
 public class BlackjackController {
     private final BlackjackCore core;
@@ -16,8 +16,8 @@ public class BlackjackController {
         this.core = core;
     }
 
-    public void startCombat(Enemy enemy) {
-        core.startCombat(enemy);
+    public void startCombat(AIRecord enemyRecord) {
+        core.startCombat(enemyRecord);
     }
 
     public void roundOverConnect(Runnable runnable) {

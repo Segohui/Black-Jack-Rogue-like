@@ -1,25 +1,21 @@
 package blackjack.core.states;
 
 import blackjack.core.BlackjackCore;
-import blackjack.entity.components.DeckComponent;
-import blackjack.entity.components.HealthComponent;
+import blackjack.entity.Entity;
 
 public class EndTurnState implements State {
-    private final HealthComponent playerHealthComponent;
-    private final HealthComponent enemyHealthComponent;
-    private final DeckComponent playerDeckComponent;
-    private final DeckComponent enemyDeckComponent;
+    private final Entity player;
+    private final Entity enemy;
 
-    public EndTurnState(HealthComponent playerHealthComponent, HealthComponent enemyHealthComponent, DeckComponent playerDeckComponent, DeckComponent enemyDeckComponent) {
-        this.playerHealthComponent = playerHealthComponent;
-        this.enemyHealthComponent = enemyHealthComponent;
-        this.playerDeckComponent = playerDeckComponent;
-        this.enemyDeckComponent = enemyDeckComponent;
+    public EndTurnState(Entity player, Entity enemy) {
+        this.player = player;
+        this.enemy = enemy;
     }
 
+    @Override
     public void handle(BlackjackCore core) {
-        int playerSum = playerDeckComponent.calculateHandSum();
-        int enemySum = enemyDeckComponent.calculateHandSum();
+        int playerSum = player.calculateHandSum();
+        int enemySum = enemy.calculateHandSum();
         int globalStand = core.getGlobalStand();
 
         if (playerSum == enemySum) {
@@ -29,18 +25,18 @@ public class EndTurnState implements State {
         }
 
         if (playerWin(globalStand, playerSum, enemySum)) {
-            enemyHealthComponent.takeDamage(playerSum);
+            enemy.takeDamage(playerSum);
             core.registerPlayerTurnWin(playerSum);
             core.emitTakeDamage();
-            if (!enemyHealthComponent.isAlive()) {
+            if (!enemy.isAlive()) {
                 core.activateEndGameState();
                 return;
             }
         } else {
-            playerHealthComponent.takeDamage(enemySum);
+            player.takeDamage(enemySum);
             core.registerEnemyTurnWin(enemySum);
             core.emitTakeDamage();
-            if (!playerHealthComponent.isAlive()) {
+            if (!player.isAlive()) {
                 core.activateEndGameState();
                 return;
             }
@@ -52,20 +48,11 @@ public class EndTurnState implements State {
     private void endTurn(BlackjackCore core) {
         core.emitRoundOver();
         core.resetWinner();
-        enemyDeckComponent.resetHand();
-        playerDeckComponent.resetHand();
         core.activateStartRoundState();
     }
 
     private boolean playerWin(int globalStand, int playerSum, int enemySum) {
-        if (playerSum <= globalStand) {
-            if (playerSum > enemySum || enemySum > globalStand) {
-                return true;
-            }
-
-            return false;
-        }
-
-        return false;
+        return ((playerSum <= globalStand)
+                && (playerSum > enemySum || enemySum > globalStand));
     }
 }

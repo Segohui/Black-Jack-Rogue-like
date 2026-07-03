@@ -23,7 +23,7 @@ public class HealthComponent {
             throw new IllegalArgumentException("Heal amount cannot be negative");
         }
 
-        this.currentHp = Math.max(heal + currentHp, maxHp);
+        this.currentHp = Math.min(heal + currentHp, maxHp);
     }
 
     public void resetHp() {
@@ -31,11 +31,7 @@ public class HealthComponent {
     }
 
     public boolean isAlive() {
-        if (this.currentHp > 0) {
-            return true;
-        }
-
-        return false;
+        return (this.currentHp > 0);
     }
 
     public int getCurrentHp() { return currentHp; }
