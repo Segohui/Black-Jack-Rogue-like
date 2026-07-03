@@ -12,7 +12,7 @@ public class PlayerTurnState implements State {
 
     @Override
     public void handle(BlackjackCore core) {
-        core.emitNextTurn();
+        core.emitPlayerTurn();
     }
 
     @Override

@@ -24,12 +24,12 @@ public class BlackjackController {
         core.roundOverConnect(runnable);
     }
 
-    public void nextTurnConnect(Runnable runnable) {
-        core.nextTurnConnect(runnable);
+    public void playerTurnConnect(Runnable runnable) {
+        core.playerTurnConnect(runnable);
     }
 
-    public void gameOverConnect(Runnable runnable) {
-        core.gameOverConnect(runnable);
+    public void combatOverConnect(Runnable runnable) {
+        core.combatOverConnect(runnable);
     }
 
     public void takeDamageConnect(Runnable runnable) {
@@ -54,6 +54,18 @@ public class BlackjackController {
         return new EntityStateData(core.getPlayerName(),
                 core.calculatePlayerSum(),
                 convertCardsToNames(core.getPlayerCards()), core.getPlayerCurrentHp());
+    }
+
+    public EntityStateData getEntityStateDataByName(String entityName) {
+        if (entityName.isEmpty() || entityName.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        if (entityName.equals(core.getPlayerName())) {
+            return getPlayerData();
+        } else {
+            return getEnemyData();
+        }
     }
 
     public DamageEventData getDamageEvent() {

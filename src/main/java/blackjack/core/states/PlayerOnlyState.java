@@ -18,7 +18,7 @@ public class PlayerOnlyState implements State {
             core.activateEndTurnState();
         }
 
-        core.emitNextTurn();
+        core.emitPlayerTurn();
     }
 
     @Override
