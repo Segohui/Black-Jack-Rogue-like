@@ -12,9 +12,9 @@ import blackjack.entity.Enemy;
 import blackjack.entity.Player;
 
 public class BlackjackCore {
-    private final Signal nextTurn = new Signal();
+    private final Signal playerTurn = new Signal();
     private final Signal roundOver = new Signal();
-    private final Signal gameOver = new Signal();
+    private final Signal combatOver = new Signal();
     private final Signal takeDamage = new Signal();
     private final Signal enemyStand = new Signal();
     private final Signal drawCard = new Signal();
@@ -134,15 +134,15 @@ public class BlackjackCore {
     }
 
     public void roundOverConnect(Runnable runnable) { roundOver.connect(runnable); }
-    public void nextTurnConnect(Runnable runnable) { nextTurn.connect(runnable); }
-    public void gameOverConnect(Runnable runnable) { gameOver.connect(runnable); }
+    public void playerTurnConnect(Runnable runnable) { playerTurn.connect(runnable); }
+    public void combatOverConnect(Runnable runnable) { combatOver.connect(runnable); }
     public void takeDamageConnect(Runnable runnable) { takeDamage.connect(runnable); }
     public void enemyStandConnect(Runnable runnable) { enemyStand.connect(runnable); }
     public void drawCardConnect(Runnable runnable) { drawCard.connect(runnable); }
 
     public void emitRoundOver() { roundOver.emit(); }
-    public void emitNextTurn() { nextTurn.emit(); }
-    public void emitGameOver() { gameOver.emit(); }
+    public void emitPlayerTurn() { playerTurn.emit(); }
+    public void emitCombatOver() { combatOver.emit(); }
     public void emitTakeDamage() { takeDamage.emit(); }
     public void emitEnemyStand() { enemyStand.emit(); }
     public void emitDrawCard() { drawCard.emit(); }

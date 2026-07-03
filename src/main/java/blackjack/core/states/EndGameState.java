@@ -24,6 +24,6 @@ public class EndGameState implements State {
             core.registerPlayerGameWin();
         }
 
-        core.emitGameOver();
+        core.emitCombatOver();
     }
 }
