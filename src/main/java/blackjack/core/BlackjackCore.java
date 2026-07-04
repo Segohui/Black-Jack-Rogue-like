@@ -7,9 +7,9 @@ import blackjack.core.states.State;
 import blackjack.core.states.StateFactory;
 import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
-import blackjack.entity.Entity;
 import blackjack.entity.AIRecord;
 import blackjack.entity.Behavior;
+import blackjack.entity.Entity;
 
 public class BlackjackCore {
     private final Signal playerTurn = new Signal();
@@ -72,34 +72,17 @@ public class BlackjackCore {
         this.winner = null;
     }
 
-    public void registerPlayerCardDraw(Card card) {
-        this.lastCardDrawEvent = new CardDrawEventData(card.toString(), getPlayerName());
+    public void registerCardDraw(Card card, Entity entity) {
+        this.lastCardDrawEvent = new CardDrawEventData(card.toString(), entity.getName());
     }
 
-    public void registerEnemyCardDraw(Card card) {
-        this.lastCardDrawEvent = new CardDrawEventData(card.toString(), getEnemyName());
+    public void registerAttack(Entity winner, Entity loser, int damage) {
+        this.lastDamageEvent = new DamageEventData(loser.getName(), damage);
+        this.winner = winner;
     }
 
-    public void registerPlayerTurnWin(int damage) {
-        createDamageEvent(getEnemyName(), damage);
-        this.winner = player;
-    }
-
-    public void registerEnemyTurnWin(int damage) {
-        createDamageEvent(getPlayerName(), damage);
-        this.winner = enemy;
-    }
-
-    public void registerPlayerGameWin() {
-        this.winner = player;
-    }
-
-    public void registerEnemyGameWin() {
-        this.winner = enemy;
-    }
-
-    public void createDamageEvent(String targetName, int damage) {
-        lastDamageEvent = new DamageEventData(targetName, damage);
+    public void registerBattleWinner(Entity winner) {
+        this.winner = winner;
     }
 
     // maybe find a better way to activate states and the other repetitive stuff

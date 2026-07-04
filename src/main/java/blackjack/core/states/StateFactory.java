@@ -39,6 +39,6 @@ public class StateFactory {
     }
 
     public State createEndGameState() {
-        return new EndGameState(player);
+        return new EndGameState(player, enemy);
     }
 }

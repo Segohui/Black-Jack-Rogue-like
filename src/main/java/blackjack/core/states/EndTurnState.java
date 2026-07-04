@@ -26,7 +26,7 @@ public class EndTurnState implements State {
 
         if (playerWin(globalStand, playerSum, enemySum)) {
             enemy.takeDamage(playerSum);
-            core.registerPlayerTurnWin(playerSum);
+            core.registerAttack(player, enemy, playerSum);
             core.emitTakeDamage();
             if (!enemy.isAlive()) {
                 core.activateEndGameState();
@@ -34,7 +34,7 @@ public class EndTurnState implements State {
             }
         } else {
             player.takeDamage(enemySum);
-            core.registerEnemyTurnWin(enemySum);
+            core.registerAttack(enemy, player, enemySum);
             core.emitTakeDamage();
             if (!player.isAlive()) {
                 core.activateEndGameState();

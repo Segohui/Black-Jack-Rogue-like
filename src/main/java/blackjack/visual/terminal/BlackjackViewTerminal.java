@@ -3,8 +3,8 @@ package blackjack.visual.terminal;
 import blackjack.controller.BlackjackController;
 import blackjack.dto.DamageEventData;
 import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.screens.ScreenFactory;
 import blackjack.visual.terminal.screens.Screen;
+import blackjack.visual.terminal.screens.ScreenFactory;
 
 public class BlackjackViewTerminal {
     private final ScreenFactory screenFactory;

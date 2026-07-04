@@ -3,17 +3,17 @@ package blackjack.entity;
 import java.util.List;
 
 import blackjack.core.cards.Card;
-import blackjack.entity.components.DeckComponent;
+import blackjack.entity.components.CardsComponent;
 import blackjack.entity.components.HealthComponent;
 
 public class CombatEntity implements Entity {
-    private final DeckComponent deckComponent;
+    private final CardsComponent cardsComponent;
     private final HealthComponent healthComponent;
     private final String name;
 
     public CombatEntity(String name, int maxHp) {
         this.name = name;
-        this.deckComponent = new DeckComponent();
+        this.cardsComponent = new CardsComponent();
         this.healthComponent = new HealthComponent(maxHp);
     }
 
@@ -24,34 +24,34 @@ public class CombatEntity implements Entity {
 
     @Override
     public List<Card> getCards() {
-        return deckComponent.getCards();
+        return cardsComponent.getCards();
     }
 
     @Override
     public int calculateHandSum() {
-        return deckComponent.calculateHandSum();
+        return cardsComponent.calculateHandSum();
     }
     
     @Override
     public List<Card> drawInitialCards(int amount) {
-        return deckComponent.drawCardToHand(amount);
+        return cardsComponent.drawCardToHand(amount);
     }
 
     @Override
     public void roundReset() {
-        deckComponent.resetHand();
+        cardsComponent.resetHand();
     }
 
     @Override
     public void battleReset() {
         healthComponent.resetHp();
-        deckComponent.resetStack();
+        cardsComponent.resetStack();
         roundReset();
     }
 
     @Override
     public Card hit() {
-        Card card = deckComponent.drawCardToHand(1).get(0);
+        Card card = cardsComponent.drawCardToHand(1).get(0);
         return card;
     }
 
