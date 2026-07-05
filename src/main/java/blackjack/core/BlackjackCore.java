@@ -7,9 +7,9 @@ import blackjack.core.states.State;
 import blackjack.core.states.StateFactory;
 import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
-import blackjack.entity.CombatEntity;
-import blackjack.entity.Enemy;
-import blackjack.entity.Player;
+import blackjack.entity.AIRecord;
+import blackjack.entity.Behavior;
+import blackjack.entity.Entity;
 
 public class BlackjackCore {
     private final Signal playerTurn = new Signal();
@@ -19,33 +19,36 @@ public class BlackjackCore {
     private final Signal enemyStand = new Signal();
     private final Signal drawCard = new Signal();
 
-    private final Player player;
+    private final Entity player;
     private int globalStand = 21; // may change with power ups
 
-    private Enemy enemy;
+    private Entity enemy;
+    private Behavior enemyBehavior;
     private StateFactory stateFactory;
-    private CombatEntity winner;
+    private Entity winner;
     private DamageEventData lastDamageEvent;
     private CardDrawEventData lastCardDrawEvent;
     private State state;
 
-    public BlackjackCore(Player player) {
+    public BlackjackCore(Entity player) {
         this.player = player;
     }
 
-    public void startCombat(Enemy enemy) {
+    public void startCombat(AIRecord enemyRecord) {
         resetCore();
-        this.enemy = enemy;
-        this.stateFactory = new StateFactory(player, enemy);
+        this.enemy = enemyRecord.entity();
+        this.enemyBehavior = enemyRecord.behavior();
+        this.stateFactory = new StateFactory(player, enemy, enemyBehavior);
         activateStartRoundState();
     }
 
-    public void resetCore() {
+    private void resetCore() {
         this.lastDamageEvent = null;
         this.lastCardDrawEvent = null;
         this.state = null;
         this.winner = null;
         this.enemy = null;
+        this.enemyBehavior = null;
         this.stateFactory = null;
     }
 
@@ -58,45 +61,28 @@ public class BlackjackCore {
     }
 
     public int calculatePlayerSum() {
-        return player.getDeckComponent().calculateHandSum();
+        return player.calculateHandSum();
     }
 
     public int calculateEnemySum() {
-        return enemy.getDeckComponent().calculateHandSum();
+        return enemy.calculateHandSum();
     }
 
     public void resetWinner() {
         this.winner = null;
     }
 
-    public void registerPlayerCardDraw(Card card) {
-        this.lastCardDrawEvent = new CardDrawEventData(card.toString(), getPlayerName());
+    public void registerCardDraw(Card card, Entity entity) {
+        this.lastCardDrawEvent = new CardDrawEventData(card.toString(), entity.getName());
     }
 
-    public void registerEnemyCardDraw(Card card) {
-        this.lastCardDrawEvent = new CardDrawEventData(card.toString(), getEnemyName());
+    public void registerAttack(Entity winner, Entity loser, int damage) {
+        this.lastDamageEvent = new DamageEventData(loser.getName(), damage);
+        this.winner = winner;
     }
 
-    public void registerPlayerTurnWin(int damage) {
-        createDamageEvent(getEnemyName(), damage);
-        this.winner = player;
-    }
-
-    public void registerEnemyTurnWin(int damage) {
-        createDamageEvent(getPlayerName(), damage);
-        this.winner = enemy;
-    }
-
-    public void registerPlayerGameWin() {
-        this.winner = player;
-    }
-
-    public void registerEnemyGameWin() {
-        this.winner = enemy;
-    }
-
-    public void createDamageEvent(String targetName, int damage) {
-        lastDamageEvent = new DamageEventData(targetName, damage);
+    public void registerBattleWinner(Entity winner) {
+        this.winner = winner;
     }
 
     // maybe find a better way to activate states and the other repetitive stuff
@@ -147,15 +133,13 @@ public class BlackjackCore {
     public void emitEnemyStand() { enemyStand.emit(); }
     public void emitDrawCard() { drawCard.emit(); }
 
-    public Player getPlayer() { return player; }
-    public Enemy getEnemy() { return enemy; }
     public String getPlayerName() { return player.getName(); }
     public String getEnemyName() { return enemy.getName(); }
-    public int getPlayerCurrentHp() { return player.getHealthComponent().getCurrentHp(); }
-    public int getEnemyCurrentHp() { return enemy.getHealthComponent().getCurrentHp(); }
-    public List<Card> getPlayerCards() { return player.getDeckComponent().getCards(); }
-    public List<Card> getEnemyCards() { return enemy.getDeckComponent().getCards(); }
-    public CombatEntity getWinner() { return winner; }
+    public int getPlayerCurrentHp() { return player.getCurrentHp(); }
+    public int getEnemyCurrentHp() { return enemy.getCurrentHp(); }
+    public List<Card> getPlayerCards() { return player.getCards(); }
+    public List<Card> getEnemyCards() { return enemy.getCards(); }
+    public Entity getWinner() { return winner; }
     public DamageEventData getLastDamageEvent() { return lastDamageEvent; }
     public CardDrawEventData getLastDrawnCardEvent() { return lastCardDrawEvent; }
     public int getGlobalStand() { return globalStand; }

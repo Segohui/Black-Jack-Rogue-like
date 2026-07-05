@@ -4,16 +4,17 @@ import java.util.List;
 
 import blackjack.controller.BlackjackController;
 import blackjack.core.BlackjackCore;
-import blackjack.entity.Enemy;
+import blackjack.entity.AIRecord;
+import blackjack.entity.CombatEntity;
 import blackjack.entity.EnemyFactory;
-import blackjack.entity.Player;
+import blackjack.entity.Entity;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.BlackjackViewTerminal;
 
 public class Main {
     public static void main(String[] args) {
         InputOutput io = new InputOutput();
-        Player player = new Player("Player");
+        Entity player = new CombatEntity("Player", 50);
         BlackjackCore core = new BlackjackCore(player);
         BlackjackController controller = new BlackjackController(core);
         new BlackjackViewTerminal(io, controller);
@@ -21,14 +22,15 @@ public class Main {
         EnemyFactory enemyFactory = new EnemyFactory();
 
         while (true) {
-            List<Enemy> enemies = enemyFactory.generateThreeRandomEnemy((float) 0.1);
+            List<AIRecord> enemyRecords = enemyFactory.generateThreeRandomEnemy((float) 0.1);
 
-            for (Enemy enemy : enemies) {
-                controller.startCombat(enemy);
-                if (!player.getHealthComponent().isAlive()) {
+            for (AIRecord enemyRecord : enemyRecords) {
+                controller.startCombat(enemyRecord);
+                if (!player.isAlive()) {
+                    io.printMessage("Game Over! You're trash lol");
                     return;
                 }
-                player.resetPlayer();
+                player.battleReset();
                 // add shop here
             }
         }

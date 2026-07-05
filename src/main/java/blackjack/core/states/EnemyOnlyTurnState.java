@@ -1,40 +1,30 @@
 package blackjack.core.states;
 
 import blackjack.core.BlackjackCore;
-import blackjack.core.states.helper.DrawCardHelper;
-import blackjack.entity.components.BehaviorComponent;
-import blackjack.entity.components.DeckComponent;
+import blackjack.entity.Behavior;
+import blackjack.entity.Entity;
 
 public class EnemyOnlyTurnState implements State {
-    private final DeckComponent deckComponent;
-    private final BehaviorComponent behaviorComponent;
+    private final Entity enemy;
+    private final Behavior enemyBehavior;
 
-    public EnemyOnlyTurnState(DeckComponent deckComponent, BehaviorComponent behaviorComponent) {
-        this.deckComponent = deckComponent;
-        this.behaviorComponent = behaviorComponent;
+    public EnemyOnlyTurnState(Entity enemy, Behavior enemyBehavior) {
+        this.enemy = enemy;
+        this.enemyBehavior = enemyBehavior;
     }
 
+    @Override
     public void handle(BlackjackCore core) {
-        int handSum = deckComponent.calculateHandSum();
         int globalStand = core.getGlobalStand();
-        int enemyLimit = behaviorComponent.calculateStandValue(globalStand);
+        enemyBehavior.playTurn(globalStand);
+        int handSum = enemy.calculateHandSum();
 
-        if (handSum < enemyLimit) {
-            DrawCardHelper.enemyDrawCard(deckComponent, core, 1);
-            handSum = deckComponent.calculateHandSum();
-            
-            if (handSum > globalStand) {
-                core.activateEndTurnState();
-                return;
-            }
-
-            core.activateEnemyOnlyTurnState();
-        } else {
-            if (handSum <= globalStand && handSum >= enemyLimit) {
-                core.emitEnemyStand();
-            }
-            
-            core.activateEndTurnState();
+        while (!enemyBehavior.hasStopped(globalStand)) {
+            enemy.hit();
         }
+        if (handSum <= globalStand) {
+            core.emitEnemyStand();
+        }
+        core.activateEndTurnState();
     }
 }

@@ -13,6 +13,7 @@ public class PlayerTurnScreen implements Screen {
         this.controller = controller;
     }
 
+    @Override
     public void render() {
         io.printHeader("Player Turn", 15);
 
@@ -28,21 +29,20 @@ public class PlayerTurnScreen implements Screen {
         io.printUpdate("type 'hit' or 'stand': ");
         while (true) {
             switch (io.getCleanInput()) {
-                case "hit": {
+                case "hit" -> {
                     controller.playerHit();
                     return;
                 }
-                case "stand": {
+                case "stand" -> {
                     controller.playerStand();
                     return;
                 }
-                case "clear": {
+                case "clear" -> {
                     io.clearScreen();
                     return;
                 }
-                default: {
+                default ->  {
                     io.printUpdate("Invalid input. Please type 'hit' or 'stand': ");
-                    break;
                 }
             }
         }
