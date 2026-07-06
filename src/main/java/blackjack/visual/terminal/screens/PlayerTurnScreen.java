@@ -3,6 +3,7 @@ package blackjack.visual.terminal.screens;
 import blackjack.controller.BlackjackController;
 import blackjack.dto.EntityStateData;
 import blackjack.visual.InputOutput;
+import blackjack.visual.terminal.ActionPrompter;
 
 public class PlayerTurnScreen implements Screen {
     private final InputOutput io;
@@ -26,26 +27,9 @@ public class PlayerTurnScreen implements Screen {
         io.printEntityState(enemyData);
         io.printDivider("=");
 
-        io.printUpdate("type 'hit' or 'stand': ");
-        while (true) {
-            switch (io.getCleanInput()) {
-                case "hit" -> {
-                    controller.playerHit();
-                    return;
-                }
-                case "stand" -> {
-                    controller.playerStand();
-                    return;
-                }
-                case "clear" -> {
-                    io.clearScreen();
-                    return;
-                }
-                default ->  {
-                    io.printUpdate("Invalid input. Please type 'hit' or 'stand': ");
-                }
-            }
-        }
-        
+        ActionPrompter actionPrompter = new ActionPrompter(io);
+        actionPrompter.addAction("hit", controller::playerHit);
+        actionPrompter.addAction("stand", controller::playerStand);
+        actionPrompter.promptAndRun();
     }
 }
