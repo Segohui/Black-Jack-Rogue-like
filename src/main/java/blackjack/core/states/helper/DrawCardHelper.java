@@ -16,4 +16,10 @@ public class DrawCardHelper {
         core.registerEnemyCardDraw(card);
         core.emitDrawCard();
     }
+
+    public static void playerUsePurchasedCard(DeckComponent playerDeckComponent, BlackjackCore core, int idx){
+        Card card = playerDeckComponent.usePurchasedCard(idx);
+        core.registerPlayerCardDraw(card);
+        core.emitDrawCard();        
+    }
 }

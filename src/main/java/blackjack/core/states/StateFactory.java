@@ -3,6 +3,7 @@ package blackjack.core.states;
 import blackjack.entity.Enemy;
 import blackjack.entity.Player;
 import blackjack.entity.components.BehaviorComponent;
+import blackjack.entity.components.CurrencyComponent;
 import blackjack.entity.components.DeckComponent;
 import blackjack.entity.components.HealthComponent;
 
@@ -12,6 +13,7 @@ public class StateFactory {
     private final DeckComponent playerDeckComponent;
     private final DeckComponent enemyDeckComponent;
     private final BehaviorComponent enemyBehaviorComponent;
+    private final CurrencyComponent playerCurrencyComponent;
 
     public StateFactory(Player player, Enemy enemy) {
         this.playerHealthComponent = player.getHealthComponent();
@@ -19,6 +21,7 @@ public class StateFactory {
         this.playerDeckComponent = player.getDeckComponent();
         this.enemyDeckComponent = enemy.getDeckComponent();
         this.enemyBehaviorComponent = enemy.getBehaviorComponent();
+        this.playerCurrencyComponent = player.getCurrencyComponent();
     }
 
     public State createStartRoundState() {
@@ -46,6 +49,6 @@ public class StateFactory {
     }
 
     public State createEndGameState() {
-        return new EndGameState(playerHealthComponent, playerDeckComponent);
+        return new EndGameState(playerHealthComponent, playerDeckComponent, playerCurrencyComponent);
     }
 }

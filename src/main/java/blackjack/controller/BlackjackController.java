@@ -4,6 +4,7 @@ import java.util.List;
 
 import blackjack.core.BlackjackCore;
 import blackjack.core.cards.Card;
+import blackjack.core.shop.Shop;
 import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
 import blackjack.dto.EntityStateData;
@@ -89,6 +90,30 @@ public class BlackjackController {
 
     public void playerStand() {
         core.playerStand();
+    }
+
+    public void playerUseBoughtCard(int idx){
+        core.playerUsePurchasedCard(idx);
+    }
+
+    public List<String> getPurchasedCardNames() {
+    return core.getPlayer().getDeckComponent().getPurchasedCards().stream()
+            .map(card -> card.toString())
+            .toList();
+}
+
+    public List<String> getShopItemLines(Shop shop) {
+        return shop.getItemsForSale().stream()
+                .map(item -> item.getName() + " (" + item.getCost() + "g) - " + item.getDescription())
+                .toList();
+    }
+
+    public int getPlayerGold() {
+        return core.getPlayer().getCurrencyComponent().getGold();
+    }
+
+    public boolean buyShopItem(Shop shop, int index) {
+        return shop.buy(index, core.getPlayer());
     }
 
     private List<String> convertCardsToNames(List<Card> cards) {

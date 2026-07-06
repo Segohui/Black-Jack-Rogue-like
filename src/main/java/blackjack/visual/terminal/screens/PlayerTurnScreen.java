@@ -24,8 +24,14 @@ public class PlayerTurnScreen implements Screen {
         io.printDivider("=");
         io.printEntityState(enemyData);
         io.printDivider("=");
+        
 
+        if(!controller.getPurchasedCardNames().isEmpty()){
+            io.printUpdate("type 'hit', 'stand', or 'use': ");
+        }
+        else
         io.printUpdate("type 'hit' or 'stand': ");
+        
         while (true) {
             switch (io.getCleanInput()) {
                 case "hit": {
@@ -38,6 +44,17 @@ public class PlayerTurnScreen implements Screen {
                 }
                 case "clear": {
                     io.clearScreen();
+                    return;
+                }
+                case "use": {
+                    var purchasedCards = controller.getPurchasedCardNames();
+                    for (int i = 0; i < purchasedCards.size(); i++) {
+                        io.printMessage(i + ") " + purchasedCards.get(i));
+                    }
+                    io.printUpdate("choose a card number: ");
+
+                    int idx = Integer.parseInt(io.getCleanInput());
+                    controller.playerUseBoughtCard(idx);
                     return;
                 }
                 default: {

@@ -32,4 +32,18 @@ public class PlayerTurnState implements State {
     public void stand(BlackjackCore core) {
         core.activateEnemyOnlyTurnState();
     }
+
+    @Override
+    public void useBoughtCard(BlackjackCore core, int idx){
+        DrawCardHelper.playerUsePurchasedCard(deckComponent, core, idx);
+
+        int handSum = deckComponent.calculateHandSum();
+
+        if(handSum > core.getGlobalStand()){
+            core.activateEndTurnState();
+        }
+        else{
+            core.activateEnemyTurnState();
+        }
+    }
 }

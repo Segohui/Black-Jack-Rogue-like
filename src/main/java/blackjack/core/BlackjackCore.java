@@ -57,6 +57,10 @@ public class BlackjackCore {
         state.stand(this);
     }
 
+    public void playerUsePurchasedCard(int idx){
+        state.useBoughtCard(this, idx);
+    }
+
     public int calculatePlayerSum() {
         return player.getDeckComponent().calculateHandSum();
     }

@@ -1,6 +1,7 @@
 package blackjack.visual.terminal.screens;
 
 import blackjack.controller.BlackjackController;
+import blackjack.core.shop.Shop;
 import blackjack.visual.InputOutput;
 
 public class ScreenFactory {
@@ -26,5 +27,9 @@ public class ScreenFactory {
 
     public Screen createCardDrawScreen() {
         return new CardDrawScreen(io, controller);
+    }
+
+    public Screen createShopScreen(Shop shop) {
+        return new ShopScreen(io, controller, shop);
     }
 }

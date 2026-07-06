@@ -13,4 +13,8 @@ public interface State {
     default void stand(BlackjackCore core) {
         throw new InvalidTurnActionException("Invalid command");
     }
+
+    default void useBoughtCard(BlackjackCore core, int idx){
+        throw new InvalidTurnActionException("Invalid command");
+    }
 }
