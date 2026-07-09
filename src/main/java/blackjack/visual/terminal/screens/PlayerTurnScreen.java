@@ -3,6 +3,8 @@ package blackjack.visual.terminal.screens;
 import blackjack.controller.BlackjackController;
 import blackjack.dto.EntityStateData;
 import blackjack.visual.InputOutput;
+import blackjack.visual.terminal.ActionPrompter;
+import java.util.List;
 
 public class PlayerTurnScreen implements Screen {
     private final InputOutput io;
@@ -13,6 +15,7 @@ public class PlayerTurnScreen implements Screen {
         this.controller = controller;
     }
 
+    @Override
     public void render() {
         io.printHeader("Player Turn", 15);
 
@@ -26,43 +29,27 @@ public class PlayerTurnScreen implements Screen {
         io.printDivider("=");
         
 
-        if(!controller.getPurchasedCardNames().isEmpty()){
-            io.printUpdate("type 'hit', 'stand', or 'use': ");
-        }
-        else
-        io.printUpdate("type 'hit' or 'stand': ");
+        ActionPrompter actionPrompter = new ActionPrompter(io);
+        actionPrompter.addAction("hit", controller::playerHit);
+        actionPrompter.addAction("stand", controller::playerStand);
         
-        while (true) {
-            switch (io.getCleanInput()) {
-                case "hit": {
-                    controller.playerHit();
-                    return;
-                }
-                case "stand": {
-                    controller.playerStand();
-                    return;
-                }
-                case "clear": {
-                    io.clearScreen();
-                    return;
-                }
-                case "use": {
-                    var purchasedCards = controller.getPurchasedCardNames();
-                    for (int i = 0; i < purchasedCards.size(); i++) {
-                        io.printMessage(i + ") " + purchasedCards.get(i));
-                    }
-                    io.printUpdate("choose a card number: ");
+        List<String> purchasedCards = controller.getPurchasedCardNames();
 
-                    int idx = Integer.parseInt(io.getCleanInput());
-                    controller.playerUseBoughtCard(idx);
-                    return;
-                }
-                default: {
-                    io.printUpdate("Invalid input. Please type 'hit' or 'stand': ");
-                    break;
-                }
-            }
+        if(!purchasedCards.isEmpty()){
+            actionPrompter.addAction("use", this::promptPurchasedCard);
         }
-        
+
+        actionPrompter.promptAndRun();
+    }
+
+    private void promptPurchasedCard(){
+        List<String> purchasedCards = controller.getPurchasedCardNames();
+        ActionPrompter cardPrompter = new ActionPrompter(io);
+
+        for(int i=0;i<purchasedCards.size();i++){
+            int idx = i;
+            cardPrompter.addAction(purchasedCards.get(i), () -> controller.playerUseBoughtCard(idx));
+        }
+        cardPrompter.promptAndRun();
     }
 }

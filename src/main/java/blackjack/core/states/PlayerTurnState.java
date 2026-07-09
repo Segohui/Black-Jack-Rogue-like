@@ -1,25 +1,28 @@
 package blackjack.core.states;
 
 import blackjack.core.BlackjackCore;
-import blackjack.core.states.helper.DrawCardHelper;
-import blackjack.entity.components.DeckComponent;
+import blackjack.entity.Entity;
+import blackjack.core.cards.Card;;
 
 public class PlayerTurnState implements State {
-    private final DeckComponent deckComponent;
+    private final Entity player;
 
-    public PlayerTurnState(DeckComponent deckComponent) {
-        this.deckComponent = deckComponent;
+    public PlayerTurnState(Entity player) {
+        this.player = player;
     }
 
+    @Override
     public void handle(BlackjackCore core) {
         core.emitPlayerTurn();
     }
 
     @Override
     public void hit(BlackjackCore core) {
-        DrawCardHelper.playerDrawCard(deckComponent, core, 1);
+        Card card = player.hit(); 
+        core.registerCardDraw(card, player);
+        core.emitDrawCard();
 
-        int handSum = deckComponent.calculateHandSum();
+        int handSum = player.calculateHandSum();
 
         if (handSum > core.getGlobalStand()) {
             core.activateEndTurnState();
@@ -35,9 +38,9 @@ public class PlayerTurnState implements State {
 
     @Override
     public void useBoughtCard(BlackjackCore core, int idx){
-        DrawCardHelper.playerUsePurchasedCard(deckComponent, core, idx);
+        player.usePurchasedCard(idx);
 
-        int handSum = deckComponent.calculateHandSum();
+        int handSum = player.calculateHandSum();
 
         if(handSum > core.getGlobalStand()){
             core.activateEndTurnState();

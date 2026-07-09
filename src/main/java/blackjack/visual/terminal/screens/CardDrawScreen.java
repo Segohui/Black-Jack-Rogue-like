@@ -14,6 +14,7 @@ public class CardDrawScreen implements Screen {
         this.controller = controller;
     }
 
+    @Override
     public void render() {
         CardDrawEventData cardDrawData = controller.getDrawnCardEvent();
         EntityStateData entityData = controller.getEntityStateDataByName(cardDrawData.entityName());

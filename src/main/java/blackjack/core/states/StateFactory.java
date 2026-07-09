@@ -1,54 +1,44 @@
 package blackjack.core.states;
 
-import blackjack.entity.Enemy;
-import blackjack.entity.Player;
-import blackjack.entity.components.BehaviorComponent;
-import blackjack.entity.components.CurrencyComponent;
-import blackjack.entity.components.DeckComponent;
-import blackjack.entity.components.HealthComponent;
+import blackjack.entity.Behavior;
+import blackjack.entity.Entity;
 
 public class StateFactory {
-    private final HealthComponent playerHealthComponent;
-    private final HealthComponent enemyHealthComponent;
-    private final DeckComponent playerDeckComponent;
-    private final DeckComponent enemyDeckComponent;
-    private final BehaviorComponent enemyBehaviorComponent;
-    private final CurrencyComponent playerCurrencyComponent;
+    private final Entity player;
+    private final Entity enemy;
+    private final Behavior enemyBehavior;
 
-    public StateFactory(Player player, Enemy enemy) {
-        this.playerHealthComponent = player.getHealthComponent();
-        this.enemyHealthComponent = enemy.getHealthComponent();
-        this.playerDeckComponent = player.getDeckComponent();
-        this.enemyDeckComponent = enemy.getDeckComponent();
-        this.enemyBehaviorComponent = enemy.getBehaviorComponent();
-        this.playerCurrencyComponent = player.getCurrencyComponent();
+    public StateFactory(Entity player, Entity enemy, Behavior enemyBehavior) {
+        this.player = player;
+        this.enemy = enemy;
+        this.enemyBehavior = enemyBehavior;
     }
 
     public State createStartRoundState() {
-        return new StartRoundState(playerDeckComponent, enemyDeckComponent);
+        return new StartRoundState(player, enemy);
     }
 
     public State createPlayerTurnState() {
-        return new PlayerTurnState(playerDeckComponent);
+        return new PlayerTurnState(player);
     }
 
     public State createPlayerOnlyState() {
-        return new PlayerOnlyState(playerDeckComponent);
+        return new PlayerOnlyState(player);
     }
 
     public State createEnemyTurnState() {
-        return new EnemyTurnState(enemyDeckComponent, enemyBehaviorComponent);
+        return new EnemyTurnState(enemy, enemyBehavior);
     }
 
     public State createEnemyOnlyState() {
-        return new EnemyOnlyTurnState(enemyDeckComponent, enemyBehaviorComponent);
+        return new EnemyOnlyTurnState(enemy, enemyBehavior);
     }
 
     public State createEndTurnState() {
-        return new EndTurnState(playerHealthComponent, enemyHealthComponent, playerDeckComponent, enemyDeckComponent);
+        return new EndTurnState(player, enemy);
     }
 
     public State createEndGameState() {
-        return new EndGameState(playerHealthComponent, playerDeckComponent, playerCurrencyComponent);
+        return new EndGameState(player, enemy);
     }
 }

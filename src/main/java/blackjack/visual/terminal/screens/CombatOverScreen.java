@@ -12,11 +12,12 @@ public class CombatOverScreen implements Screen {
         this.controller = controller;
     }
 
+    @Override
     public void render() {
         io.printLine();
         io.printHeader("Game End", 15);
         io.printUpdate("Winner: " + controller.getWinnerName());
-        io.printUpdate("Money gained: ");
+        io.printUpdate("Money gained: " + controller.getLastGoldReward());
         io.enterToProceed();
     }
 }

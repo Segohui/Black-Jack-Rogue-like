@@ -8,7 +8,7 @@ import blackjack.core.shop.Shop;
 import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
 import blackjack.dto.EntityStateData;
-import blackjack.entity.Enemy;
+import blackjack.entity.AIRecord;
 
 public class BlackjackController {
     private final BlackjackCore core;
@@ -17,8 +17,8 @@ public class BlackjackController {
         this.core = core;
     }
 
-    public void startCombat(Enemy enemy) {
-        core.startCombat(enemy);
+    public void startCombat(AIRecord enemyRecord) {
+        core.startCombat(enemyRecord);
     }
 
     public void roundOverConnect(Runnable runnable) {
@@ -96,11 +96,15 @@ public class BlackjackController {
         core.playerUsePurchasedCard(idx);
     }
 
+    public boolean playerHasPurchasedCards(){
+        return core.getPlayer().hasPurchasedCards();
+    }
+
     public List<String> getPurchasedCardNames() {
-    return core.getPlayer().getDeckComponent().getPurchasedCards().stream()
-            .map(card -> card.toString())
-            .toList();
-}
+        return core.getPlayer().getPurchasedCards().stream()
+                .map(card -> card.toString())
+                .toList();
+    }
 
     public List<String> getShopItemLines(Shop shop) {
         return shop.getItemsForSale().stream()
@@ -109,7 +113,7 @@ public class BlackjackController {
     }
 
     public int getPlayerGold() {
-        return core.getPlayer().getCurrencyComponent().getGold();
+        return core.getPlayer().getGold();
     }
 
     public boolean buyShopItem(Shop shop, int index) {
@@ -120,5 +124,9 @@ public class BlackjackController {
         return cards.stream()
                 .map(card -> card.toString())
                 .toList();
+    }
+
+    public int getLastGoldReward(){
+        return core.getLastGoldReward();
     }
 }

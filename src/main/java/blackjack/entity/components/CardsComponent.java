@@ -10,7 +10,7 @@ import blackjack.core.cards.Hand;
 import blackjack.core.cards.HandEvaluator;
 import blackjack.core.cards.Stack;
 
-public class DeckComponent {
+public class CardsComponent {
     private final Deck deck = new Deck();
     private final Stack stack = new Stack(deck);
     private final Hand hand = new Hand();

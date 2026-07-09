@@ -1,23 +1,24 @@
 package blackjack.core.states;
 
 import blackjack.core.BlackjackCore;
-import blackjack.entity.components.DeckComponent;
+import blackjack.entity.Entity;
 
 public class StartRoundState implements State {
-    private final DeckComponent playerDeckComponent;
-    private final DeckComponent enemyDeckComponent;
+    private final Entity player;
+    private final Entity enemy;
 
-    public StartRoundState(DeckComponent playerDeckComponent, DeckComponent enemyDeckComponent) {
-        this.playerDeckComponent = playerDeckComponent;
-        this.enemyDeckComponent = enemyDeckComponent;
+    public StartRoundState(Entity player, Entity enemy) {
+        this.player = player;
+        this.enemy = enemy;
     }
 
+    @Override
     public void handle(BlackjackCore core) {
-        playerDeckComponent.resetHand();
-        enemyDeckComponent.resetHand();
+        player.roundReset();
+        enemy.roundReset();
 
-        playerDeckComponent.drawCardToHand(2);
-        enemyDeckComponent.drawCardToHand(2);
+        player.drawInitialCards(2);
+        enemy.drawInitialCards(2);
 
         core.activatePlayerTurnState();
     }

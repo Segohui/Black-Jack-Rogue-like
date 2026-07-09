@@ -2,7 +2,7 @@ package blackjack.core.shop.items;
 
 import blackjack.core.cards.Card;
 import blackjack.core.shop.ShopItem;
-import blackjack.entity.Player;
+import blackjack.entity.Entity;
 
 public class CardItem implements ShopItem {
     private final Card card;
@@ -29,7 +29,7 @@ public class CardItem implements ShopItem {
     }
 
     @Override
-    public void apply(Player player) {
-        player.getDeckComponent().addPurchasedCard(card);
+    public void apply(Entity player) {
+        player.addPurchasedCard(card);
     }
 }

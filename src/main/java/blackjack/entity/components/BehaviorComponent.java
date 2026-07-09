@@ -1,15 +1,19 @@
 package blackjack.entity.components;
 
+import blackjack.entity.Behavior;
+
 public class BehaviorComponent {
-    private final int standThreshold;
+    private final Behavior behavior;
 
-    public BehaviorComponent(int standThreshold) {
-        this.standThreshold = standThreshold;
+    public BehaviorComponent(Behavior behavior) {
+        this.behavior = behavior;
     }
 
-    public int calculateStandValue(int globalStand) {
-        return Math.max(globalStand - standThreshold, 0);
+    public void playTurn(int globalStand) {
+        behavior.playTurn(globalStand);
     }
 
-    public int getStandThreshold() { return standThreshold; }
+    public boolean hasStopped(int globalStand) {
+        return behavior.hasStopped(globalStand);
+    }
 }

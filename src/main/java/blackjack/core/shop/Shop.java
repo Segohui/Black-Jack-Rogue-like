@@ -2,7 +2,7 @@ package blackjack.core.shop;
 
 import java.util.List;
 
-import blackjack.entity.Player;
+import blackjack.entity.Entity;
 
 public class Shop {
     private final List<ShopItem> itemsForSale;
@@ -15,17 +15,17 @@ public class Shop {
         return itemsForSale;
     }
 
-    public boolean buy(int index, Player player) {
+    public boolean buy(int index, Entity player) {
         if (index < 0 || index >= itemsForSale.size()) {
             return false;
         }
 
         ShopItem item = itemsForSale.get(index);
-        if (!player.getCurrencyComponent().canAfford(item.getCost())) {
+        if (!player.canAfford(item.getCost())) {
             return false;
         }
 
-        player.getCurrencyComponent().spend(item.getCost());
+        player.spend(item.getCost());
         item.apply(player);
         itemsForSale.remove(index);
         return true;
