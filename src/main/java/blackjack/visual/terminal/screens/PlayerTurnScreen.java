@@ -23,9 +23,9 @@ public class PlayerTurnScreen implements Screen {
         EntityStateData playerData = controller.getPlayerData();
 
         io.printDivider("=");
-        io.printEntityState(playerData);
-        io.printDivider("=");
         io.printEntityState(enemyData);
+        io.printDivider("=");
+        io.printEntityState(playerData);
         io.printDivider("=");
         
 
@@ -50,6 +50,7 @@ public class PlayerTurnScreen implements Screen {
             int idx = i;
             cardPrompter.addAction(purchasedCards.get(i), () -> controller.playerUseBoughtCard(idx));
         }
+        cardPrompter.defineBottomAction("Go back", this::render);
         cardPrompter.promptAndRun();
     }
 }
