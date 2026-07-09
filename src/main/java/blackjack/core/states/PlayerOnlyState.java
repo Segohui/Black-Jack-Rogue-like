@@ -38,4 +38,18 @@ public class PlayerOnlyState implements State {
     public void stand(BlackjackCore core) {
         core.activateEndTurnState();
     }
+
+    @Override
+    public void useBoughtCard(BlackjackCore core, int idx){
+        player.usePurchasedCard(idx);
+
+        int handSum = player.calculateHandSum();
+
+        if(handSum > core.getGlobalStand()){
+            core.activateEndTurnState();
+        }
+        else{
+            core.activateEnemyTurnState();
+        }
+    }
 }

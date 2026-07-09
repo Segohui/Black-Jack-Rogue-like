@@ -21,6 +21,7 @@ public class BlackjackCore {
 
     private final Entity player;
     private int globalStand = 21; // may change with power ups
+    private int lastGoldReward = 0;
 
     private Entity enemy;
     private Behavior enemyBehavior;
@@ -58,6 +59,10 @@ public class BlackjackCore {
 
     public void playerStand() {
         state.stand(this);
+    }
+
+    public void playerUsePurchasedCard(int idx){
+        state.useBoughtCard(this, idx);
     }
 
     public int calculatePlayerSum() {
@@ -119,6 +124,14 @@ public class BlackjackCore {
         transitionTo(stateFactory.createEndGameState());
     }
 
+    public void registerGoldReward(int amount){
+        this.lastGoldReward = amount;
+    }
+
+    public int getLastGoldReward(){
+        return lastGoldReward;
+    }
+
     public void roundOverConnect(Runnable runnable) { roundOver.connect(runnable); }
     public void playerTurnConnect(Runnable runnable) { playerTurn.connect(runnable); }
     public void combatOverConnect(Runnable runnable) { combatOver.connect(runnable); }
@@ -143,4 +156,5 @@ public class BlackjackCore {
     public DamageEventData getLastDamageEvent() { return lastDamageEvent; }
     public CardDrawEventData getLastDrawnCardEvent() { return lastCardDrawEvent; }
     public int getGlobalStand() { return globalStand; }
+    public Entity getPlayer() { return player; }
 }
