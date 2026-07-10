@@ -1,6 +1,7 @@
 package blackjack.core;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import blackjack.core.cards.Card;
 import blackjack.core.states.State;
@@ -11,13 +12,14 @@ import blackjack.entity.AIRecord;
 import blackjack.entity.Behavior;
 import blackjack.entity.Entity;
 
-public class BlackjackCore {
-    private final Signal playerTurn = new Signal();
-    private final Signal roundOver = new Signal();
-    private final Signal combatOver = new Signal();
-    private final Signal takeDamage = new Signal();
-    private final Signal enemyStand = new Signal();
-    private final Signal drawCard = new Signal();
+public class BattleCore {
+    private final EmptySignal playerTurn = new EmptySignal();
+    private final EmptySignal roundOver = new EmptySignal();
+    private final EmptySignal takeDamage = new EmptySignal();
+    private final EmptySignal enemyStand = new EmptySignal();
+    private final EmptySignal drawCard = new EmptySignal();
+
+    private final DataSignal<Boolean> combatOver = new DataSignal<>();
 
     private final Entity player;
     private int globalStand = 21; // may change with power ups
@@ -31,7 +33,7 @@ public class BlackjackCore {
     private CardDrawEventData lastCardDrawEvent;
     private State state;
 
-    public BlackjackCore(Entity player) {
+    public BattleCore(Entity player) {
         this.player = player;
     }
 
@@ -134,17 +136,21 @@ public class BlackjackCore {
 
     public void roundOverConnect(Runnable runnable) { roundOver.connect(runnable); }
     public void playerTurnConnect(Runnable runnable) { playerTurn.connect(runnable); }
-    public void combatOverConnect(Runnable runnable) { combatOver.connect(runnable); }
     public void takeDamageConnect(Runnable runnable) { takeDamage.connect(runnable); }
     public void enemyStandConnect(Runnable runnable) { enemyStand.connect(runnable); }
     public void drawCardConnect(Runnable runnable) { drawCard.connect(runnable); }
+    
+    public void combatOverConnect(Consumer<Boolean> listener) { combatOver.connect(listener); }
+
 
     public void emitRoundOver() { roundOver.emit(); }
     public void emitPlayerTurn() { playerTurn.emit(); }
-    public void emitCombatOver() { combatOver.emit(); }
     public void emitTakeDamage() { takeDamage.emit(); }
     public void emitEnemyStand() { enemyStand.emit(); }
     public void emitDrawCard() { drawCard.emit(); }
+
+    public void emitCombatOver(boolean isPlayerAlive) { combatOver.emit(isPlayerAlive); }
+
 
     public String getPlayerName() { return player.getName(); }
     public String getEnemyName() { return enemy.getName(); }

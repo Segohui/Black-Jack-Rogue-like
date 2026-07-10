@@ -51,7 +51,7 @@ public class EnemyFactory {
     private AIRecord generateSafeEnemy(float multiplier) {
         int baseHp = calculateHp(3, multiplier);
         int standThreshold = 6;
-        String name = "Jonas";
+        String name = "Villager";
 
         Entity enemy = new CombatEntity(name, Math.round(baseHp * multiplier));
         Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
@@ -61,7 +61,7 @@ public class EnemyFactory {
     private AIRecord generateModerateEnemy(float multiplier) {
         int baseHp = calculateHp(5, multiplier);
         int standThreshold = 4;
-        String name = "Malaquias";
+        String name = "Zombie";
 
         Entity enemy = new CombatEntity(name, Math.round(baseHp * multiplier));
         Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
@@ -71,7 +71,7 @@ public class EnemyFactory {
     private AIRecord generateAggressiveEnemy(float multiplier) {
         int baseHp = calculateHp(7, multiplier);
         int standThreshold = 3;
-        String name = "Amélia";
+        String name = "Herobrine";
 
         Entity enemy = new CombatEntity(name, Math.round(baseHp * multiplier));
         Behavior behavior = new ThresholdBehavior(enemy, standThreshold);

@@ -1,6 +1,6 @@
 package blackjack.core.states;
 
-import blackjack.core.BlackjackCore;
+import blackjack.core.BattleCore;
 import blackjack.entity.Entity;
 
 public class StartRoundState implements State {
@@ -13,7 +13,7 @@ public class StartRoundState implements State {
     }
 
     @Override
-    public void handle(BlackjackCore core) {
+    public void handle(BattleCore core) {
         player.roundReset();
         enemy.roundReset();
 

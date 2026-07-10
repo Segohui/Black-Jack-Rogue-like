@@ -1,20 +1,20 @@
-package blackjack.visual.terminal.screens;
+package blackjack.visual.screens.battle;
 
-import blackjack.controller.BlackjackController;
+import blackjack.controller.BattleController;
 import blackjack.visual.InputOutput;
+import blackjack.visual.screens.Screen;
 
 public class RoundOverScreen implements Screen {
     private final InputOutput io;
-    private final BlackjackController controller;
+    private final BattleController controller;
 
-    public RoundOverScreen(InputOutput io, BlackjackController controller) {
+    public RoundOverScreen(InputOutput io, BattleController controller) {
         this.io = io;
         this.controller = controller;
     }
 
     @Override
     public void render() {
-        io.printLine();
         io.printDivider("=");
         io.printUpdate("Round winner: " + controller.getWinnerName());
         io.printDivider("=");

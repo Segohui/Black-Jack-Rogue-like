@@ -1,6 +1,6 @@
 package blackjack.core.states;
 
-import blackjack.core.BlackjackCore;
+import blackjack.core.BattleCore;
 import blackjack.entity.Entity;
 import blackjack.core.cards.Card;;
 
@@ -12,12 +12,12 @@ public class PlayerTurnState implements State {
     }
 
     @Override
-    public void handle(BlackjackCore core) {
+    public void handle(BattleCore core) {
         core.emitPlayerTurn();
     }
 
     @Override
-    public void hit(BlackjackCore core) {
+    public void hit(BattleCore core) {
         Card card = player.hit(); 
         core.registerCardDraw(card, player);
         core.emitDrawCard();
@@ -32,12 +32,12 @@ public class PlayerTurnState implements State {
     }
 
     @Override
-    public void stand(BlackjackCore core) {
+    public void stand(BattleCore core) {
         core.activateEnemyOnlyTurnState();
     }
 
     @Override
-    public void useBoughtCard(BlackjackCore core, int idx){
+    public void useBoughtCard(BattleCore core, int idx){
         player.usePurchasedCard(idx);
 
         int handSum = player.calculateHandSum();

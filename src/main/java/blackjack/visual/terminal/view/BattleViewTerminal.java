@@ -1,21 +1,22 @@
-package blackjack.visual.terminal;
+package blackjack.visual.terminal.view;
 
-import blackjack.controller.BlackjackController;
+import blackjack.controller.BattleController;
 import blackjack.dto.DamageEventData;
 import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.screens.Screen;
-import blackjack.visual.terminal.screens.ScreenFactory;
+import blackjack.visual.screens.Screen;
+import blackjack.visual.screens.battle.BattleScreenFactory;
+import blackjack.visual.terminal.NotificationRenderer;
 
-public class BlackjackViewTerminal {
-    private final ScreenFactory screenFactory;
+public class BattleViewTerminal {
+    private final BattleScreenFactory screenFactory;
     private final NotificationRenderer notifications;
     private final InputOutput io;
-    private final BlackjackController controller;
+    private final BattleController controller;
 
-    public BlackjackViewTerminal(InputOutput io, BlackjackController controller) {
+    public BattleViewTerminal(InputOutput io, BattleController controller) {
         this.io = io;
         this.controller = controller;
-        this.screenFactory = new ScreenFactory(io, controller);
+        this.screenFactory = new BattleScreenFactory(io, controller);
         this.notifications = new NotificationRenderer(io);
         
         // Notifications
@@ -57,7 +58,7 @@ public class BlackjackViewTerminal {
         navigateToScreen(screenFactory.createRoundOverScreen());
     }
 
-    private void onCombatOver() {
+    private void onCombatOver(Boolean isPlayerAlive) {
         navigateToScreen(screenFactory.createCombatOverScreen());
     }
 

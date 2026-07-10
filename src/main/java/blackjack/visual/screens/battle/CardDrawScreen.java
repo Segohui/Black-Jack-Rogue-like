@@ -1,15 +1,16 @@
-package blackjack.visual.terminal.screens;
+package blackjack.visual.screens.battle;
 
-import blackjack.controller.BlackjackController;
+import blackjack.controller.BattleController;
 import blackjack.dto.CardDrawEventData;
 import blackjack.dto.EntityStateData;
 import blackjack.visual.InputOutput;
+import blackjack.visual.screens.Screen;
 
 public class CardDrawScreen implements Screen {
     private final InputOutput io;
-    private final BlackjackController controller;
+    private final BattleController controller;
 
-    public CardDrawScreen(InputOutput io, BlackjackController controller) {
+    public CardDrawScreen(InputOutput io, BattleController controller) {
         this.io = io;
         this.controller = controller;
     }

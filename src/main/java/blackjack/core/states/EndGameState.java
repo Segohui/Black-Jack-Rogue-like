@@ -1,6 +1,6 @@
 package blackjack.core.states;
 
-import blackjack.core.BlackjackCore;
+import blackjack.core.BattleCore;
 import blackjack.entity.Entity;
 
 public class EndGameState implements State {
@@ -14,7 +14,7 @@ public class EndGameState implements State {
     }
 
     @Override
-    public void handle(BlackjackCore core) {
+    public void handle(BattleCore core) {
         Entity winner = (player.isAlive()) ? player : enemy;
         core.registerBattleWinner(winner);
 
@@ -24,6 +24,6 @@ public class EndGameState implements State {
         }
         player.battleReset();
 
-        core.emitCombatOver();
+        core.emitCombatOver(player.isAlive());
     }
 }

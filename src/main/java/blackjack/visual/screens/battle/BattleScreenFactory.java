@@ -1,14 +1,14 @@
-package blackjack.visual.terminal.screens;
+package blackjack.visual.screens.battle;
 
-import blackjack.controller.BlackjackController;
-import blackjack.core.shop.Shop;
+import blackjack.controller.BattleController;
 import blackjack.visual.InputOutput;
+import blackjack.visual.screens.Screen;
 
-public class ScreenFactory {
+public class BattleScreenFactory {
     private final InputOutput io;
-    private final BlackjackController controller;
+    private final BattleController controller;
 
-    public ScreenFactory(InputOutput io, BlackjackController controller) {
+    public BattleScreenFactory(InputOutput io, BattleController controller) {
         this.io = io;
         this.controller = controller;
     }
@@ -27,9 +27,5 @@ public class ScreenFactory {
 
     public Screen createCardDrawScreen() {
         return new CardDrawScreen(io, controller);
-    }
-
-    public Screen createShopScreen(Shop shop) {
-        return new ShopScreen(io, controller, shop);
     }
 }
