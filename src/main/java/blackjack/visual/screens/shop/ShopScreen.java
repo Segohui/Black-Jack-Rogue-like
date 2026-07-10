@@ -2,7 +2,6 @@ package blackjack.visual.screens.shop;
 
 import java.util.List;
 
-import blackjack.controller.BattleController;
 import blackjack.controller.ShopController;
 import blackjack.core.shop.Shop;
 import blackjack.visual.InputOutput;
