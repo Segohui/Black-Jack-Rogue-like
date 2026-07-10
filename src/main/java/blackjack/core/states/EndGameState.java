@@ -23,7 +23,6 @@ public class EndGameState implements State {
             core.registerGoldReward(GOLD_REWARD);
         }
         player.battleReset();
-
         core.emitCombatOver(player.isAlive());
     }
 }

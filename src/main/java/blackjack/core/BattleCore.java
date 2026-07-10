@@ -142,7 +142,6 @@ public class BattleCore {
     
     public void combatOverConnect(Consumer<Boolean> listener) { combatOver.connect(listener); }
 
-
     public void emitRoundOver() { roundOver.emit(); }
     public void emitPlayerTurn() { playerTurn.emit(); }
     public void emitTakeDamage() { takeDamage.emit(); }
@@ -150,7 +149,6 @@ public class BattleCore {
     public void emitDrawCard() { drawCard.emit(); }
 
     public void emitCombatOver(boolean isPlayerAlive) { combatOver.emit(isPlayerAlive); }
-
 
     public String getPlayerName() { return player.getName(); }
     public String getEnemyName() { return enemy.getName(); }
