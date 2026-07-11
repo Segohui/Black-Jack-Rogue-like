@@ -11,7 +11,7 @@ import blackjack.visual.terminal.view.ViewRouter;
 public class Main {
     public static void main(String[] args) {
         InputOutput io = new InputOutput();
-        Entity player = new CombatEntity("Player", 50);
+        Entity player = new CombatEntity("Player", 50, true);
         Shop shop = new Shop(null, player);
         BattleCore core = new BattleCore(player);
         ControllerFactory controllerFactory = new ControllerFactory(core, shop);

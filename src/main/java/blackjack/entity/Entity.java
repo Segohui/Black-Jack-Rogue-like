@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import blackjack.core.cards.Card;
-import blackjack.dto.CardDrawEventData;
+import blackjack.dto.CardDrawEventDTO;
+import blackjack.dto.DamageEventDTO;
 
 public interface Entity {
     String getName();
@@ -27,8 +28,16 @@ public interface Entity {
     boolean canAfford(int cost);
     void spend(int cost);
     void addGold(int amount);
-    void drawCardConnect(Consumer<CardDrawEventData> listener);
+    boolean isPlayerControlled();
+
+    // Signals handling
+
+    void drawCardConnect(Consumer<CardDrawEventDTO> listener);
+    void emitDrawCard(CardDrawEventDTO eventData);
+
     void entityStandConnect(Consumer<String> listener);
-    void emitDrawCard(CardDrawEventData eventData);
     void emitEntityStand();
+
+    void takeDamageConnect(Consumer<DamageEventDTO> listener);
+    void emitTakeDamage(DamageEventDTO eventData);
 }

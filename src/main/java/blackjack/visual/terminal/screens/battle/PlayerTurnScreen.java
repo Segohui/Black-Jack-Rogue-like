@@ -1,7 +1,7 @@
 package blackjack.visual.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
-import blackjack.dto.EntityStateData;
+import blackjack.dto.EntityStateDTO;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.ActionPrompter;
 import blackjack.visual.terminal.screens.Screen;
@@ -21,8 +21,8 @@ public class PlayerTurnScreen implements Screen {
     public void render() {
         io.printHeader("Player Turn");
 
-        EntityStateData enemyData = controller.getEnemyData();
-        EntityStateData playerData = controller.getPlayerData();
+        EntityStateDTO enemyData = controller.getEnemyData();
+        EntityStateDTO playerData = controller.getPlayerData();
 
         io.printDivider("=");
         io.printEntityState(enemyData);

@@ -19,35 +19,31 @@ public class EndTurnState implements State {
         int globalStand = core.getGlobalStand();
 
         if (playerSum == enemySum) {
-            endTurn(core);
-            
+            endTurn(core, null);
             return;
         }
 
         if (playerWin(globalStand, playerSum, enemySum)) {
             enemy.takeDamage(playerSum);
-            core.registerAttack(player, enemy, playerSum);
-            core.emitTakeDamage();
             if (!enemy.isAlive()) {
                 core.activateEndGameState();
                 return;
             }
+
+            endTurn(core, player.getName());
         } else {
             player.takeDamage(enemySum);
-            core.registerAttack(enemy, player, enemySum);
-            core.emitTakeDamage();
             if (!player.isAlive()) {
                 core.activateEndGameState();
                 return;
             }
-        }
 
-        endTurn(core);
+            endTurn(core, enemy.getName());
+        }
     }
 
-    private void endTurn(BattleCore core) {
-        core.emitRoundOver();
-        core.resetWinner();
+    private void endTurn(BattleCore core, String winnerName) {
+        core.emitRoundOverData(winnerName);
         core.activateStartRoundState();
     }
 

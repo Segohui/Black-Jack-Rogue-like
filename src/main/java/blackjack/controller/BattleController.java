@@ -6,19 +6,20 @@ import java.util.function.Consumer;
 import blackjack.core.DataSignal;
 import blackjack.core.battle.BattleCore;
 import blackjack.core.cards.Card;
-import blackjack.dto.CardDrawEventData;
-import blackjack.dto.DamageEventData;
-import blackjack.dto.EntityStateData;
+import blackjack.dto.CardDrawEventDTO;
+import blackjack.dto.CombatOverDTO;
+import blackjack.dto.DamageEventDTO;
+import blackjack.dto.EntityStateDTO;
 import blackjack.entity.AIRecord;
 
 public class BattleController {
     private final BattleCore core;
 
-    private final DataSignal<Boolean> playerAlive = new DataSignal<>(); 
+    private final DataSignal<Boolean> playerWon = new DataSignal<>(); 
 
     public BattleController(BattleCore core) {
         this.core = core;
-        core.combatOverConnect(this::handleCoreGameOver);
+        core.combatOverDataConnect(this::handleCombatOverData);
     }
 
     public void initializeEnemy(AIRecord aiRecord) {
@@ -29,23 +30,23 @@ public class BattleController {
         core.startCombat();
     }
 
-    private void handleCoreGameOver(boolean isPlayerAlive) {
-        playerAlive.emit(isPlayerAlive);
+    private void handleCombatOverData(CombatOverDTO combatOverDTO) {
+        playerWon.emit(combatOverDTO.isPlayerControlled());
     }
 
-    public EntityStateData getEnemyData() {
-        return new EntityStateData(core.getEnemyName(),
+    public EntityStateDTO getEnemyData() {
+        return new EntityStateDTO(core.getEnemyName(),
                 core.calculateEnemySum(),
                 convertCardsToNames(core.getEnemyCards()), core.getEnemyCurrentHp());
     }
 
-    public EntityStateData getPlayerData() {
-        return new EntityStateData(core.getPlayerName(),
+    public EntityStateDTO getPlayerData() {
+        return new EntityStateDTO(core.getPlayerName(),
                 core.calculatePlayerSum(),
                 convertCardsToNames(core.getPlayerCards()), core.getPlayerCurrentHp());
     }
 
-    public EntityStateData getEntityStateDataByName(String entityName) {
+    public EntityStateDTO getEntityStateDataByName(String entityName) {
         if (entityName.isEmpty() || entityName.isBlank()) {
             throw new IllegalArgumentException();
         }
@@ -57,23 +58,8 @@ public class BattleController {
         }
     }
 
-    public DamageEventData getDamageEvent() {
-        return core.getLastDamageEvent();
-    }
-
-    public String getWinnerName() {
-        if (core.getWinner() == null) {
-            return "no one (tie)";
-        }
-        return core.getWinner().getName();
-    }
-
     public String getPlayerName() {
         return core.getPlayerName();
-    }
-
-    public CardDrawEventData getDrawnCardEvent() {
-        return core.getLastDrawnCardEvent();
     }
 
     public void playerHit() {
@@ -94,10 +80,6 @@ public class BattleController {
         core.playerUsePurchasedCard(idx);
     }
 
-    public int getLastGoldReward() {
-        return core.getLastGoldReward();
-    }
-
     public List<String> getPurchasedCardNames() {
         return core.getPlayer().getPurchasedCards().stream()
                 .map(card -> card.toString())
@@ -106,16 +88,17 @@ public class BattleController {
 
     // Connects
 
-    public void roundOverConnect(Runnable runnable) {
-        core.roundOverConnect(runnable);
+    public void roundOverDataConnect(Consumer<String> listener) {
+        core.roundOverDataConnect(listener);
     }
 
     public void playerTurnConnect(Runnable runnable) {
         core.playerTurnConnect(runnable);
     }
 
-    public void takeDamageConnect(Runnable runnable) {
-        core.takeDamageConnect(runnable);
+    public void takeDamageConnect(Consumer<DamageEventDTO> listener) {
+        core.playerTakeDamageConnect(listener);
+        core.enemyTakeDamageConnect(listener);
     }
 
     public void entityStandConnect(Consumer<String> listener) {
@@ -123,16 +106,16 @@ public class BattleController {
         core.enemyStandConnect(listener);
     }
 
-    public void drawCardConnect(Consumer<CardDrawEventData> listener) {
+    public void drawCardConnect(Consumer<CardDrawEventDTO> listener) {
         core.drawCardPlayerConnect(listener);
         core.drawCardEnemyConnect(listener);
     }
 
-    public void combatOverConnect(Consumer<Boolean> listener) {
-        core.combatOverConnect(listener);
+    public void combatOverDataConnect(Consumer<CombatOverDTO> listener) {
+        core.combatOverDataConnect(listener);
     }
 
     public void playerAliveConnect(Consumer<Boolean> listener) {
-        playerAlive.connect(listener);
+        playerWon.connect(listener);
     }
 }

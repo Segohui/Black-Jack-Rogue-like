@@ -53,7 +53,7 @@ public class EnemyFactory {
         int standThreshold = 6;
         String name = "Villager";
 
-        Entity enemy = new CombatEntity(name, hp);
+        Entity enemy = new CombatEntity(name, hp, false);
         Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
         return new AIRecord(enemy, behavior);
     }
@@ -63,7 +63,7 @@ public class EnemyFactory {
         int standThreshold = 4;
         String name = "Zombie";
 
-        Entity enemy = new CombatEntity(name, hp);
+        Entity enemy = new CombatEntity(name, hp, false);
         Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
         return new AIRecord(enemy, behavior);
     }
@@ -73,7 +73,7 @@ public class EnemyFactory {
         int standThreshold = 3;
         String name = "Herobrine";
 
-        Entity enemy = new CombatEntity(name, hp);
+        Entity enemy = new CombatEntity(name, hp, false);
         Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
         return new AIRecord(enemy, behavior);
     }

@@ -1,17 +1,17 @@
 package blackjack.visual.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
-import blackjack.dto.CardDrawEventData;
-import blackjack.dto.EntityStateData;
+import blackjack.dto.CardDrawEventDTO;
+import blackjack.dto.EntityStateDTO;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
 
 public class CardDrawScreen implements Screen {
     private final InputOutput io;
     private final BattleController controller;
-    private final CardDrawEventData eventData;
+    private final CardDrawEventDTO eventData;
 
-    public CardDrawScreen(InputOutput io, BattleController controller, CardDrawEventData eventData) {
+    public CardDrawScreen(InputOutput io, BattleController controller, CardDrawEventDTO eventData) {
         this.io = io;
         this.controller = controller;
         this.eventData = eventData;
@@ -19,7 +19,7 @@ public class CardDrawScreen implements Screen {
 
     @Override
     public void render() {
-        EntityStateData entityData = controller.getEntityStateDataByName(eventData.entityName());
+        EntityStateDTO entityData = controller.getEntityStateDataByName(eventData.entityName());
         String entityName = eventData.entityName();
 
         io.printHeader(entityName + " Turn");

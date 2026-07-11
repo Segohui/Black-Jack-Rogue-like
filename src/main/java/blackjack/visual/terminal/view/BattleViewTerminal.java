@@ -1,16 +1,15 @@
 package blackjack.visual.terminal.view;
 
 import blackjack.controller.BattleController;
-import blackjack.dto.CardDrawEventData;
-import blackjack.dto.DamageEventData;
+import blackjack.dto.CardDrawEventDTO;
+import blackjack.dto.DamageEventDTO;
+import blackjack.dto.CombatOverDTO;
 import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.NotificationRenderer;
 import blackjack.visual.terminal.screens.Screen;
 import blackjack.visual.terminal.screens.battle.BattleScreenFactory;
 
 public class BattleViewTerminal {
     private final BattleScreenFactory screenFactory;
-    private final NotificationRenderer notifications;
     private final InputOutput io;
     private final BattleController controller;
 
@@ -18,7 +17,6 @@ public class BattleViewTerminal {
         this.io = io;
         this.controller = controller;
         this.screenFactory = new BattleScreenFactory(io, controller);
-        this.notifications = new NotificationRenderer(io);
         
         // Notifications
         controller.takeDamageConnect(this::onTakeDamage);
@@ -26,9 +24,9 @@ public class BattleViewTerminal {
 
         // Screens
         controller.drawCardConnect(this::onDrawCard);
-        controller.roundOverConnect(this::onRoundOver);
+        controller.roundOverDataConnect(this::onRoundOver);
         controller.playerTurnConnect(this::onPlayerTurn);
-        controller.combatOverConnect(this::onCombatOver);
+        controller.combatOverDataConnect(this::onCombatOver);
     }
 
     private void navigateToScreen(Screen newScreen) {
@@ -36,34 +34,30 @@ public class BattleViewTerminal {
         newScreen.render();
     }
 
-    // Notifications
-    private void onTakeDamage() {
-        DamageEventData damageEvent = controller.getDamageEvent();
-        String message = damageEvent.targetName() + " took " + damageEvent.damage() + " damage!";
-
-        notifications.showPopup(message);
-    }
-
-    private void onEntityStand(String name) {
-        String message = name + " Stand!";
-        
-        notifications.showPopup(message);
-    }
-
     // Screens
-    private void onDrawCard(CardDrawEventData eventData) {
+    private void onDrawCard(CardDrawEventDTO eventData) {
         navigateToScreen(screenFactory.createCardDrawScreen(eventData));
     }
 
-    private void onRoundOver() {
-        navigateToScreen(screenFactory.createRoundOverScreen());
+    private void onRoundOver(String winnerName) {
+        navigateToScreen(screenFactory.createRoundOverScreen(winnerName));
     }
 
-    private void onCombatOver(Boolean isPlayerAlive) {
-        navigateToScreen(screenFactory.createCombatOverScreen());
+    private void onCombatOver(CombatOverDTO winnerDataDTO) {
+        navigateToScreen(screenFactory.createCombatOverScreen(winnerDataDTO));
     }
 
     private void onPlayerTurn() {
         navigateToScreen(screenFactory.createPlayerTurnScreen());
+    }
+
+    private void onTakeDamage(DamageEventDTO eventData) {
+        String message = eventData.targetName() + " took " + eventData.damage() + " damage!";
+        navigateToScreen(screenFactory.createNotificationScreen(message));
+    }
+
+    private void onEntityStand(String name) {
+        String message = name + " Stand!";
+        navigateToScreen(screenFactory.createNotificationScreen(message));
     }
 }
