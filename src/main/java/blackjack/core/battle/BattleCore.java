@@ -8,29 +8,25 @@ import blackjack.core.EmptySignal;
 import blackjack.core.battle.states.State;
 import blackjack.core.battle.states.StateFactory;
 import blackjack.core.cards.Card;
-import blackjack.dto.CardDrawEventData;
-import blackjack.dto.DamageEventData;
+import blackjack.dto.CardDrawEventDTO;
+import blackjack.dto.CombatOverDTO;
+import blackjack.dto.DamageEventDTO;
 import blackjack.entity.AIRecord;
 import blackjack.entity.Behavior;
 import blackjack.entity.Entity;
 
 public class BattleCore {
     private final EmptySignal playerTurn = new EmptySignal();
-    private final EmptySignal roundOver = new EmptySignal();
-    private final EmptySignal takeDamage = new EmptySignal();
 
-    private final DataSignal<Boolean> combatOver = new DataSignal<>();
+    private final DataSignal<String> roundOverData = new DataSignal<>();
+    private final DataSignal<CombatOverDTO> combatOverData = new DataSignal<>();
 
     private final Entity player;
     private int globalStand = 21; // may change with power ups
-    private int lastGoldReward = 0;
 
     private Entity enemy;
     private Behavior enemyBehavior;
     private StateFactory stateFactory;
-    private Entity winner;
-    private DamageEventData lastDamageEvent;
-    private CardDrawEventData lastCardDrawEvent;
     private State state;
 
     public BattleCore(Entity player) {
@@ -43,11 +39,7 @@ public class BattleCore {
     }
 
     private void resetCore() {
-        this.lastDamageEvent = null;
-        this.lastCardDrawEvent = null;
-        this.state = null;
-        this.winner = null;
-        
+        this.state = null;        
         this.stateFactory = new StateFactory(player, enemy, enemyBehavior);
     }
 
@@ -74,23 +66,6 @@ public class BattleCore {
 
     public int calculateEnemySum() {
         return enemy.calculateHandSum();
-    }
-
-    public void resetWinner() {
-        this.winner = null;
-    }
-
-    public void registerCardDraw(Card card, Entity entity) {
-        this.lastCardDrawEvent = new CardDrawEventData(card.toString(), entity.getName());
-    }
-
-    public void registerAttack(Entity winner, Entity loser, int damage) {
-        this.lastDamageEvent = new DamageEventData(loser.getName(), damage);
-        this.winner = winner;
-    }
-
-    public void registerBattleWinner(Entity winner) {
-        this.winner = winner;
     }
 
     // maybe find a better way to activate states and the other repetitive stuff
@@ -127,32 +102,29 @@ public class BattleCore {
         transitionTo(stateFactory.createEndGameState());
     }
 
-    public void registerGoldReward(int amount){
-        this.lastGoldReward = amount;
-    }
+    
 
-    public int getLastGoldReward(){
-        return lastGoldReward;
-    }
+    // Signal Handling
 
-    public void roundOverConnect(Runnable runnable) { roundOver.connect(runnable); }
     public void playerTurnConnect(Runnable runnable) { playerTurn.connect(runnable); }
-    public void takeDamageConnect(Runnable runnable) { takeDamage.connect(runnable); }
+    public void emitPlayerTurn() { playerTurn.emit(); }
+
+    public void roundOverDataConnect(Consumer<String> listener) { roundOverData.connect(listener); }
+    public void combatOverDataConnect(Consumer<CombatOverDTO> listener) { combatOverData.connect(listener); }
+
+    public void emitRoundOverData(String name) { roundOverData.emit(name); }
+    public void emitCombatOverData(String name, boolean isPlayerControlled, int goldReward) { combatOverData.emit(new CombatOverDTO(name, isPlayerControlled, goldReward)); }
     
-    
-    
-    public void drawCardPlayerConnect(Consumer<CardDrawEventData> listerner) { player.drawCardConnect(listerner); }
-    public void drawCardEnemyConnect(Consumer<CardDrawEventData> listerner) { enemy.drawCardConnect(listerner); }
+    public void drawCardPlayerConnect(Consumer<CardDrawEventDTO> listerner) { player.drawCardConnect(listerner); }
+    public void drawCardEnemyConnect(Consumer<CardDrawEventDTO> listerner) { enemy.drawCardConnect(listerner); }
+
     public void playerStandConnect(Consumer<String> listener) { player.entityStandConnect(listener); }
     public void enemyStandConnect(Consumer<String> listener) { enemy.entityStandConnect(listener); }
-    
-    public void combatOverConnect(Consumer<Boolean> listener) { combatOver.connect(listener); }
 
-    public void emitRoundOver() { roundOver.emit(); }
-    public void emitPlayerTurn() { playerTurn.emit(); }
-    public void emitTakeDamage() { takeDamage.emit(); }
+    public void playerTakeDamageConnect(Consumer<DamageEventDTO> listener) { player.takeDamageConnect(listener); }
+    public void enemyTakeDamageConnect(Consumer<DamageEventDTO> listener) { enemy.takeDamageConnect(listener); }
 
-    public void emitCombatOver(boolean isPlayerAlive) { combatOver.emit(isPlayerAlive); }
+    // Getters
 
     public String getPlayerName() { return player.getName(); }
     public String getEnemyName() { return enemy.getName(); }
@@ -160,9 +132,6 @@ public class BattleCore {
     public int getEnemyCurrentHp() { return enemy.getCurrentHp(); }
     public List<Card> getPlayerCards() { return player.getCards(); }
     public List<Card> getEnemyCards() { return enemy.getCards(); }
-    public Entity getWinner() { return winner; }
-    public DamageEventData getLastDamageEvent() { return lastDamageEvent; }
-    public CardDrawEventData getLastDrawnCardEvent() { return lastCardDrawEvent; }
     public int getGlobalStand() { return globalStand; }
     public Entity getPlayer() { return player; }
 }

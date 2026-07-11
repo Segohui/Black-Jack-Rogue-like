@@ -3,7 +3,7 @@ package blackjack.visual;
 import java.util.List;
 import java.util.Scanner;
 
-import blackjack.dto.EntityStateData;
+import blackjack.dto.EntityStateDTO;
 
 public class InputOutput {
     private final Scanner scanner;
@@ -83,7 +83,7 @@ public class InputOutput {
         printMessage("");
     }
 
-    public void printEntityState(EntityStateData entityData) {
+    public void printEntityState(EntityStateDTO entityData) {
         printColored(entityData.name() + " 's hand (" + entityData.currentSum() + "): ", ConsoleColors.CYAN);
         printColored("Hp: " + entityData.hp(), ConsoleColors.RED);
         printDivider("-");

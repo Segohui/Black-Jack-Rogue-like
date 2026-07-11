@@ -16,13 +16,12 @@ public class EndGameState implements State {
     @Override
     public void handle(BattleCore core) {
         Entity winner = (player.isAlive()) ? player : enemy;
-        core.registerBattleWinner(winner);
 
         if(player.isAlive()) {
             player.addGold(GOLD_REWARD);
-            core.registerGoldReward(GOLD_REWARD);
         }
+
         player.battleReset();
-        core.emitCombatOver(player.isAlive());
+        core.emitCombatOverData(winner.getName(), winner.isPlayerControlled(), GOLD_REWARD);
     }
 }

@@ -5,7 +5,8 @@ import java.util.function.Consumer;
 
 import blackjack.core.DataSignal;
 import blackjack.core.cards.Card;
-import blackjack.dto.CardDrawEventData;
+import blackjack.dto.CardDrawEventDTO;
+import blackjack.dto.DamageEventDTO;
 import blackjack.entity.components.CardsComponent;
 import blackjack.entity.components.CurrencyComponent;
 import blackjack.entity.components.HealthComponent;
@@ -15,15 +16,26 @@ public class CombatEntity implements Entity {
     private final HealthComponent healthComponent;
     private final CurrencyComponent currencyComponent;
     private final String name;
+    private final boolean isPlayerControlled;
 
-    private final DataSignal<CardDrawEventData> drawCard = new DataSignal<>();
+    private final DataSignal<CardDrawEventDTO> drawCard = new DataSignal<>();
     private final DataSignal<String> entityStand = new DataSignal<>();
+    private final DataSignal<DamageEventDTO> takeDamage = new DataSignal<>();
 
-    public CombatEntity(String name, int maxHp) {
+    public CombatEntity(String name, int maxHp, boolean isPlayerControlled) {
         this.name = name;
+        this.isPlayerControlled = isPlayerControlled;
         this.cardsComponent = new CardsComponent();
         this.healthComponent = new HealthComponent(maxHp);
         this.currencyComponent = new CurrencyComponent(0);
+    }
+
+    private CardDrawEventDTO createCardDrawEventData(Card card) {
+        return new CardDrawEventDTO(card.toString(), name);
+    }
+
+    private DamageEventDTO createDamageEventData(int damageTaken) {
+        return new DamageEventDTO(name, damageTaken);
     }
 
     @Override
@@ -77,6 +89,7 @@ public class CombatEntity implements Entity {
     @Override
     public void takeDamage(int damage) {
         healthComponent.takeDamage(damage);
+        takeDamage.emit(createDamageEventData(damage));
     }
 
     @Override
@@ -129,19 +142,27 @@ public class CombatEntity implements Entity {
         currencyComponent.add(amount);
     }
 
-    private CardDrawEventData createCardDrawEventData(Card card) {
-        return new CardDrawEventData(card.toString(), name);
+    @Override public boolean isPlayerControlled() {
+        return isPlayerControlled;
     }
 
+    // Signals Handling
+
     @Override
-    public void drawCardConnect(Consumer<CardDrawEventData> listener) { drawCard.connect(listener); }
+    public void drawCardConnect(Consumer<CardDrawEventDTO> listener) { drawCard.connect(listener); }
+
+    @Override
+    public void emitDrawCard(CardDrawEventDTO eventData) { drawCard.emit(eventData); }
 
     @Override
     public void entityStandConnect(Consumer<String> listener) { entityStand.connect(listener); }
-    
-    @Override
-    public void emitDrawCard(CardDrawEventData eventData) { drawCard.emit(eventData); }
 
     @Override
     public void emitEntityStand() { entityStand.emit(name); }
+    
+    @Override
+    public void takeDamageConnect(Consumer<DamageEventDTO> listener) { takeDamage.connect(listener); }
+
+    @Override
+    public void emitTakeDamage(DamageEventDTO eventData) { takeDamage.emit(eventData); }
 }
