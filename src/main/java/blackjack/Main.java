@@ -1,7 +1,7 @@
 package blackjack;
 
 import blackjack.controller.ControllerFactory;
-import blackjack.core.BattleCore;
+import blackjack.core.battle.BattleCore;
 import blackjack.core.shop.Shop;
 import blackjack.entity.CombatEntity;
 import blackjack.entity.Entity;

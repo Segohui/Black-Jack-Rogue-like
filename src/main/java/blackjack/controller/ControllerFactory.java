@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.core.BattleCore;
+import blackjack.core.battle.BattleCore;
 import blackjack.core.shop.Shop;
 import blackjack.entity.AIRecord;
 

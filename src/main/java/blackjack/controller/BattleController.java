@@ -3,8 +3,8 @@ package blackjack.controller;
 import java.util.List;
 import java.util.function.Consumer;
 
-import blackjack.core.BattleCore;
 import blackjack.core.DataSignal;
+import blackjack.core.battle.BattleCore;
 import blackjack.core.cards.Card;
 import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
