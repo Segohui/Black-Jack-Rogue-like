@@ -2,7 +2,7 @@ package blackjack.visual.terminal.view;
 
 import blackjack.controller.MenuController;
 import blackjack.visual.InputOutput;
-import blackjack.visual.screens.menu.MenuScreenFactory;
+import blackjack.visual.terminal.screens.menu.MenuScreenFactory;
 
 public class MenuViewTerminal {
     private final InputOutput io;

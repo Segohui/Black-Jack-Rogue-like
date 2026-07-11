@@ -3,9 +3,9 @@ package blackjack.visual.terminal.view;
 import blackjack.controller.BattleController;
 import blackjack.dto.DamageEventData;
 import blackjack.visual.InputOutput;
-import blackjack.visual.screens.Screen;
-import blackjack.visual.screens.battle.BattleScreenFactory;
 import blackjack.visual.terminal.NotificationRenderer;
+import blackjack.visual.terminal.screens.Screen;
+import blackjack.visual.terminal.screens.battle.BattleScreenFactory;
 
 public class BattleViewTerminal {
     private final BattleScreenFactory screenFactory;
