@@ -39,7 +39,7 @@ public class GameManager {
         battleController.startBattle();
     }
 
-    public void startStoreRoom() {
+    public void startShopRoom() {
         ShopController shopController = controllerFactory.createShop();
         
         shopController.shopExitedConnect(v -> startCombatRoom());
@@ -50,7 +50,7 @@ public class GameManager {
 
     private void onBattleEnd(boolean isPlayerAlive) {
         if (isPlayerAlive) {
-            startStoreRoom();
+            startShopRoom();
         } else {
             exitGame();
         }
