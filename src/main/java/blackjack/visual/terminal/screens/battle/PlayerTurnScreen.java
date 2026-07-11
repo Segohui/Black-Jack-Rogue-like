@@ -19,7 +19,7 @@ public class PlayerTurnScreen implements Screen {
 
     @Override
     public void render() {
-        io.printHeader("Player Turn", 15);
+        io.printHeader("Player Turn");
 
         EntityStateData enemyData = controller.getEnemyData();
         EntityStateData playerData = controller.getPlayerData();
@@ -30,7 +30,6 @@ public class PlayerTurnScreen implements Screen {
         io.printEntityState(playerData);
         io.printDivider("=");
         
-
         ActionPrompter actionPrompter = new ActionPrompter(io);
         actionPrompter.addAction("hit", controller::playerHit);
         actionPrompter.addAction("stand", controller::playerStand);

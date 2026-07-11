@@ -32,14 +32,27 @@ public class InputOutput {
         System.out.println(message);
     }
 
+    public void printInline(String message) {
+        System.out.print(message);
+    }
+    public void printColored(String message, String color) {
+        System.out.println(color + message + ConsoleColors.RESET);
+    }
+
+    private void printColoredInLine(String message, String color) {
+        System.out.print(color + message + ConsoleColors.RESET);
+    }
+
     public void printUpdate(String message) {
         printMessage("> " + message);
     }
 
-    public void printHeader(String message, int size) {
-        printDivider("=", size);
-        printMessage("| " + message + " |");
-        printDivider("=", size);
+    public void printHeader(String message) {
+        printDivider("=", message.length() + 4);
+        printInline("| ");
+        printColoredInLine(message, ConsoleColors.CYAN);
+        printMessage(" |");
+        printDivider("=", message.length() + 4);
     }
 
     public void printDivider(String divider, int size) {
@@ -58,8 +71,10 @@ public class InputOutput {
     }
 
     public void printEntityState(EntityStateData entityData) {
-        printMessage(entityData.name() + " 's hand (" + entityData.currentSum() + "): ");
-        printMessage("Hp: " + entityData.hp());
+        printColored(entityData.name() + " 's hand (" + entityData.currentSum() + "): ", ConsoleColors.CYAN);
+        printColored("Hp: " + entityData.hp(), ConsoleColors.RED);
+        printDivider("-");
+        printMessage("Hand:");
         printHand(entityData.cardNames());
     }
 

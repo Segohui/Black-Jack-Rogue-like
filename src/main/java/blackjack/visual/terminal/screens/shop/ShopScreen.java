@@ -23,7 +23,7 @@ public class ShopScreen implements Screen {
 
     @Override
     public void render() {
-        io.printHeader("Shop", 15);
+        io.printHeader("Shop");
 
         while (shopping) {
             io.printMessage("Gold: " + controller.getPlayerGold());

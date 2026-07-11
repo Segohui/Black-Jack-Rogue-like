@@ -21,7 +21,7 @@ public class CardDrawScreen implements Screen {
         EntityStateData entityData = controller.getEntityStateDataByName(cardDrawData.entityName());
         String entityName = cardDrawData.entityName();
 
-        io.printHeader(entityName + " Turn", 15);
+        io.printHeader(entityName + " Turn");
         io.printUpdate(cardDrawData.entityName() + " drew: " + cardDrawData.cardName());
         io.printLine();
         io.printDivider("=");

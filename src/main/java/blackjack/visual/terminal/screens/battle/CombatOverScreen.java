@@ -16,7 +16,7 @@ public class CombatOverScreen implements Screen {
     @Override
     public void render() {
         io.printLine();
-        io.printHeader("Game End", 15);
+        io.printHeader("Game End");
         io.printUpdate("Winner: " + controller.getWinnerName());
         io.printUpdate("Money gained: " + controller.getLastGoldReward());
         io.enterToProceed();

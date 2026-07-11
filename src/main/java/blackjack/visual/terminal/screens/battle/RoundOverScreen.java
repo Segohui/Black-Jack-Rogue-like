@@ -1,6 +1,7 @@
 package blackjack.visual.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
+import blackjack.visual.ConsoleColors;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
 
@@ -15,9 +16,11 @@ public class RoundOverScreen implements Screen {
 
     @Override
     public void render() {
-        io.printDivider("=");
-        io.printUpdate("Round winner: " + controller.getWinnerName());
-        io.printDivider("=");
+        String message = "Round Winner: " + controller.getWinnerName();
+
+        io.printDivider("=", message.length());
+        io.printColored("Round winner: " + controller.getWinnerName(), ConsoleColors.YELLOW);
+        io.printDivider("=", message.length());
         io.enterToProceed();
     }
 }

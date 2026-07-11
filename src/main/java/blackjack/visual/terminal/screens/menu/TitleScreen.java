@@ -16,7 +16,7 @@ public class TitleScreen implements Screen {
 
     @Override
     public void render() {
-        io.printHeader("Black Jack Rogue Like", 30);
+        io.printHeader("Black Jack Rogue Like");
         
         ActionPrompter actionPrompter = new ActionPrompter(io);
         actionPrompter.addAction("Start Game", controller::selectPlay);
