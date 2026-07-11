@@ -1,8 +1,8 @@
-package blackjack.visual.screens.battle;
+package blackjack.visual.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
 import blackjack.visual.InputOutput;
-import blackjack.visual.screens.Screen;
+import blackjack.visual.terminal.screens.Screen;
 
 public class CombatOverScreen implements Screen {
     private final InputOutput io;

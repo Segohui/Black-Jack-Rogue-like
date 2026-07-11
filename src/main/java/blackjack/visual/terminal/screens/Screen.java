@@ -1,4 +1,4 @@
-package blackjack.visual.screens;
+package blackjack.visual.terminal.screens;
 
 public interface Screen {
     void render();

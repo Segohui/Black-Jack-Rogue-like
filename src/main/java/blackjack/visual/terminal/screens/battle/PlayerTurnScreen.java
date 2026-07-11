@@ -1,10 +1,11 @@
-package blackjack.visual.screens.battle;
+package blackjack.visual.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
 import blackjack.dto.EntityStateData;
 import blackjack.visual.InputOutput;
-import blackjack.visual.screens.Screen;
 import blackjack.visual.terminal.ActionPrompter;
+import blackjack.visual.terminal.screens.Screen;
+
 import java.util.List;
 
 public class PlayerTurnScreen implements Screen {
