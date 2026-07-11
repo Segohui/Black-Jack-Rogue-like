@@ -32,8 +32,9 @@ public class GameManager {
     }
 
     public void startCombatRoom() {
-        BattleController battleController = controllerFactory.createBattle(enemyFactory.generateRandomEnemy(1));
+        BattleController battleController = controllerFactory.createBattle();
         battleController.playerAliveConnect(this::onBattleEnd);
+        battleController.initializeEnemy(enemyFactory.generateRandomEnemy((float) 1));
         battleStarted.emit(battleController);
         battleController.startBattle();
     }

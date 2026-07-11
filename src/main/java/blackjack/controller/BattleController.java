@@ -13,18 +13,20 @@ import blackjack.entity.AIRecord;
 
 public class BattleController {
     private final BattleCore core;
-    private final AIRecord aiRecord;
 
     private final DataSignal<Boolean> playerAlive = new DataSignal<>(); 
 
-    public BattleController(BattleCore core, AIRecord aiRecord) {
+    public BattleController(BattleCore core) {
         this.core = core;
-        this.aiRecord = aiRecord;
         core.combatOverConnect(this::handleCoreGameOver);
     }
 
+    public void initializeEnemy(AIRecord aiRecord) {
+        core.resetEnemy(aiRecord);
+    }
+
     public void startBattle() {
-        core.startCombat(aiRecord);
+        core.startCombat();
     }
 
     private void handleCoreGameOver(boolean isPlayerAlive) {
@@ -116,12 +118,14 @@ public class BattleController {
         core.takeDamageConnect(runnable);
     }
 
-    public void enemyStandConnect(Runnable runnable) {
-        core.enemyStandConnect(runnable);
+    public void entityStandConnect(Consumer<String> listener) {
+        core.playerStandConnect(listener);
+        core.enemyStandConnect(listener);
     }
 
-    public void drawCardConnect(Runnable runnable) {
-        core.drawCardConnect(runnable);
+    public void drawCardConnect(Consumer<CardDrawEventData> listener) {
+        core.drawCardPlayerConnect(listener);
+        core.drawCardEnemyConnect(listener);
     }
 
     public void combatOverConnect(Consumer<Boolean> listener) {

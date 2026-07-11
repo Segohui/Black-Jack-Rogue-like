@@ -23,7 +23,7 @@ public class EnemyOnlyTurnState implements State {
             enemy.hit();
         }
         if (handSum <= globalStand) {
-            core.emitEnemyStand();
+            enemy.stand();
         }
         core.activateEndTurnState();
     }

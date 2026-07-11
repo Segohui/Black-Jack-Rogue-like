@@ -1,6 +1,7 @@
 package blackjack.visual.terminal.view;
 
 import blackjack.controller.BattleController;
+import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.NotificationRenderer;
@@ -21,7 +22,7 @@ public class BattleViewTerminal {
         
         // Notifications
         controller.takeDamageConnect(this::onTakeDamage);
-        controller.enemyStandConnect(this::onEnemyStand);
+        controller.entityStandConnect(this::onEntityStand);
 
         // Screens
         controller.drawCardConnect(this::onDrawCard);
@@ -43,15 +44,15 @@ public class BattleViewTerminal {
         notifications.showPopup(message);
     }
 
-    private void onEnemyStand() {
-        String message = "Enemy Stand!";
+    private void onEntityStand(String name) {
+        String message = name + " Stand!";
         
         notifications.showPopup(message);
     }
 
     // Screens
-    private void onDrawCard() {
-        navigateToScreen(screenFactory.createCardDrawScreen());
+    private void onDrawCard(CardDrawEventData eventData) {
+        navigateToScreen(screenFactory.createCardDrawScreen(eventData));
     }
 
     private void onRoundOver() {

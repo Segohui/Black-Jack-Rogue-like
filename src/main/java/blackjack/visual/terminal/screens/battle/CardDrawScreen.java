@@ -9,20 +9,21 @@ import blackjack.visual.terminal.screens.Screen;
 public class CardDrawScreen implements Screen {
     private final InputOutput io;
     private final BattleController controller;
+    private final CardDrawEventData eventData;
 
-    public CardDrawScreen(InputOutput io, BattleController controller) {
+    public CardDrawScreen(InputOutput io, BattleController controller, CardDrawEventData eventData) {
         this.io = io;
         this.controller = controller;
+        this.eventData = eventData;
     }
 
     @Override
     public void render() {
-        CardDrawEventData cardDrawData = controller.getDrawnCardEvent();
-        EntityStateData entityData = controller.getEntityStateDataByName(cardDrawData.entityName());
-        String entityName = cardDrawData.entityName();
+        EntityStateData entityData = controller.getEntityStateDataByName(eventData.entityName());
+        String entityName = eventData.entityName();
 
         io.printHeader(entityName + " Turn");
-        io.printUpdate(cardDrawData.entityName() + " drew: " + cardDrawData.cardName());
+        io.printUpdate(eventData.entityName() + " drew: " + eventData.cardName());
         io.printLine();
         io.printDivider("=");
         io.printEntityState(entityData);

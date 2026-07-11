@@ -36,6 +36,7 @@ public class PlayerOnlyState implements State {
 
     @Override
     public void stand(BattleCore core) {
+        player.stand();
         core.activateEndTurnState();
     }
 

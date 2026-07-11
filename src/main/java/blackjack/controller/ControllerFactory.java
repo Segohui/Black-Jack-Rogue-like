@@ -2,7 +2,6 @@ package blackjack.controller;
 
 import blackjack.core.battle.BattleCore;
 import blackjack.core.shop.Shop;
-import blackjack.entity.AIRecord;
 
 public class ControllerFactory {
     private final BattleCore core;
@@ -13,8 +12,8 @@ public class ControllerFactory {
         this.shop = shop;
     }
 
-    public BattleController createBattle(AIRecord aiRecord) {
-        return new BattleController(core, aiRecord);
+    public BattleController createBattle() {
+        return new BattleController(core);
     }
 
     public ShopController createShop() {

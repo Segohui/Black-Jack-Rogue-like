@@ -1,6 +1,7 @@
 package blackjack.visual.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
+import blackjack.dto.CardDrawEventData;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
 
@@ -25,7 +26,7 @@ public class BattleScreenFactory {
         return new RoundOverScreen(io, controller);
     }
 
-    public Screen createCardDrawScreen() {
-        return new CardDrawScreen(io, controller);
+    public Screen createCardDrawScreen(CardDrawEventData eventData) {
+        return new CardDrawScreen(io, controller, eventData);
     }
 }

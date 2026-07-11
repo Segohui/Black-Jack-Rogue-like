@@ -23,7 +23,7 @@ public class EnemyTurnState implements State {
             core.activateEndTurnState();
         } else {
             if (enemyBehavior.hasStopped(globalStand)) {
-                core.emitEnemyStand();
+                enemy.stand();
                 core.activatePlayerOnlyTurnState();
             } else {
                 core.activatePlayerTurnState();

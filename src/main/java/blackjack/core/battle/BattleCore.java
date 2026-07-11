@@ -18,8 +18,6 @@ public class BattleCore {
     private final EmptySignal playerTurn = new EmptySignal();
     private final EmptySignal roundOver = new EmptySignal();
     private final EmptySignal takeDamage = new EmptySignal();
-    private final EmptySignal enemyStand = new EmptySignal();
-    private final EmptySignal drawCard = new EmptySignal();
 
     private final DataSignal<Boolean> combatOver = new DataSignal<>();
 
@@ -39,11 +37,8 @@ public class BattleCore {
         this.player = player;
     }
 
-    public void startCombat(AIRecord enemyRecord) {
+    public void startCombat() {
         resetCore();
-        this.enemy = enemyRecord.entity();
-        this.enemyBehavior = enemyRecord.behavior();
-        this.stateFactory = new StateFactory(player, enemy, enemyBehavior);
         activateStartRoundState();
     }
 
@@ -52,9 +47,13 @@ public class BattleCore {
         this.lastCardDrawEvent = null;
         this.state = null;
         this.winner = null;
-        this.enemy = null;
-        this.enemyBehavior = null;
-        this.stateFactory = null;
+        
+        this.stateFactory = new StateFactory(player, enemy, enemyBehavior);
+    }
+
+    public void resetEnemy(AIRecord enemyRecord) {
+        this.enemy = enemyRecord.entity();
+        this.enemyBehavior = enemyRecord.behavior();
     }
 
     public void playerHit() {
@@ -139,16 +138,19 @@ public class BattleCore {
     public void roundOverConnect(Runnable runnable) { roundOver.connect(runnable); }
     public void playerTurnConnect(Runnable runnable) { playerTurn.connect(runnable); }
     public void takeDamageConnect(Runnable runnable) { takeDamage.connect(runnable); }
-    public void enemyStandConnect(Runnable runnable) { enemyStand.connect(runnable); }
-    public void drawCardConnect(Runnable runnable) { drawCard.connect(runnable); }
+    
+    
+    
+    public void drawCardPlayerConnect(Consumer<CardDrawEventData> listerner) { player.drawCardConnect(listerner); }
+    public void drawCardEnemyConnect(Consumer<CardDrawEventData> listerner) { enemy.drawCardConnect(listerner); }
+    public void playerStandConnect(Consumer<String> listener) { player.entityStandConnect(listener); }
+    public void enemyStandConnect(Consumer<String> listener) { enemy.entityStandConnect(listener); }
     
     public void combatOverConnect(Consumer<Boolean> listener) { combatOver.connect(listener); }
 
     public void emitRoundOver() { roundOver.emit(); }
     public void emitPlayerTurn() { playerTurn.emit(); }
     public void emitTakeDamage() { takeDamage.emit(); }
-    public void emitEnemyStand() { enemyStand.emit(); }
-    public void emitDrawCard() { drawCard.emit(); }
 
     public void emitCombatOver(boolean isPlayerAlive) { combatOver.emit(isPlayerAlive); }
 
