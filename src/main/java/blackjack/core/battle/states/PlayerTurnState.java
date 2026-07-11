@@ -1,42 +1,39 @@
-package blackjack.core.states;
+package blackjack.core.battle.states;
 
-import blackjack.core.BattleCore;
 import blackjack.entity.Entity;
+import blackjack.core.battle.BattleCore;
+import blackjack.core.cards.Card;;
 
-public class PlayerOnlyState implements State {
+public class PlayerTurnState implements State {
     private final Entity player;
 
-    public PlayerOnlyState(Entity player) {
+    public PlayerTurnState(Entity player) {
         this.player = player;
     }
 
     @Override
     public void handle(BattleCore core) {
-        int handSum = player.calculateHandSum();
-
-        if (handSum > core.getGlobalStand()) {
-            core.activateEndTurnState();
-        }
-
         core.emitPlayerTurn();
     }
 
     @Override
     public void hit(BattleCore core) {
-        player.hit();
+        Card card = player.hit(); 
+        core.registerCardDraw(card, player);
+        core.emitDrawCard();
 
         int handSum = player.calculateHandSum();
 
         if (handSum > core.getGlobalStand()) {
             core.activateEndTurnState();
         } else {
-            core.activatePlayerOnlyTurnState();
+            core.activateEnemyTurnState();
         }
     }
 
     @Override
     public void stand(BattleCore core) {
-        core.activateEndTurnState();
+        core.activateEnemyOnlyTurnState();
     }
 
     @Override

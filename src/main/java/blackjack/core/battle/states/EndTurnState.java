@@ -1,6 +1,6 @@
-package blackjack.core.states;
+package blackjack.core.battle.states;
 
-import blackjack.core.BattleCore;
+import blackjack.core.battle.BattleCore;
 import blackjack.entity.Entity;
 
 public class EndTurnState implements State {

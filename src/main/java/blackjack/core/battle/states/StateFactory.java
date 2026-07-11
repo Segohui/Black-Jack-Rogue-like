@@ -1,4 +1,4 @@
-package blackjack.core.states;
+package blackjack.core.battle.states;
 
 import blackjack.entity.Behavior;
 import blackjack.entity.Entity;

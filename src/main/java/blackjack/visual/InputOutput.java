@@ -44,7 +44,20 @@ public class InputOutput {
     }
 
     public void printUpdate(String message) {
-        printMessage("> " + message);
+        String m = "> " + message;
+
+        printDivider("-", m.length());
+        printColored(m, ConsoleColors.YELLOW);
+        printDivider("-", m.length());
+    }
+
+    public void printUpdate(List<String> messages, int size) {
+        printDivider("-", size);
+        for (String message: messages) {
+            String m = "> " + message;
+            printColored(m, ConsoleColors.YELLOW);
+        }
+        printDivider("-", size);
     }
 
     public void printHeader(String message) {
@@ -79,7 +92,7 @@ public class InputOutput {
     }
 
     public void printLine() {
-        printMessage("");
+        System.out.println();
     }
 
     public void enterToProceed() {
@@ -89,7 +102,7 @@ public class InputOutput {
 
     public void clearScreen() {
         for (int i = 0; i < 30; i++) {
-            printMessage("");
+            System.out.println();
         }
     }
 }

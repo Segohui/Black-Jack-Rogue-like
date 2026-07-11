@@ -1,11 +1,13 @@
-package blackjack.core;
+package blackjack.core.battle;
 
 import java.util.List;
 import java.util.function.Consumer;
 
+import blackjack.core.DataSignal;
+import blackjack.core.EmptySignal;
+import blackjack.core.battle.states.State;
+import blackjack.core.battle.states.StateFactory;
 import blackjack.core.cards.Card;
-import blackjack.core.states.State;
-import blackjack.core.states.StateFactory;
 import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
 import blackjack.entity.AIRecord;

@@ -1,5 +1,8 @@
 package blackjack.visual.terminal.screens.battle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import blackjack.controller.BattleController;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
@@ -15,10 +18,14 @@ public class CombatOverScreen implements Screen {
 
     @Override
     public void render() {
+        List<String> messages = new ArrayList<>();
+
+        messages.add("Winner: " + controller.getWinnerName());
+        messages.add("Money gained: " + controller.getLastGoldReward());
+
         io.printLine();
         io.printHeader("Game End");
-        io.printUpdate("Winner: " + controller.getWinnerName());
-        io.printUpdate("Money gained: " + controller.getLastGoldReward());
+        io.printUpdate(messages, 20);
         io.enterToProceed();
     }
 }
