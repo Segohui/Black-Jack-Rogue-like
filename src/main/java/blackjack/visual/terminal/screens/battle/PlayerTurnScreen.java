@@ -1,23 +1,25 @@
-package blackjack.visual.terminal.screens;
+package blackjack.visual.terminal.screens.battle;
 
-import blackjack.controller.BlackjackController;
+import blackjack.controller.BattleController;
 import blackjack.dto.EntityStateData;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.ActionPrompter;
+import blackjack.visual.terminal.screens.Screen;
+
 import java.util.List;
 
 public class PlayerTurnScreen implements Screen {
     private final InputOutput io;
-    private final BlackjackController controller;
+    private final BattleController controller;
 
-    public PlayerTurnScreen(InputOutput io, BlackjackController controller) {
+    public PlayerTurnScreen(InputOutput io, BattleController controller) {
         this.io = io;
         this.controller = controller;
     }
 
     @Override
     public void render() {
-        io.printHeader("Player Turn", 15);
+        io.printHeader("Player Turn");
 
         EntityStateData enemyData = controller.getEnemyData();
         EntityStateData playerData = controller.getPlayerData();
@@ -28,7 +30,6 @@ public class PlayerTurnScreen implements Screen {
         io.printEntityState(playerData);
         io.printDivider("=");
         
-
         ActionPrompter actionPrompter = new ActionPrompter(io);
         actionPrompter.addAction("hit", controller::playerHit);
         actionPrompter.addAction("stand", controller::playerStand);

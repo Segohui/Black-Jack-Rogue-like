@@ -1,20 +1,21 @@
-package blackjack.visual.terminal.screens;
+package blackjack.visual.terminal.screens.shop;
 
 import java.util.List;
 
-import blackjack.controller.BlackjackController;
+import blackjack.controller.ShopController;
 import blackjack.core.shop.Shop;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.ActionPrompter;
+import blackjack.visual.terminal.screens.Screen;
 
 public class ShopScreen implements Screen {
     private final InputOutput io;
-    private final BlackjackController controller;
+    private final ShopController controller;
     private final Shop shop;
 
     private boolean shopping = true;
 
-    public ShopScreen(InputOutput io, BlackjackController controller, Shop shop) {
+    public ShopScreen(InputOutput io, ShopController controller, Shop shop) {
         this.io = io;
         this.controller = controller;
         this.shop = shop;
@@ -22,7 +23,7 @@ public class ShopScreen implements Screen {
 
     @Override
     public void render() {
-        io.printHeader("Shop", 15);
+        io.printHeader("Shop");
 
         while (shopping) {
             io.printMessage("Gold: " + controller.getPlayerGold());

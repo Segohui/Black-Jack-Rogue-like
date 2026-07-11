@@ -1,26 +1,28 @@
-package blackjack.visual.terminal;
+package blackjack.visual.terminal.view;
 
-import blackjack.controller.BlackjackController;
+import blackjack.controller.BattleController;
+import blackjack.dto.CardDrawEventData;
 import blackjack.dto.DamageEventData;
 import blackjack.visual.InputOutput;
+import blackjack.visual.terminal.NotificationRenderer;
 import blackjack.visual.terminal.screens.Screen;
-import blackjack.visual.terminal.screens.ScreenFactory;
+import blackjack.visual.terminal.screens.battle.BattleScreenFactory;
 
-public class BlackjackViewTerminal {
-    private final ScreenFactory screenFactory;
+public class BattleViewTerminal {
+    private final BattleScreenFactory screenFactory;
     private final NotificationRenderer notifications;
     private final InputOutput io;
-    private final BlackjackController controller;
+    private final BattleController controller;
 
-    public BlackjackViewTerminal(InputOutput io, BlackjackController controller) {
+    public BattleViewTerminal(InputOutput io, BattleController controller) {
         this.io = io;
         this.controller = controller;
-        this.screenFactory = new ScreenFactory(io, controller);
+        this.screenFactory = new BattleScreenFactory(io, controller);
         this.notifications = new NotificationRenderer(io);
         
         // Notifications
         controller.takeDamageConnect(this::onTakeDamage);
-        controller.enemyStandConnect(this::onEnemyStand);
+        controller.entityStandConnect(this::onEntityStand);
 
         // Screens
         controller.drawCardConnect(this::onDrawCard);
@@ -42,22 +44,22 @@ public class BlackjackViewTerminal {
         notifications.showPopup(message);
     }
 
-    private void onEnemyStand() {
-        String message = "Enemy Stand!";
+    private void onEntityStand(String name) {
+        String message = name + " Stand!";
         
         notifications.showPopup(message);
     }
 
     // Screens
-    private void onDrawCard() {
-        navigateToScreen(screenFactory.createCardDrawScreen());
+    private void onDrawCard(CardDrawEventData eventData) {
+        navigateToScreen(screenFactory.createCardDrawScreen(eventData));
     }
 
     private void onRoundOver() {
         navigateToScreen(screenFactory.createRoundOverScreen());
     }
 
-    private void onCombatOver() {
+    private void onCombatOver(Boolean isPlayerAlive) {
         navigateToScreen(screenFactory.createCombatOverScreen());
     }
 

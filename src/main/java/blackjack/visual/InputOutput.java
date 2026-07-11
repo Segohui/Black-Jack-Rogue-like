@@ -32,14 +32,40 @@ public class InputOutput {
         System.out.println(message);
     }
 
-    public void printUpdate(String message) {
-        printMessage("> " + message);
+    public void printInline(String message) {
+        System.out.print(message);
+    }
+    public void printColored(String message, String color) {
+        System.out.println(color + message + ConsoleColors.RESET);
     }
 
-    public void printHeader(String message, int size) {
-        printDivider("=", size);
-        printMessage("| " + message + " |");
-        printDivider("=", size);
+    private void printColoredInLine(String message, String color) {
+        System.out.print(color + message + ConsoleColors.RESET);
+    }
+
+    public void printUpdate(String message) {
+        String m = "> " + message;
+
+        printDivider("-", m.length());
+        printColored(m, ConsoleColors.YELLOW);
+        printDivider("-", m.length());
+    }
+
+    public void printUpdate(List<String> messages, int size) {
+        printDivider("-", size);
+        for (String message: messages) {
+            String m = "> " + message;
+            printColored(m, ConsoleColors.YELLOW);
+        }
+        printDivider("-", size);
+    }
+
+    public void printHeader(String message) {
+        printDivider("=", message.length() + 4);
+        printInline("| ");
+        printColoredInLine(message, ConsoleColors.CYAN);
+        printMessage(" |");
+        printDivider("=", message.length() + 4);
     }
 
     public void printDivider(String divider, int size) {
@@ -58,13 +84,15 @@ public class InputOutput {
     }
 
     public void printEntityState(EntityStateData entityData) {
-        printMessage(entityData.name() + " 's hand (" + entityData.currentSum() + "): ");
-        printMessage("Hp: " + entityData.hp());
+        printColored(entityData.name() + " 's hand (" + entityData.currentSum() + "): ", ConsoleColors.CYAN);
+        printColored("Hp: " + entityData.hp(), ConsoleColors.RED);
+        printDivider("-");
+        printMessage("Hand:");
         printHand(entityData.cardNames());
     }
 
     public void printLine() {
-        printMessage("");
+        System.out.println();
     }
 
     public void enterToProceed() {
@@ -73,8 +101,8 @@ public class InputOutput {
     }
 
     public void clearScreen() {
-        for (int i = 0; i < 50; i++) {
-            printMessage("");
+        for (int i = 0; i < 30; i++) {
+            System.out.println();
         }
     }
 }

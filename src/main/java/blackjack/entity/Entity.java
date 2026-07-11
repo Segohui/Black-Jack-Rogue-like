@@ -1,8 +1,10 @@
 package blackjack.entity;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 import blackjack.core.cards.Card;
+import blackjack.dto.CardDrawEventData;
 
 public interface Entity {
     String getName();
@@ -11,7 +13,8 @@ public interface Entity {
     List<Card> drawInitialCards(int amount);
     void roundReset();
     void battleReset();
-    Card hit();
+    void hit();
+    void stand();
     int getCurrentHp();
     void takeDamage(int damage);
     void heal(int amount);
@@ -24,4 +27,8 @@ public interface Entity {
     boolean canAfford(int cost);
     void spend(int cost);
     void addGold(int amount);
+    void drawCardConnect(Consumer<CardDrawEventData> listener);
+    void entityStandConnect(Consumer<String> listener);
+    void emitDrawCard(CardDrawEventData eventData);
+    void emitEntityStand();
 }

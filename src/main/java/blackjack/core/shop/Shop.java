@@ -6,8 +6,10 @@ import blackjack.entity.Entity;
 
 public class Shop {
     private final List<ShopItem> itemsForSale;
+    private final Entity player;
 
-    public Shop(List<ShopItem> itemsForSale) {
+    public Shop(List<ShopItem> itemsForSale, Entity player) {
+        this.player = player;
         this.itemsForSale = itemsForSale;
     }
 
@@ -29,5 +31,9 @@ public class Shop {
         item.apply(player);
         itemsForSale.remove(index);
         return true;
+    }
+
+    public Entity getPlayer() {
+        return player;
     }
 }

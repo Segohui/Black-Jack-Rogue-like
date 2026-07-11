@@ -1,8 +1,11 @@
 package blackjack.entity;
 
 import java.util.List;
+import java.util.function.Consumer;
 
+import blackjack.core.DataSignal;
 import blackjack.core.cards.Card;
+import blackjack.dto.CardDrawEventData;
 import blackjack.entity.components.CardsComponent;
 import blackjack.entity.components.CurrencyComponent;
 import blackjack.entity.components.HealthComponent;
@@ -12,6 +15,9 @@ public class CombatEntity implements Entity {
     private final HealthComponent healthComponent;
     private final CurrencyComponent currencyComponent;
     private final String name;
+
+    private final DataSignal<CardDrawEventData> drawCard = new DataSignal<>();
+    private final DataSignal<String> entityStand = new DataSignal<>();
 
     public CombatEntity(String name, int maxHp) {
         this.name = name;
@@ -53,9 +59,14 @@ public class CombatEntity implements Entity {
     }
 
     @Override
-    public Card hit() {
+    public void hit() {
         Card card = cardsComponent.drawCardToHand(1).get(0);
-        return card;
+        emitDrawCard(createCardDrawEventData(card));
+    }
+
+    @Override
+    public void stand() {
+        emitEntityStand();
     }
 
     @Override
@@ -118,4 +129,19 @@ public class CombatEntity implements Entity {
         currencyComponent.add(amount);
     }
 
+    private CardDrawEventData createCardDrawEventData(Card card) {
+        return new CardDrawEventData(card.toString(), name);
+    }
+
+    @Override
+    public void drawCardConnect(Consumer<CardDrawEventData> listener) { drawCard.connect(listener); }
+
+    @Override
+    public void entityStandConnect(Consumer<String> listener) { entityStand.connect(listener); }
+    
+    @Override
+    public void emitDrawCard(CardDrawEventData eventData) { drawCard.emit(eventData); }
+
+    @Override
+    public void emitEntityStand() { entityStand.emit(name); }
 }

@@ -1,0 +1,32 @@
+package blackjack.visual.terminal.screens.battle;
+
+import blackjack.controller.BattleController;
+import blackjack.dto.CardDrawEventData;
+import blackjack.visual.InputOutput;
+import blackjack.visual.terminal.screens.Screen;
+
+public class BattleScreenFactory {
+    private final InputOutput io;
+    private final BattleController controller;
+
+    public BattleScreenFactory(InputOutput io, BattleController controller) {
+        this.io = io;
+        this.controller = controller;
+    }
+
+    public Screen createPlayerTurnScreen() {
+        return new PlayerTurnScreen(io, controller);
+    }
+
+    public Screen createCombatOverScreen() {
+        return new CombatOverScreen(io, controller);
+    }
+
+    public Screen createRoundOverScreen() {
+        return new RoundOverScreen(io, controller);
+    }
+
+    public Screen createCardDrawScreen(CardDrawEventData eventData) {
+        return new CardDrawScreen(io, controller, eventData);
+    }
+}

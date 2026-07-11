@@ -3,7 +3,7 @@ package blackjack.core;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Signal {
+public class EmptySignal {
     private final Set<Runnable> connections = new HashSet<>();
 
     public void connect(Runnable runnable) {
@@ -15,4 +15,4 @@ public class Signal {
             runnable.run();
         }
     }
-}
+} 

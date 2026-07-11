@@ -1,6 +1,6 @@
-package blackjack.core.states;
+package blackjack.core.battle.states;
 
-import blackjack.core.BlackjackCore;
+import blackjack.core.battle.BattleCore;
 import blackjack.entity.Behavior;
 import blackjack.entity.Entity;
 
@@ -14,7 +14,7 @@ public class EnemyOnlyTurnState implements State {
     }
 
     @Override
-    public void handle(BlackjackCore core) {
+    public void handle(BattleCore core) {
         int globalStand = core.getGlobalStand();
         enemyBehavior.playTurn(globalStand);
         int handSum = enemy.calculateHandSum();
@@ -23,7 +23,7 @@ public class EnemyOnlyTurnState implements State {
             enemy.hit();
         }
         if (handSum <= globalStand) {
-            core.emitEnemyStand();
+            enemy.stand();
         }
         core.activateEndTurnState();
     }

@@ -1,20 +1,20 @@
-package blackjack.core.states;
+package blackjack.core.battle.states;
 
-import blackjack.core.BlackjackCore;
+import blackjack.core.battle.BattleCore;
 import blackjack.exceptions.InvalidTurnActionException;
 
 public interface State {
-    void handle(BlackjackCore core);
+    void handle(BattleCore core);
 
-    default void hit(BlackjackCore core) {
+    default void hit(BattleCore core) {
         throw new InvalidTurnActionException("Invalid command");
     }
 
-    default void stand(BlackjackCore core) {
+    default void stand(BattleCore core) {
         throw new InvalidTurnActionException("Invalid command");
     }
 
-    default void useBoughtCard(BlackjackCore core, int idx){
+    default void useBoughtCard(BattleCore core, int idx){
         throw new InvalidTurnActionException("Invalid command");
     }
 }
