@@ -6,9 +6,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import blackjack.core.cards.Deck;
 import blackjack.core.inventory.Inventory;
+import blackjack.dtos.entity.AIRecordDTO;
 import blackjack.entity.CombatEntity;
 import blackjack.entity.Entity;
-import blackjack.entity.enemy.AIRecord;
 import blackjack.entity.enemy.blueprints.EnemyBlueprint;
 import blackjack.entity.enemy.blueprints.IsaacEnemies;
 import blackjack.entity.enemy.blueprints.MineEnemies;
@@ -17,7 +17,7 @@ public class CombinedEnemiesFactory implements AbstractEnemyFactory {
     private final List<EnemyBlueprint> blueprints = buildBlueprintPool();
 
     @Override
-    public AIRecord generateRandomEnemy(float difficultyMultiplier) {
+    public AIRecordDTO generateRandomEnemy(float difficultyMultiplier) {
         int randomIndex = ThreadLocalRandom.current().nextInt(blueprints.size());
         EnemyBlueprint blueprint = blueprints.get(randomIndex);
 
@@ -25,7 +25,7 @@ public class CombinedEnemiesFactory implements AbstractEnemyFactory {
     }
 
     @Override
-    public AIRecord generateSpecificEnemy(EnemyBlueprint blueprint, float difficultyMultiplier) {
+    public AIRecordDTO generateSpecificEnemy(EnemyBlueprint blueprint, float difficultyMultiplier) {
         return buildEnemy(blueprint, difficultyMultiplier);
     }
 
@@ -36,7 +36,7 @@ public class CombinedEnemiesFactory implements AbstractEnemyFactory {
         return pool;
     }
 
-    private AIRecord buildEnemy(EnemyBlueprint blueprint, float multiplier) {
+    private AIRecordDTO buildEnemy(EnemyBlueprint blueprint, float multiplier) {
         int finalHp = (int) (blueprint.getBaseHp() * multiplier);
 
         Entity enemyEntity = new CombatEntity(
@@ -45,6 +45,6 @@ public class CombinedEnemiesFactory implements AbstractEnemyFactory {
         Inventory enemyInventory = new Inventory();
         enemyInventory.addGold(blueprint.getGoldReward());
 
-        return new AIRecord(enemyEntity, blueprint.getBehavior(), enemyInventory);
+        return new AIRecordDTO(enemyEntity, blueprint.getBehavior(), enemyInventory);
     }
 }

@@ -3,11 +3,11 @@ package blackjack.entity;
 import java.util.List;
 import java.util.function.Consumer;
 
-import blackjack.core.DataSignal;
 import blackjack.core.cards.Card;
 import blackjack.core.cards.Deck;
-import blackjack.dto.CardDrawEventDTO;
-import blackjack.dto.DamageEventDTO;
+import blackjack.core.signal.DataSignal;
+import blackjack.dtos.core.battle.CardDrawEventDTO;
+import blackjack.dtos.core.battle.DamageEventDTO;
 import blackjack.entity.components.CardsComponent;
 import blackjack.entity.components.HealthComponent;
 import blackjack.entity.components.ModifiersComponent;
@@ -24,7 +24,7 @@ public class CombatEntity implements Entity {
     private final String name;
     private final boolean isPlayerControlled;
     
-    private boolean hasStand = false;
+    private boolean hasStanded = false;
 
     public CombatEntity(String name, Deck deck, int maxHp, boolean isPlayerControlled) {
         this.name = name;
@@ -78,19 +78,20 @@ public class CombatEntity implements Entity {
     public void battleReset() {
         healthComponent.resetHp();
         cardsComponent.resetStack();
-        hasStand = false;
+        hasStanded = false;
         roundReset();
     }
 
     @Override
     public void hit() {
+        hasStanded = false;
         Card card = cardsComponent.drawCardToHand(1).get(0);
         emitDrawCard(createCardDrawEventData(card));
     }
 
     @Override
     public void stand() {
-        hasStand = true;
+        hasStanded = true;
         emitEntityStand();
     }
 
@@ -101,7 +102,7 @@ public class CombatEntity implements Entity {
 
     @Override
     public void takeDamage(int damage) {
-        if (hasStand) {
+        if (hasStanded) {
             damage = Math.ceilDiv(damage, 2);
         }
         

@@ -1,6 +1,6 @@
 package blackjack.controller;
 
-import blackjack.core.EmptySignal;
+import blackjack.core.signal.EmptySignal;
 
 public class MenuController {
     private final EmptySignal playSelected = new EmptySignal();

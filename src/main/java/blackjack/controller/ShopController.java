@@ -2,9 +2,10 @@ package blackjack.controller;
 
 import java.util.List;
 
-import blackjack.core.EmptySignal;
 import blackjack.core.inventory.Inventory;
 import blackjack.core.shop.Shop;
+import blackjack.core.signal.EmptySignal;
+import blackjack.dtos.core.items.ShopItemDTO;
 import blackjack.exceptions.InsufficientGoldException;
 
 public class ShopController {
@@ -29,10 +30,14 @@ public class ShopController {
         shopExited.emit();
     }
 
-    public List<String> getShopItemLines() {
+    public List<ShopItemDTO> getShopItems() {
         return shop.getItemsForSale().stream()
-                .map(buyable -> "%s (%dg) - %s".formatted(
-                        buyable.getName(), buyable.getCost(), buyable.getDescription()))
+                .map(buyable -> new ShopItemDTO(
+                        buyable.getName(), 
+                        buyable.getItemType(), 
+                        buyable.getDescription(), 
+                        buyable.getCost()
+                ))
                 .toList();
     }
 

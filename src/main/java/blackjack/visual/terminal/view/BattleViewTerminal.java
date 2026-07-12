@@ -1,9 +1,9 @@
 package blackjack.visual.terminal.view;
 
 import blackjack.controller.BattleController;
-import blackjack.dto.CardDrawEventDTO;
-import blackjack.dto.DamageEventDTO;
-import blackjack.dto.CombatOverDTO;
+import blackjack.dtos.core.battle.CardDrawEventDTO;
+import blackjack.dtos.core.battle.CombatOverDTO;
+import blackjack.dtos.core.battle.DamageEventDTO;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
 import blackjack.visual.terminal.screens.battle.BattleScreenFactory;

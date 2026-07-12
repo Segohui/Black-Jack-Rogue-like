@@ -3,6 +3,7 @@ package blackjack.core.shop.buyables;
 import blackjack.core.cards.Card;
 import blackjack.core.cards.Deck;
 import blackjack.core.shop.Buyable;
+import blackjack.dtos.core.items.ItemType;
 
 public class CardBuyable implements Buyable {
     private final Card card;
@@ -33,5 +34,10 @@ public class CardBuyable implements Buyable {
     @Override
     public void buy() {
         deck.addCard(card);
+    }
+
+    @Override
+    public ItemType getItemType() {
+        return ItemType.PASSIVE;
     }
 }

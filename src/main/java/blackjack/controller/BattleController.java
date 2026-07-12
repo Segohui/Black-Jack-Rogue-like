@@ -7,11 +7,11 @@ import blackjack.core.battle.BattleCore;
 import blackjack.core.cards.Card;
 import blackjack.core.inventory.Inventory;
 import blackjack.core.inventory.ItemInfo;
-import blackjack.dto.CardDrawEventDTO;
-import blackjack.dto.CombatOverDTO;
-import blackjack.dto.DamageEventDTO;
-import blackjack.dto.EntityStateDTO;
-import blackjack.entity.enemy.AIRecord;
+import blackjack.dtos.core.battle.CardDrawEventDTO;
+import blackjack.dtos.core.battle.CombatOverDTO;
+import blackjack.dtos.core.battle.DamageEventDTO;
+import blackjack.dtos.core.battle.EntityStateDTO;
+import blackjack.dtos.entity.AIRecordDTO;
 
 public class BattleController {
     private final BattleCore core;
@@ -22,8 +22,8 @@ public class BattleController {
         this.playerInventory = playerInventory;
     }
 
-    public void initializeEnemy(AIRecord aiRecord) {
-        core.resetEnemy(aiRecord);
+    public void prepareBattleStage(AIRecordDTO aiRecord) {
+        core.prepareForNewBattle(aiRecord);
     }
 
     public void startBattle() {

@@ -3,6 +3,7 @@ package blackjack.visual.terminal.screens.shop;
 import java.util.List;
 
 import blackjack.controller.ShopController;
+import blackjack.dtos.core.items.ShopItemDTO;
 import blackjack.exceptions.InsufficientGoldException;
 import blackjack.visual.ConsoleColors;
 import blackjack.visual.InputOutput;
@@ -25,14 +26,34 @@ public class ShopScreen implements Screen {
         io.printHeader("Shop");
 
         while (shopping) {
-            io.printColored("Gold: " + controller.getPlayerGold(), ConsoleColors.YELLOW);
+            io.printColored("\nGold: " + controller.getPlayerGold(), ConsoleColors.YELLOW);
+            
+            io.printMessage("Types: " + 
+                ConsoleColors.GREEN + "Cosumable" + ConsoleColors.RESET + " | " +
+                ConsoleColors.CYAN + "Active" + ConsoleColors.RESET + " | " +
+                ConsoleColors.PURPLE + "Passive" + ConsoleColors.RESET);
+            io.printLine();
 
             ActionPrompter actionPrompter = new ActionPrompter(io);
 
-            List<String> items = controller.getShopItemLines();
+            List<ShopItemDTO> items = controller.getShopItems();
+            
             for (int i = 0; i < items.size(); i++) {
-                int idx = i; // need this for the lambda
-                actionPrompter.addAction(items.get(i), () -> buyShopItem(idx));
+                int idx = i; 
+                ShopItemDTO item = items.get(i);
+                
+                String typeColor = switch (item.itemType()) {
+                    case CONSUMABLE -> ConsoleColors.GREEN;
+                    case ACTIVE -> ConsoleColors.CYAN;
+                    case PASSIVE -> ConsoleColors.PURPLE;
+                };
+
+                String coloredOption = String.format("%s%s%s - %s%dg%s - %s",
+                        typeColor, item.name(), ConsoleColors.RESET,
+                        ConsoleColors.YELLOW, item.price(), ConsoleColors.RESET,
+                        item.description());
+
+                actionPrompter.addAction(coloredOption, () -> buyShopItem(idx));
             }
             actionPrompter.defineBottomAction("Leave shop", () -> shopping = false);
             

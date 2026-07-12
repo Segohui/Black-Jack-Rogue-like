@@ -3,7 +3,7 @@ package blackjack.visual;
 import java.util.List;
 import java.util.Scanner;
 
-import blackjack.dto.EntityStateDTO;
+import blackjack.dtos.core.battle.EntityStateDTO;
 
 public class InputOutput {
     private final Scanner scanner;
