@@ -6,6 +6,7 @@ import java.util.List;
 import blackjack.core.cards.Deck;
 import blackjack.core.inventory.Inventory;
 import blackjack.core.inventory.ItemRegistry;
+import blackjack.exceptions.InsufficientGoldException;
 
 public class Shop {
     private final List<Buyable> itemsForSale;
@@ -31,14 +32,14 @@ public class Shop {
         return itemsForSale;
     }
 
-    public boolean buy(int index) {
+    public boolean buy(int index) throws InsufficientGoldException {
         if (index < 0 || index >= itemsForSale.size()) {
             return false;
         }
 
         Buyable item = itemsForSale.get(index);
         if (!inventory.canAfford(item.getCost())) {
-            return false;
+            throw new InsufficientGoldException("Not enough gold to buy " + item.getName()); 
         }
 
         inventory.spendGold(item.getCost());
