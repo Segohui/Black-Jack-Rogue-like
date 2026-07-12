@@ -11,9 +11,9 @@ import blackjack.core.cards.Card;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.CombatOverDTO;
 import blackjack.dto.DamageEventDTO;
-import blackjack.entity.AIRecord;
-import blackjack.entity.Behavior;
 import blackjack.entity.Entity;
+import blackjack.entity.enemy.AIRecord;
+import blackjack.entity.enemy.behaviors.Behavior;
 
 public class BattleCore {
     private final EmptySignal playerTurn = new EmptySignal();
@@ -39,7 +39,7 @@ public class BattleCore {
     }
 
     private void resetCore() {
-        this.state = null;        
+        this.state = null;
         this.stateFactory = new StateFactory(player, enemy, enemyBehavior);
     }
 
@@ -116,13 +116,12 @@ public class BattleCore {
     public void emitCombatOverData(String name, boolean isPlayerControlled, int goldReward) { combatOverData.emit(new CombatOverDTO(name, isPlayerControlled, goldReward)); }
     
     public void drawCardPlayerConnect(Consumer<CardDrawEventDTO> listerner) { player.drawCardConnect(listerner); }
-    public void drawCardEnemyConnect(Consumer<CardDrawEventDTO> listerner) { enemy.drawCardConnect(listerner); }
-
     public void playerStandConnect(Consumer<String> listener) { player.entityStandConnect(listener); }
-    public void enemyStandConnect(Consumer<String> listener) { enemy.entityStandConnect(listener); }
-
     public void playerTakeDamageConnect(Consumer<DamageEventDTO> listener) { player.takeDamageConnect(listener); }
+
     public void enemyTakeDamageConnect(Consumer<DamageEventDTO> listener) { enemy.takeDamageConnect(listener); }
+    public void drawCardEnemyConnect(Consumer<CardDrawEventDTO> listener) { enemy.drawCardConnect(listener); }
+    public void enemyStandConnect(Consumer<String> listener) { enemy.entityStandConnect(listener); }
 
     // Getters
 

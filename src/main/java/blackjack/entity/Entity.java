@@ -33,6 +33,8 @@ public interface Entity {
 
     // Signals handling
 
+    void clearSignals();
+
     void drawCardConnect(Consumer<CardDrawEventDTO> listener);
     void emitDrawCard(CardDrawEventDTO eventData);
 

@@ -12,7 +12,7 @@ public class BattleViewTerminal {
     private final BattleScreenFactory screenFactory;
     private final InputOutput io;
     private final BattleController controller;
-
+    
     public BattleViewTerminal(InputOutput io, BattleController controller) {
         this.io = io;
         this.controller = controller;
@@ -51,13 +51,11 @@ public class BattleViewTerminal {
         navigateToScreen(screenFactory.createPlayerTurnScreen());
     }
 
-    private void onTakeDamage(DamageEventDTO eventData) {
-        String message = eventData.targetName() + " took " + eventData.damage() + " damage!";
-        navigateToScreen(screenFactory.createNotificationScreen(message));
+    private void onTakeDamage(DamageEventDTO eventDTO) {
+        navigateToScreen(screenFactory.createTakeDamageScreen(eventDTO));
     }
 
-    private void onEntityStand(String name) {
-        String message = name + " Stand!";
-        navigateToScreen(screenFactory.createNotificationScreen(message));
+    private void onEntityStand(String entityName) {
+        navigateToScreen(screenFactory.createEntityStandScreen(entityName));
     }
 }

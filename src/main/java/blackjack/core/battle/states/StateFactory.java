@@ -1,7 +1,7 @@
 package blackjack.core.battle.states;
 
-import blackjack.entity.Behavior;
 import blackjack.entity.Entity;
+import blackjack.entity.enemy.behaviors.Behavior;
 
 public class StateFactory {
     private final Entity player;
