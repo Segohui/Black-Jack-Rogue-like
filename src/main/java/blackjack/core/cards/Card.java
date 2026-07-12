@@ -27,6 +27,20 @@ public class Card {
         return suit;
     }
 
+    public int getBaseScore() {
+        return BaseRankScores.getScore(rank);
+    }
+
+    public boolean isFaceCard() {
+        return this.rank == Rank.RANK_J
+                || this.rank == Rank.RANK_K
+                || this.rank == Rank.RANK_Q;
+    }
+
+    public boolean isNumberCard() {
+        return this.rank != Rank.RANK_A && !isFaceCard();
+    }
+
     @Override
     public String toString() {
         return this.rank.toString() + " | " + this.suit.toString();

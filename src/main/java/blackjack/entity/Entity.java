@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import blackjack.core.cards.Card;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.DamageEventDTO;
+import blackjack.entity.modifiers.DamageModifier;
 
 public interface Entity {
     String getName();
@@ -22,6 +23,9 @@ public interface Entity {
     boolean isAlive();
     boolean isPlayerControlled();
     Card discardLastCardInHand();
+    int calculateAttackDamage();
+    void addDamageOutputModifier(DamageModifier modifier);
+    void addDamageCardModifier(Card card, DamageModifier modifier);
 
     // Signals handling
 

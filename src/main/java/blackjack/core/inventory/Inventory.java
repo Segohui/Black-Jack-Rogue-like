@@ -28,7 +28,7 @@ public class Inventory {
         items.get(index).trigger(ctx);
     }
 
-    public void triggerItemAuto(BattleContextDTO ctx) {
+    public void triggerItemsAuto(BattleContextDTO ctx) {
         for (Item item: items) {
             if (!item.isManual()) {
                 item.trigger(ctx);

@@ -10,17 +10,20 @@ import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.DamageEventDTO;
 import blackjack.entity.components.CardsComponent;
 import blackjack.entity.components.HealthComponent;
+import blackjack.entity.components.ModifiersComponent;
+import blackjack.entity.modifiers.DamageModifier;
 
 public class CombatEntity implements Entity {
-    private final CardsComponent cardsComponent;
-    private final HealthComponent healthComponent;
-    private final String name;
-    private final boolean isPlayerControlled;
-
     private final DataSignal<CardDrawEventDTO> drawCard = new DataSignal<>();
     private final DataSignal<String> entityStand = new DataSignal<>();
     private final DataSignal<DamageEventDTO> takeDamage = new DataSignal<>();
 
+    private final CardsComponent cardsComponent;
+    private final HealthComponent healthComponent;
+    private final ModifiersComponent modifiersComponent;
+    private final String name;
+    private final boolean isPlayerControlled;
+    
     private boolean hasStand = false;
 
     public CombatEntity(String name, Deck deck, int maxHp, boolean isPlayerControlled) {
@@ -28,6 +31,7 @@ public class CombatEntity implements Entity {
         this.isPlayerControlled = isPlayerControlled;
         this.cardsComponent = new CardsComponent(deck);
         this.healthComponent = new HealthComponent(maxHp);
+        this.modifiersComponent = new ModifiersComponent();
     }
 
     private CardDrawEventDTO createCardDrawEventData(Card card) {
@@ -123,6 +127,23 @@ public class CombatEntity implements Entity {
     @Override
     public Card discardLastCardInHand() {
         return cardsComponent.discardLastCardInHand();
+    }
+
+    @Override
+    public int calculateAttackDamage() {
+        int totalDamage = modifiersComponent.applyModifiers(getCards());
+        modifiersComponent.clearModifiers();
+        return totalDamage;
+    }
+
+    @Override
+    public void addDamageOutputModifier(DamageModifier modifier) {
+        modifiersComponent.addOutputModifier(modifier);
+    }
+
+    @Override
+    public void addDamageCardModifier(Card card, DamageModifier modifier) {
+        modifiersComponent.addCardModifier(card, modifier);
     }
 
     // Signals Handling

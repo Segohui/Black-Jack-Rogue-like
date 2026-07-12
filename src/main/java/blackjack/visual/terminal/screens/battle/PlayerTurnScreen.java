@@ -1,6 +1,7 @@
 package blackjack.visual.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
+import blackjack.core.inventory.ItemInfo;
 import blackjack.dto.EntityStateDTO;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.ActionPrompter;
@@ -35,19 +36,32 @@ public class PlayerTurnScreen implements Screen {
         actionPrompter.addAction("stand", controller::playerStand);
 
         if (controller.playerHasItems()) {
-            actionPrompter.addAction("use item", this::promptPurchasedCard);
+            actionPrompter.addAction("items", this::promptItems);
         }
 
         actionPrompter.promptAndRun();
     }
 
-    private void promptPurchasedCard() {
-        List<String> itemLines = controller.getItemLines();
+    private void promptItems() {
+        List<ItemInfo> itemInfos = controller.getItemInfos();
+        io.printMessage("[PASSIVE ITEMS]");
+        itemInfos.stream()
+                .filter(info -> !info.isManual())
+                .map(info -> "%s - %s".formatted(info.name(), info.description()))
+                .forEach(line -> io.printMessage("- " + line));
+        
+        io.printLine();
+        io.printMessage("[TRIGGERABLE ITEMS]");
+        
+        List<String> usableItemLines = itemInfos.stream()
+                .filter(info -> info.isManual())
+                .map(info -> "%s - %s".formatted(info.name(), info.description()))
+                .toList();
         ActionPrompter cardPrompter = new ActionPrompter(io);
 
-        for (int i = 0; i < itemLines.size(); i++) {
+        for (int i = 0; i < usableItemLines.size(); i++) {
             int idx = i;
-            cardPrompter.addAction(itemLines.get(i), () -> controller.playerUseItem(idx));
+            cardPrompter.addAction(usableItemLines.get(i), () -> controller.playerUseItem(idx));
         }
         cardPrompter.defineBottomAction("Go back", this::render);
         cardPrompter.promptAndRun();
