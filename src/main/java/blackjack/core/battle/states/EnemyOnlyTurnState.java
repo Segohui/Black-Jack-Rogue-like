@@ -18,7 +18,7 @@ public class EnemyOnlyTurnState implements State {
         int globalStand = core.getGlobalStand();
         enemyBehavior.playTurn(enemy, globalStand);
 
-        while (!enemyBehavior.hasStopped(enemy, globalStand)) {
+        while (!enemyBehavior.hasStopped() && !enemyBehavior.hasLost()) {
             enemyBehavior.playTurn(enemy, globalStand);
         }
 

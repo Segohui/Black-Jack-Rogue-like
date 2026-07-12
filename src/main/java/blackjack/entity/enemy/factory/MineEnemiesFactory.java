@@ -4,16 +4,16 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import blackjack.core.cards.Deck;
 import blackjack.core.inventory.Inventory;
+import blackjack.dtos.entity.AIRecordDTO;
 import blackjack.entity.CombatEntity;
 import blackjack.entity.Entity;
-import blackjack.entity.enemy.AIRecord;
 import blackjack.entity.enemy.blueprints.MineEnemies;
 import blackjack.entity.enemy.blueprints.EnemyBlueprint;
 
 public class MineEnemiesFactory implements AbstractEnemyFactory {
 
     @Override
-    public AIRecord generateRandomEnemy(float difficultyMultiplier) {
+    public AIRecordDTO generateRandomEnemy(float difficultyMultiplier) {
         MineEnemies[] enemyPool = MineEnemies.values();
         int randomIndex = ThreadLocalRandom.current().nextInt(enemyPool.length);
         EnemyBlueprint blueprint = enemyPool[randomIndex];
@@ -22,11 +22,11 @@ public class MineEnemiesFactory implements AbstractEnemyFactory {
     }
 
     @Override
-    public AIRecord generateSpecificEnemy(EnemyBlueprint blueprint, float difficultyMultiplier) {
+    public AIRecordDTO generateSpecificEnemy(EnemyBlueprint blueprint, float difficultyMultiplier) {
         return buildEnemy(blueprint, difficultyMultiplier);
     }
 
-    private AIRecord buildEnemy(EnemyBlueprint blueprint, float multiplier) {
+    private AIRecordDTO buildEnemy(EnemyBlueprint blueprint, float multiplier) {
         int finalHp = (int) (blueprint.getBaseHp() * multiplier);
         
         Entity enemyEntity = new CombatEntity(
@@ -35,6 +35,6 @@ public class MineEnemiesFactory implements AbstractEnemyFactory {
         Inventory enemyInventory = new Inventory();
         enemyInventory.addGold(blueprint.getGoldReward());
         
-        return new AIRecord(enemyEntity, blueprint.getBehavior(), enemyInventory);
+        return new AIRecordDTO(enemyEntity, blueprint.getBehavior(), enemyInventory);
     }
 }

@@ -1,9 +1,9 @@
 package blackjack.entity.enemy.factory;
 
-import blackjack.entity.enemy.AIRecord;
+import blackjack.dtos.entity.AIRecordDTO;
 import blackjack.entity.enemy.blueprints.EnemyBlueprint;
 
 public interface AbstractEnemyFactory {
-    AIRecord generateRandomEnemy(float difficultyMultiplier);
-    AIRecord generateSpecificEnemy(EnemyBlueprint blueprint, float difficultyMultiplier);
+    AIRecordDTO generateRandomEnemy(float difficultyMultiplier);
+    AIRecordDTO generateSpecificEnemy(EnemyBlueprint blueprint, float difficultyMultiplier);
 }

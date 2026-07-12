@@ -12,7 +12,7 @@ import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.view.ViewRouter;
 
 public class GameInitializer {
-    private final InputOutput io;
+    private final InputOutput io; 
 
     public GameInitializer() {
         this.io = new InputOutput();
@@ -20,17 +20,20 @@ public class GameInitializer {
 
     public void startNewGame() {
         Deck playerDeck = new Deck();
+        Entity player = new CombatEntity("Player", playerDeck, 50, true);
+        
         Inventory playerInventory = new Inventory();
         ItemRegistry itemRegistry = new ItemRegistry();
-        Entity player = new CombatEntity("Player", playerDeck, 50, true);
+        
         Shop shop = new Shop(playerInventory, playerDeck, itemRegistry);
         BattleCore core = new BattleCore(player, playerDeck, playerInventory);
         
         ControllerFactory controllerFactory = new ControllerFactory(core, shop, playerInventory);
         GameManager gameManager = new GameManager(controllerFactory);
-        gameManager.restartGameConnect(this::startNewGame);
         ViewRouter router = new ViewRouter(io, gameManager);
         
+        gameManager.restartGameConnect(this::startNewGame);
+
         gameManager.startMainMenu();
     }
 }

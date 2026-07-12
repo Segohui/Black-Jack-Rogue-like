@@ -17,16 +17,15 @@ public class EnemyTurnState implements State {
     public void handle(BattleCore core) {
         int globalStand = core.getGlobalStand();
         enemyBehavior.playTurn(enemy, globalStand);
-        int handSum = enemy.calculateHandSum();
 
-        if (handSum > globalStand) {
-            core.activateEndTurnState();
-        } else {
-            if (enemyBehavior.hasStopped(enemy, globalStand)) {
-                core.activatePlayerOnlyTurnState();
+        if (enemyBehavior.hasStopped()) {
+            if (enemyBehavior.hasLost()) {
+                core.activateEndTurnState();
             } else {
-                core.activatePlayerTurnState();
+                core.activatePlayerOnlyTurnState();
             }
+        } else {
+            core.activatePlayerTurnState();
         }
     }
 }

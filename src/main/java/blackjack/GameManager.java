@@ -5,9 +5,9 @@ import blackjack.controller.BattleController;
 import blackjack.controller.ControllerFactory;
 import blackjack.controller.MenuController;
 import blackjack.controller.ShopController;
-import blackjack.core.DataSignal;
-import blackjack.core.EmptySignal;
-import blackjack.dto.CombatOverDTO;
+import blackjack.core.signal.DataSignal;
+import blackjack.core.signal.EmptySignal;
+import blackjack.dtos.core.battle.CombatOverDTO;
 import blackjack.entity.enemy.factory.AbstractEnemyFactory;
 import blackjack.entity.enemy.factory.CombinedEnemiesFactory;
 
@@ -20,6 +20,7 @@ public class GameManager {
 
     private AbstractEnemyFactory currentEnemyFactory;
     private float difficultyMultiplier = 1;
+    private int combatsWon = 0;
 
     public GameManager(ControllerFactory controllerFactory) {
         this.controllerFactory = controllerFactory;
@@ -40,11 +41,13 @@ public class GameManager {
 
     public void startCombatRoom() {
         BattleController battleController = controllerFactory.createBattle();
+        
+        battleController.prepareBattleStage(currentEnemyFactory.generateRandomEnemy(difficultyMultiplier));
+        
         battleController.combatOverDataConnect(this::onBattleEnd);
         
-        battleController.initializeEnemy(currentEnemyFactory.generateRandomEnemy(difficultyMultiplier));
-        
         battleStarted.emit(battleController);
+        
         battleController.startBattle();
     }
 
@@ -70,7 +73,10 @@ public class GameManager {
 
     private void onBattleEnd(CombatOverDTO combatOverDTO) {
         if (combatOverDTO.isPlayerControlled()) {
-            difficultyMultiplier += 0.1; 
+            // The enemies get stronger after 3 cleared
+            if (combatsWon % 3 == 0) {
+                difficultyMultiplier += 0.2;
+            }
             startShopRoom();
         } else {
             playerLoseMenu();

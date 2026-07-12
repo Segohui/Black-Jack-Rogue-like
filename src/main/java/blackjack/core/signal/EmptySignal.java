@@ -1,4 +1,4 @@
-package blackjack.core;
+package blackjack.core.signal;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,7 +16,7 @@ public class EmptySignal {
         }
     }
 
-    public void clear() {
+    public void clearConnections() {
         connections.clear();
     }
 } 

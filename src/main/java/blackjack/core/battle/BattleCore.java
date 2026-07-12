@@ -3,18 +3,18 @@ package blackjack.core.battle;
 import java.util.List;
 import java.util.function.Consumer;
 
-import blackjack.core.DataSignal;
-import blackjack.core.EmptySignal;
 import blackjack.core.battle.states.State;
 import blackjack.core.battle.states.StateFactory;
 import blackjack.core.cards.Card;
 import blackjack.core.cards.Deck;
 import blackjack.core.inventory.Inventory;
-import blackjack.dto.CardDrawEventDTO;
-import blackjack.dto.CombatOverDTO;
-import blackjack.dto.DamageEventDTO;
+import blackjack.core.signal.DataSignal;
+import blackjack.core.signal.EmptySignal;
+import blackjack.dtos.core.battle.CardDrawEventDTO;
+import blackjack.dtos.core.battle.CombatOverDTO;
+import blackjack.dtos.core.battle.DamageEventDTO;
+import blackjack.dtos.entity.AIRecordDTO;
 import blackjack.entity.Entity;
-import blackjack.entity.enemy.AIRecord;
 import blackjack.entity.enemy.behaviors.Behavior;
 
 public class BattleCore {
@@ -26,7 +26,7 @@ public class BattleCore {
     private final Entity player;
     private final Deck playerDeck;
     private final Inventory playerInventory;
-    private int globalStand = 21; // may change with power ups
+    private int globalStand = 21; // may change with items
 
     private Entity enemy;
     private Behavior enemyBehavior;
@@ -51,10 +51,24 @@ public class BattleCore {
                 playerInventory, enemyInventory);
     }
 
-    public void resetEnemy(AIRecord enemyRecord) {
+    public void prepareForNewBattle(AIRecordDTO enemyRecord) {
+        roundOverData.clearConnections();
+        combatOverData.clearConnections();
+        playerTurn.clearConnections();
+        player.clearSignals();
+        resetEnemy(enemyRecord);
+    }
+
+    private void resetEnemy(AIRecordDTO enemyRecord) {
         this.enemy = enemyRecord.entity();
         this.enemyBehavior = enemyRecord.behavior();
         this.enemyInventory = enemyRecord.inventory();
+    }
+
+    private void clearSignals() {
+        playerTurn.clearConnections();
+        roundOverData.clearConnections();
+        combatOverData.clearConnections();
     }
 
     public void playerHit() {

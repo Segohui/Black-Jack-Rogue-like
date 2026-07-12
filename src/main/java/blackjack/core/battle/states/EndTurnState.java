@@ -34,19 +34,17 @@ public class EndTurnState implements State {
             enemy.takeDamage(player.calculateAttackDamage());
             if (!enemy.isAlive()) {
                 core.activateEndGameState();
-                return;
+            } else {
+                endTurn(core, enemy.getName());
             }
-
-            endTurn(core, player.getName());
         } else {
             enemyInventory.triggerItemsAuto(core.getBattleContextDTO());
             player.takeDamage(enemy.calculateAttackDamage());
             if (!player.isAlive()) {
                 core.activateEndGameState();
-                return;
+            } else {
+                endTurn(core, enemy.getName());
             }
-
-            endTurn(core, enemy.getName());
         }
     }
 
