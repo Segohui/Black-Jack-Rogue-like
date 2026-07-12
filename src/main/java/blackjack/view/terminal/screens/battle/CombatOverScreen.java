@@ -1,11 +1,11 @@
-package blackjack.visual.terminal.screens.battle;
+package blackjack.view.terminal.screens.battle;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import blackjack.dtos.core.battle.CombatOverDTO;
-import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.screens.Screen;
+import blackjack.view.InputOutput;
+import blackjack.view.terminal.screens.Screen;
 
 public class CombatOverScreen implements Screen {
     private final InputOutput io;

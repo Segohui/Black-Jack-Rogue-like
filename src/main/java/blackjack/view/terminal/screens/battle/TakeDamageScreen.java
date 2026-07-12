@@ -1,8 +1,8 @@
-package blackjack.visual.terminal.screens.battle;
+package blackjack.view.terminal.screens.battle;
 
 import blackjack.dtos.core.battle.DamageEventDTO;
-import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.screens.Screen;
+import blackjack.view.InputOutput;
+import blackjack.view.terminal.screens.Screen;
 
 public class TakeDamageScreen implements Screen {
     private final InputOutput io;

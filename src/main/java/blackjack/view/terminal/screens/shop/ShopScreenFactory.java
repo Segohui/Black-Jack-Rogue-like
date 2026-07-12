@@ -1,8 +1,8 @@
-package blackjack.visual.terminal.screens.shop;
+package blackjack.view.terminal.screens.shop;
 
 import blackjack.controller.ShopController;
-import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.screens.Screen;
+import blackjack.view.InputOutput;
+import blackjack.view.terminal.screens.Screen;
 
 public class ShopScreenFactory {
     private final InputOutput io;

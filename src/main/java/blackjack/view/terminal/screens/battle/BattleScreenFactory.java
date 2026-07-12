@@ -1,11 +1,11 @@
-package blackjack.visual.terminal.screens.battle;
+package blackjack.view.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
 import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.CombatOverDTO;
 import blackjack.dtos.core.battle.DamageEventDTO;
-import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.screens.Screen;
+import blackjack.view.InputOutput;
+import blackjack.view.terminal.screens.Screen;
 
 public class BattleScreenFactory {
     private final InputOutput io;

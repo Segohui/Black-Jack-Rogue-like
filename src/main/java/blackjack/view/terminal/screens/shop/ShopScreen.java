@@ -1,14 +1,14 @@
-package blackjack.visual.terminal.screens.shop;
+package blackjack.view.terminal.screens.shop;
 
 import java.util.List;
 
 import blackjack.controller.ShopController;
 import blackjack.dtos.core.items.ShopItemDTO;
 import blackjack.exceptions.InsufficientGoldException;
-import blackjack.visual.ConsoleColors;
-import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.ActionPrompter;
-import blackjack.visual.terminal.screens.Screen;
+import blackjack.view.ConsoleColors;
+import blackjack.view.InputOutput;
+import blackjack.view.terminal.ActionPrompter;
+import blackjack.view.terminal.screens.Screen;
 
 public class ShopScreen implements Screen {
     private final InputOutput io;

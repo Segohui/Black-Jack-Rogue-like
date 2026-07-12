@@ -8,8 +8,8 @@ import blackjack.core.entity.Entity;
 import blackjack.core.inventory.Inventory;
 import blackjack.core.inventory.ItemRegistry;
 import blackjack.core.shop.Shop;
-import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.views.ViewRouter;
+import blackjack.view.InputOutput;
+import blackjack.view.terminal.views.ViewRouter;
 
 public class GameInitializer {
     private final InputOutput io; 
