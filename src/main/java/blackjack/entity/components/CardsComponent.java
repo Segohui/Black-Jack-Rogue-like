@@ -11,11 +11,14 @@ import blackjack.core.cards.HandEvaluator;
 import blackjack.core.cards.Stack;
 
 public class CardsComponent {
-    private final Deck deck = new Deck();
-    private final Stack stack = new Stack(deck);
+    private final Stack stack;
     private final Hand hand = new Hand();
     private final HandEvaluator handEvaluator = new HandEvaluator();
     private final List<Card> purchasedCards = new ArrayList<>();
+
+    public CardsComponent(Deck deck) {
+        this.stack = new Stack(deck);
+    }
 
     public void resetHand() {
         hand.reset();
@@ -49,6 +52,10 @@ public class CardsComponent {
         Card card = purchasedCards.remove(idx);
         hand.addCard(card);
         return card;
+    }
+
+    public Card discardLastCardInHand() {
+        return hand.discardLast();
     }
 
     public boolean hasPurchasedCards(){

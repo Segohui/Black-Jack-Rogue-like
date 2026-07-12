@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 import blackjack.core.cards.Card;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.DamageEventDTO;
+import blackjack.entity.modifiers.DamageModifier;
 
 public interface Entity {
     String getName();
@@ -20,18 +21,15 @@ public interface Entity {
     void takeDamage(int damage);
     void heal(int amount);
     boolean isAlive();
-    void addPurchasedCard(Card card);
-    Card usePurchasedCard(int idx);
-    boolean hasPurchasedCards();
-    List<Card> getPurchasedCards();
-    int getGold();
-    boolean canAfford(int cost);
-    void spend(int cost);
-    void addGold(int amount);
     boolean isPlayerControlled();
-    void clearSignals();
+    Card discardLastCardInHand();
+    int calculateAttackDamage();
+    void addDamageOutputModifier(DamageModifier modifier);
+    void addDamageCardModifier(Card card, DamageModifier modifier);
 
     // Signals handling
+
+    void clearSignals();
 
     void drawCardConnect(Consumer<CardDrawEventDTO> listener);
     void emitDrawCard(CardDrawEventDTO eventData);

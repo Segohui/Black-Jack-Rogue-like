@@ -9,13 +9,11 @@ import blackjack.visual.terminal.screens.Screen;
 import blackjack.visual.terminal.screens.battle.BattleScreenFactory;
 
 public class BattleViewTerminal {
-    private final BattleScreenFactory screenFactory;
     private final InputOutput io;
-    private final BattleController controller;
+    private final BattleScreenFactory screenFactory;
     
     public BattleViewTerminal(InputOutput io, BattleController controller) {
         this.io = io;
-        this.controller = controller;
         this.screenFactory = new BattleScreenFactory(io, controller);
         
         // Notifications

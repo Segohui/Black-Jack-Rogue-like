@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import blackjack.core.cards.Deck;
+import blackjack.core.inventory.Inventory;
 import blackjack.entity.CombatEntity;
 import blackjack.entity.Entity;
 import blackjack.entity.enemy.AIRecord;
@@ -37,10 +39,12 @@ public class CombinedEnemiesFactory implements AbstractEnemyFactory {
     private AIRecord buildEnemy(EnemyBlueprint blueprint, float multiplier) {
         int finalHp = (int) (blueprint.getBaseHp() * multiplier);
 
-        Entity enemyEntity = new CombatEntity(blueprint.getName(), finalHp, false);
+        Entity enemyEntity = new CombatEntity(
+                blueprint.getName(), new Deck(),finalHp, false);
+        
+        Inventory enemyInventory = new Inventory();
+        enemyInventory.addGold(blueprint.getGoldReward());
 
-        enemyEntity.addGold(blueprint.getGoldReward());
-
-        return new AIRecord(enemyEntity, blueprint.getBehavior());
+        return new AIRecord(enemyEntity, blueprint.getBehavior(), enemyInventory);
     }
 }

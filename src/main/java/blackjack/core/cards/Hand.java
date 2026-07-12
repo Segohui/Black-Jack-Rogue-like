@@ -15,6 +15,10 @@ public class Hand {
         cards.clear();
     }
 
+    public Card discardLast() {
+        return cards.removeLast();
+    }
+
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }

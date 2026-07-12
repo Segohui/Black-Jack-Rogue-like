@@ -5,31 +5,33 @@ import java.util.function.Consumer;
 
 import blackjack.core.DataSignal;
 import blackjack.core.cards.Card;
+import blackjack.core.cards.Deck;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.DamageEventDTO;
 import blackjack.entity.components.CardsComponent;
-import blackjack.entity.components.CurrencyComponent;
 import blackjack.entity.components.HealthComponent;
+import blackjack.entity.components.ModifiersComponent;
+import blackjack.entity.modifiers.DamageModifier;
 
 public class CombatEntity implements Entity {
-    private final CardsComponent cardsComponent;
-    private final HealthComponent healthComponent;
-    private final CurrencyComponent currencyComponent;
-    private final String name;
-    private final boolean isPlayerControlled;
-
     private final DataSignal<CardDrawEventDTO> drawCard = new DataSignal<>();
     private final DataSignal<String> entityStand = new DataSignal<>();
     private final DataSignal<DamageEventDTO> takeDamage = new DataSignal<>();
 
+    private final CardsComponent cardsComponent;
+    private final HealthComponent healthComponent;
+    private final ModifiersComponent modifiersComponent;
+    private final String name;
+    private final boolean isPlayerControlled;
+    
     private boolean hasStand = false;
 
-    public CombatEntity(String name, int maxHp, boolean isPlayerControlled) {
+    public CombatEntity(String name, Deck deck, int maxHp, boolean isPlayerControlled) {
         this.name = name;
         this.isPlayerControlled = isPlayerControlled;
-        this.cardsComponent = new CardsComponent();
+        this.cardsComponent = new CardsComponent(deck);
         this.healthComponent = new HealthComponent(maxHp);
-        this.currencyComponent = new CurrencyComponent(0);
+        this.modifiersComponent = new ModifiersComponent();
     }
 
     private CardDrawEventDTO createCardDrawEventData(Card card) {
@@ -118,47 +120,30 @@ public class CombatEntity implements Entity {
     }
 
     @Override
-    public void addPurchasedCard(Card card) {
-        cardsComponent.addPurchasedCard(card);
-    }
-
-    @Override
-    public Card usePurchasedCard(int idx){
-        return cardsComponent.usePurchasedCard(idx);
-    }
-
-    @Override
-    public boolean hasPurchasedCards(){
-        return cardsComponent.hasPurchasedCards();
-    }
-
-    @Override
-    public List<Card> getPurchasedCards(){
-        return cardsComponent.getPurchasedCards();
-    }
-
-    @Override
-    public int getGold(){
-        return currencyComponent.getGold();
-    }
-
-    @Override
-    public boolean canAfford(int cost) {
-        return currencyComponent.canAfford(cost);
-    }
-
-    @Override
-    public void spend(int cost){
-        currencyComponent.spend(cost);
-    }
-
-    @Override
-    public void addGold(int amount){
-        currencyComponent.add(amount);
-    }
-
-    @Override public boolean isPlayerControlled() {
+    public boolean isPlayerControlled() {
         return isPlayerControlled;
+    }
+
+    @Override
+    public Card discardLastCardInHand() {
+        return cardsComponent.discardLastCardInHand();
+    }
+
+    @Override
+    public int calculateAttackDamage() {
+        int totalDamage = modifiersComponent.applyModifiers(getCards());
+        modifiersComponent.clearModifiers();
+        return totalDamage;
+    }
+
+    @Override
+    public void addDamageOutputModifier(DamageModifier modifier) {
+        modifiersComponent.addOutputModifier(modifier);
+    }
+
+    @Override
+    public void addDamageCardModifier(Card card, DamageModifier modifier) {
+        modifiersComponent.addCardModifier(card, modifier);
     }
 
     // Signals Handling

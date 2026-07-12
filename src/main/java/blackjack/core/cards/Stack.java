@@ -8,13 +8,13 @@ public class Stack {
     private final Deck deck;
 
     public Stack(Deck deck) {
-        this.cards = deck.copyBasicDeck();
+        this.cards = deck.copyDeckCards();
         this.deck = deck;
         Collections.shuffle(cards);
     }
 
     public void reset() {
-        cards = deck.copyBasicDeck();
+        cards = deck.copyDeckCards();
         Collections.shuffle(cards);
     }
 

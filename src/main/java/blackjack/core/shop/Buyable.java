@@ -1,10 +1,8 @@
 package blackjack.core.shop;
 
-import blackjack.entity.Entity;
-
-public interface ShopItem {
+public interface Buyable {
     String getName();
     String getDescription();
     int getCost();
-    void apply(Entity player);
+    void buy();
 }

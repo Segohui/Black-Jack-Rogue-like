@@ -1,42 +1,57 @@
 package blackjack.controller;
 
 import java.util.List;
-import java.util.function.Consumer;
 
-import blackjack.core.DataSignal;
+import blackjack.core.EmptySignal;
+import blackjack.core.inventory.Inventory;
 import blackjack.core.shop.Shop;
 
 public class ShopController {
-    private final DataSignal<Boolean> shopExited = new DataSignal<>();
+    private final EmptySignal shopEntered = new EmptySignal();
+    private final EmptySignal shopExited = new EmptySignal();
+
     private final Shop shop;
+    private final Inventory playerInventory;
 
-    public ShopController(Shop shop) {
+    public ShopController(Shop shop, Inventory playerInventory) {
         this.shop = shop;
+        this.playerInventory = playerInventory;
     }
 
-    public void openShop() {
-        // Implement shop opening logic here
+    public void enterShop() {
+        shop.populateWithItems();
+        shopEntered.emit();
     }
 
-    public void shopExitedConnect(Consumer<Boolean> listener) {
-        shopExited.connect(listener);
+    public void exitShop() {
+        shop.clearItems();
+        shopExited.emit();
     }
 
-    public List<String> getShopItemLines(Shop shop) {
+    public List<String> getShopItemLines() {
         return shop.getItemsForSale().stream()
-                .map(item -> item.getName() + " (" + item.getCost() + "g) - " + item.getDescription())
+                .map(buyable -> "%s (%dg) - %s".formatted(
+                        buyable.getName(), buyable.getCost(), buyable.getDescription()))
                 .toList();
     }
 
     public int getPlayerGold() {
-        return shop.getPlayer().getGold();
+        return playerInventory.getGoldAmount();
     }
 
-    public boolean buyShopItem(Shop shop, int index) {
-        return shop.buy(index, shop.getPlayer());
+    public boolean buyShopItem(int index) {
+        return shop.buy(index);
     }
 
-    public boolean playerHasPurchasedCards(){
-        return shop.getPlayer().hasPurchasedCards();
+    public boolean playerHasItems() {
+        return playerInventory.hasItems();
+    }
+
+    public void shopEnteredConnect(Runnable runnable) {
+        shopEntered.connect(runnable);
+    }
+
+    public void shopExitedConnect(Runnable runnable) {
+        shopExited.connect(runnable);
     }
 }

@@ -1,15 +1,21 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
+import blackjack.core.inventory.Inventory;
 import blackjack.entity.Entity;
 
 public class EndTurnState implements State {
     private final Entity player;
     private final Entity enemy;
+    private final Inventory playerInventory;
+    private final Inventory enemyInventory;
 
-    public EndTurnState(Entity player, Entity enemy) {
+    public EndTurnState(Entity player, Entity enemy,
+            Inventory playerInventory, Inventory enemyInventory) {
         this.player = player;
         this.enemy = enemy;
+        this.playerInventory = playerInventory;
+        this.enemyInventory = enemyInventory;
     }
 
     @Override
@@ -24,7 +30,8 @@ public class EndTurnState implements State {
         }
 
         if (playerWin(globalStand, playerSum, enemySum)) {
-            enemy.takeDamage(playerSum);
+            playerInventory.triggerItemsAuto(core.getBattleContextDTO());
+            enemy.takeDamage(player.calculateAttackDamage());
             if (!enemy.isAlive()) {
                 core.activateEndGameState();
                 return;
@@ -32,7 +39,8 @@ public class EndTurnState implements State {
 
             endTurn(core, player.getName());
         } else {
-            player.takeDamage(enemySum);
+            enemyInventory.triggerItemsAuto(core.getBattleContextDTO());
+            player.takeDamage(enemy.calculateAttackDamage());
             if (!player.isAlive()) {
                 core.activateEndGameState();
                 return;

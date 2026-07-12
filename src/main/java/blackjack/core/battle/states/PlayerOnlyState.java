@@ -1,13 +1,16 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
+import blackjack.core.inventory.Inventory;
 import blackjack.entity.Entity;
 
 public class PlayerOnlyState implements State {
     private final Entity player;
+    private final Inventory playerInventory;
 
-    public PlayerOnlyState(Entity player) {
+    public PlayerOnlyState(Entity player, Inventory playerInventory) {
         this.player = player;
+        this.playerInventory = playerInventory;
     }
 
     @Override
@@ -41,8 +44,8 @@ public class PlayerOnlyState implements State {
     }
 
     @Override
-    public void useBoughtCard(BattleCore core, int idx){
-        player.usePurchasedCard(idx);
+    public void useItem(BattleCore core, int idx){
+        playerInventory.triggerItem(idx, core.getBattleContextDTO());
 
         int handSum = player.calculateHandSum();
 

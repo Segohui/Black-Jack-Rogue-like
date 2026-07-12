@@ -1,5 +1,6 @@
 package blackjack.core.battle.states;
 
+import blackjack.core.inventory.Inventory;
 import blackjack.entity.Entity;
 import blackjack.entity.enemy.behaviors.Behavior;
 
@@ -7,11 +8,16 @@ public class StateFactory {
     private final Entity player;
     private final Entity enemy;
     private final Behavior enemyBehavior;
+    private final Inventory playerInventory;
+    private final Inventory enemyInventory;
 
-    public StateFactory(Entity player, Entity enemy, Behavior enemyBehavior) {
+    public StateFactory(Entity player, Entity enemy, Behavior enemyBehavior,
+            Inventory playerInventory, Inventory enemyInventory) {
         this.player = player;
         this.enemy = enemy;
         this.enemyBehavior = enemyBehavior;
+        this.playerInventory = playerInventory;
+        this.enemyInventory = enemyInventory;
     }
 
     public State createStartRoundState() {
@@ -19,11 +25,11 @@ public class StateFactory {
     }
 
     public State createPlayerTurnState() {
-        return new PlayerTurnState(player);
+        return new PlayerTurnState(player, playerInventory);
     }
 
     public State createPlayerOnlyState() {
-        return new PlayerOnlyState(player);
+        return new PlayerOnlyState(player, playerInventory);
     }
 
     public State createEnemyTurnState() {
@@ -35,10 +41,10 @@ public class StateFactory {
     }
 
     public State createEndTurnState() {
-        return new EndTurnState(player, enemy);
+        return new EndTurnState(player, enemy, playerInventory, enemyInventory);
     }
 
     public State createEndGameState() {
-        return new EndGameState(player, enemy);
+        return new EndGameState(player, enemy, playerInventory, enemyInventory);
     }
 }

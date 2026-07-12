@@ -1,7 +1,6 @@
 package blackjack.visual.terminal.screens.shop;
 
 import blackjack.controller.ShopController;
-import blackjack.core.shop.Shop;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
 
@@ -14,7 +13,7 @@ public class ShopScreenFactory {
         this.controller = controller;
     }
 
-    public Screen createShopScreen(Shop shop) {
-        return new ShopScreen(io, controller, shop);
+    public Screen createShopScreen() {
+        return new ShopScreen(io, controller);
     }
 }

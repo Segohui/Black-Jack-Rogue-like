@@ -51,10 +51,10 @@ public class GameManager {
     private void startShopRoom() {
         ShopController shopController = controllerFactory.createShop();
         
-        shopController.shopExitedConnect(v -> startCombatRoom());
+        shopController.shopExitedConnect(this::startCombatRoom);
         
         shopStarted.emit(shopController);
-        shopController.openShop();
+        shopController.enterShop();
     }
 
     private void playerLoseMenu() {
