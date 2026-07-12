@@ -15,4 +15,8 @@ public class EmptySignal {
             runnable.run();
         }
     }
+
+    public void clear() {
+        connections.clear();
+    }
 } 

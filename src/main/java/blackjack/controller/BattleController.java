@@ -3,23 +3,19 @@ package blackjack.controller;
 import java.util.List;
 import java.util.function.Consumer;
 
-import blackjack.core.DataSignal;
 import blackjack.core.battle.BattleCore;
 import blackjack.core.cards.Card;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.CombatOverDTO;
 import blackjack.dto.DamageEventDTO;
 import blackjack.dto.EntityStateDTO;
-import blackjack.entity.AIRecord;
+import blackjack.entity.enemy.AIRecord;
 
 public class BattleController {
     private final BattleCore core;
 
-    private final DataSignal<Boolean> playerWon = new DataSignal<>(); 
-
     public BattleController(BattleCore core) {
         this.core = core;
-        core.combatOverDataConnect(this::handleCombatOverData);
     }
 
     public void initializeEnemy(AIRecord aiRecord) {
@@ -28,10 +24,6 @@ public class BattleController {
 
     public void startBattle() {
         core.startCombat();
-    }
-
-    private void handleCombatOverData(CombatOverDTO combatOverDTO) {
-        playerWon.emit(combatOverDTO.isPlayerControlled());
     }
 
     public EntityStateDTO getEnemyData() {
@@ -113,9 +105,5 @@ public class BattleController {
 
     public void combatOverDataConnect(Consumer<CombatOverDTO> listener) {
         core.combatOverDataConnect(listener);
-    }
-
-    public void playerAliveConnect(Consumer<Boolean> listener) {
-        playerWon.connect(listener);
     }
 }

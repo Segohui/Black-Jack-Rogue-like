@@ -101,7 +101,7 @@ public class InputOutput {
     }
 
     public void clearScreen() {
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 50; i++) {
             System.out.println();
         }
     }

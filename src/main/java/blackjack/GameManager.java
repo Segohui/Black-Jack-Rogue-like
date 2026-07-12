@@ -6,18 +6,22 @@ import blackjack.controller.ControllerFactory;
 import blackjack.controller.MenuController;
 import blackjack.controller.ShopController;
 import blackjack.core.DataSignal;
-import blackjack.entity.EnemyFactory;
+import blackjack.dto.CombatOverDTO;
+import blackjack.entity.enemy.factory.AbstractEnemyFactory;
+import blackjack.entity.enemy.factory.MineEnemiesFactory;
 
 public class GameManager {
     private final DataSignal<BattleController> battleStarted = new DataSignal<>();
     private final DataSignal<ShopController> shopStarted = new DataSignal<>();
     private final DataSignal<MenuController> menuStarted = new DataSignal<>();
-
-    private final EnemyFactory enemyFactory = new EnemyFactory();
     private final ControllerFactory controllerFactory;
+
+    private AbstractEnemyFactory currentEnemyFactory;
+    private float difficultyMultiplier = 1;
 
     public GameManager(ControllerFactory controllerFactory) {
         this.controllerFactory = controllerFactory;
+        this.currentEnemyFactory = new MineEnemiesFactory();
     }
 
     // Game States
@@ -29,12 +33,15 @@ public class GameManager {
         menuController.quitSelectedConnect(this::exitGame);
         
         menuStarted.emit(menuController);
+        menuController.startMenu();
     }
 
     public void startCombatRoom() {
         BattleController battleController = controllerFactory.createBattle();
-        battleController.playerAliveConnect(this::onBattleEnd);
-        battleController.initializeEnemy(enemyFactory.generateRandomEnemy((float) 1));
+        battleController.combatOverDataConnect(this::onBattleEnd);
+        
+        battleController.initializeEnemy(currentEnemyFactory.generateRandomEnemy(difficultyMultiplier));
+        
         battleStarted.emit(battleController);
         battleController.startBattle();
     }
@@ -48,12 +55,28 @@ public class GameManager {
         shopController.openShop();
     }
 
-    private void onBattleEnd(boolean isPlayerAlive) {
-        if (isPlayerAlive) {
+    public void playerLoseMenu() {
+        MenuController menuController = controllerFactory.createMenu();
+
+        menuController.playSelectedConnect(this::startCombatRoom);
+        menuController.quitSelectedConnect(this::exitGame);
+        
+        menuStarted.emit(menuController);
+
+        menuController.selectLose();
+    }
+
+    private void onBattleEnd(CombatOverDTO combatOverDTO) {
+        if (combatOverDTO.isPlayerControlled()) {
+            difficultyMultiplier += 0.1; 
             startShopRoom();
         } else {
-            exitGame();
+            playerLoseMenu();
         }
+    }
+
+    public void changeEnemyFactory(AbstractEnemyFactory newEnemyFactory) {
+        this.currentEnemyFactory = newEnemyFactory;
     }
 
     public void exitGame() {

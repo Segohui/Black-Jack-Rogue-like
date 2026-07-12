@@ -5,23 +5,23 @@ import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.ActionPrompter;
 import blackjack.visual.terminal.screens.Screen;
 
-public class TitleScreen implements Screen {
+public class LoseScreen implements Screen {
     private final InputOutput io;
     private final MenuController controller;
 
-    public TitleScreen(InputOutput io, MenuController controller) {
+    public LoseScreen(InputOutput io, MenuController controller) {
         this.io = io;
         this.controller = controller;
     }
 
     @Override
     public void render() {
-        io.printHeader("Black Jack Rogue Like");
-        
+        io.printUpdate("You lost the game!");
+        io.printMessage("\nWould you like to retry?");
         ActionPrompter actionPrompter = new ActionPrompter(io);
-        actionPrompter.addAction("Start Game", controller::selectPlay);
-        actionPrompter.addAction("Exit", controller::selectQuit);
-        actionPrompter.addAction("Instructions", controller::selectInstructions);
+
+        actionPrompter.addAction("yes", controller::startMenu);
+        actionPrompter.addAction("no", controller::selectQuit);
         actionPrompter.promptAndRun();
     }
 }

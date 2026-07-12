@@ -3,18 +3,18 @@ package blackjack.visual.terminal.screens.battle;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
 
-public class NotificationScreen implements Screen {
+public class EntityStandScreen implements Screen {
     private final InputOutput io;
-    private final String message;
+    private final String entityName;
 
-    public NotificationScreen(InputOutput io, String message) {
+    public EntityStandScreen(InputOutput io, String entityName) {
         this.io = io;
-        this.message = message;
+        this.entityName = entityName;
     }
 
     public void render() {
         io.printLine();
-        io.printUpdate(message);
+        io.printUpdate(entityName + " stand! (will take half damage)");
         io.enterToProceed();
     }
 }
