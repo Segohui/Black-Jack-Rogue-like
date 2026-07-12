@@ -16,4 +16,8 @@ public class DataSignal<T> {
             listener.accept(data);
         }
     }
+
+    public void clear() {
+        connections.clear();
+    }
 }

@@ -5,6 +5,7 @@ import blackjack.core.EmptySignal;
 public class MenuController {
     private final EmptySignal playSelected = new EmptySignal();
     private final EmptySignal quitSelected = new EmptySignal();
+    private final EmptySignal playerLose = new EmptySignal();
     private final EmptySignal instructionsSelected = new EmptySignal();
     private final EmptySignal startMenu = new EmptySignal();
 
@@ -26,8 +27,13 @@ public class MenuController {
         quitSelected.emit();
     }
 
+    public void selectLose() {
+        playerLose.emit();
+    }
+
     public void playSelectedConnect(Runnable runnable) { playSelected.connect(runnable); }
     public void quitSelectedConnect(Runnable runnable) { quitSelected.connect(runnable); }
     public void instructionsSelectedConnect(Runnable runnable) { instructionsSelected.connect(runnable); }
-    public void startMenuConnect(Runnable runnable) {startMenu.connect(runnable); }
+    public void startMenuConnect(Runnable runnable) { startMenu.connect(runnable); }
+    public void playerLoseConnect(Runnable runnable) { playerLose.connect(runnable); }
 }

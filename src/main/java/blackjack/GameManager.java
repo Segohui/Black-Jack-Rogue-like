@@ -6,6 +6,7 @@ import blackjack.controller.ControllerFactory;
 import blackjack.controller.MenuController;
 import blackjack.controller.ShopController;
 import blackjack.core.DataSignal;
+import blackjack.dto.CombatOverDTO;
 import blackjack.entity.enemy.factory.AbstractEnemyFactory;
 import blackjack.entity.enemy.factory.MineEnemiesFactory;
 
@@ -37,7 +38,7 @@ public class GameManager {
 
     public void startCombatRoom() {
         BattleController battleController = controllerFactory.createBattle();
-        battleController.playerAliveConnect(this::onBattleEnd);
+        battleController.combatOverDataConnect(this::onBattleEnd);
         
         battleController.initializeEnemy(currentEnemyFactory.generateRandomEnemy(difficultyMultiplier));
         
@@ -54,12 +55,23 @@ public class GameManager {
         shopController.openShop();
     }
 
-    private void onBattleEnd(boolean isPlayerAlive) {
-        if (isPlayerAlive) {
+    public void playerLoseMenu() {
+        MenuController menuController = controllerFactory.createMenu();
+
+        menuController.playSelectedConnect(this::startCombatRoom);
+        menuController.quitSelectedConnect(this::exitGame);
+        
+        menuStarted.emit(menuController);
+
+        menuController.selectLose();
+    }
+
+    private void onBattleEnd(CombatOverDTO combatOverDTO) {
+        if (combatOverDTO.isPlayerControlled()) {
             difficultyMultiplier += 0.1; 
             startShopRoom();
         } else {
-            exitGame();
+            playerLoseMenu();
         }
     }
 

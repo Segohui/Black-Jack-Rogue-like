@@ -17,6 +17,8 @@ public class MenuViewTerminal {
 
         controller.startMenuConnect(this::renderStartMenu);
         controller.instructionsSelectedConnect(this::onInstructionsSelected);
+        controller.quitSelectedConnect(this::onQuitSelected);
+        controller.playerLoseConnect(this::onPlayerLose);
     }
 
     private void renderStartMenu() {
@@ -27,10 +29,18 @@ public class MenuViewTerminal {
     private void navigateToScreen(Screen newScreen) {
         io.clearScreen();
         newScreen.render();
-        renderStartMenu();
     }
 
     public void onInstructionsSelected() {
         navigateToScreen(menuScreenFactory.createInstructionsScreen());
+        renderStartMenu();
+    }
+
+    public void onQuitSelected() {
+        navigateToScreen(menuScreenFactory.createQuitScreen());
+    }
+
+    public void onPlayerLose() {
+        navigateToScreen(menuScreenFactory.createLoseScreen());
     }
 }

@@ -40,6 +40,13 @@ public class CombatEntity implements Entity {
         return new DamageEventDTO(name, damageTaken);
     }
 
+    @Override 
+    public void clearSignals() {
+        drawCard.clear();
+        entityStand.clear();
+        takeDamage.clear();
+    }
+
     @Override
     public String getName() {
         return name;

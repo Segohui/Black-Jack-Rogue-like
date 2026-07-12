@@ -20,4 +20,12 @@ public class MenuScreenFactory {
     public Screen createInstructionsScreen() {
         return new InstructionsScreen(io);
     }
+
+    public Screen createQuitScreen() {
+        return new QuitScreen(io);
+    }
+
+    public Screen createLoseScreen() {
+        return new LoseScreen(io, controller);
+    }
 }
