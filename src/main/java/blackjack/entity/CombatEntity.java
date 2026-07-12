@@ -42,9 +42,9 @@ public class CombatEntity implements Entity {
 
     @Override 
     public void clearSignals() {
-        drawCard.clear();
-        entityStand.clear();
-        takeDamage.clear();
+        drawCard.clearConnections();
+        entityStand.clearConnections();
+        takeDamage.clearConnections();
     }
 
     @Override
