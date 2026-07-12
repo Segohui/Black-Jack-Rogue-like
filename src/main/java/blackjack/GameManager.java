@@ -8,7 +8,7 @@ import blackjack.controller.ShopController;
 import blackjack.core.DataSignal;
 import blackjack.dto.CombatOverDTO;
 import blackjack.entity.enemy.factory.AbstractEnemyFactory;
-import blackjack.entity.enemy.factory.MineEnemiesFactory;
+import blackjack.entity.enemy.factory.CombinedEnemiesFactory;
 
 public class GameManager {
     private final DataSignal<BattleController> battleStarted = new DataSignal<>();
@@ -21,7 +21,7 @@ public class GameManager {
 
     public GameManager(ControllerFactory controllerFactory) {
         this.controllerFactory = controllerFactory;
-        this.currentEnemyFactory = new MineEnemiesFactory();
+        this.currentEnemyFactory = new CombinedEnemiesFactory();
     }
 
     // Game States
