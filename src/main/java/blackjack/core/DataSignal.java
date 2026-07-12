@@ -17,7 +17,7 @@ public class DataSignal<T> {
         }
     }
 
-    public void clear() {
+    public void clearConnections() {
         connections.clear();
     }
 }
