@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import blackjack.core.DataSignal;
 import blackjack.core.cards.Card;
+import blackjack.core.cards.Deck;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.DamageEventDTO;
 import blackjack.entity.components.CardsComponent;
@@ -22,10 +23,10 @@ public class CombatEntity implements Entity {
     private final DataSignal<String> entityStand = new DataSignal<>();
     private final DataSignal<DamageEventDTO> takeDamage = new DataSignal<>();
 
-    public CombatEntity(String name, int maxHp, boolean isPlayerControlled) {
+    public CombatEntity(String name, Deck deck, int maxHp, boolean isPlayerControlled) {
         this.name = name;
         this.isPlayerControlled = isPlayerControlled;
-        this.cardsComponent = new CardsComponent();
+        this.cardsComponent = new CardsComponent(deck);
         this.healthComponent = new HealthComponent(maxHp);
         this.currencyComponent = new CurrencyComponent(0);
     }
@@ -142,8 +143,14 @@ public class CombatEntity implements Entity {
         currencyComponent.add(amount);
     }
 
-    @Override public boolean isPlayerControlled() {
+    @Override
+    public boolean isPlayerControlled() {
         return isPlayerControlled;
+    }
+
+    @Override
+    public Card discardLastCardInHand() {
+        return cardsComponent.discardLastCardInHand();
     }
 
     // Signals Handling

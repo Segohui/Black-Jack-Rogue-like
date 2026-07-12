@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Function;
 
+import blackjack.core.cards.Deck;
 import blackjack.entity.behaviors.ThresholdBehavior;
 
 public class EnemyFactory {
@@ -53,7 +54,7 @@ public class EnemyFactory {
         int standThreshold = 6;
         String name = "Villager";
 
-        Entity enemy = new CombatEntity(name, hp, false);
+        Entity enemy = new CombatEntity(name, new Deck(), hp, false);
         Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
         return new AIRecord(enemy, behavior);
     }
@@ -63,7 +64,7 @@ public class EnemyFactory {
         int standThreshold = 4;
         String name = "Zombie";
 
-        Entity enemy = new CombatEntity(name, hp, false);
+        Entity enemy = new CombatEntity(name, new Deck(), hp, false);
         Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
         return new AIRecord(enemy, behavior);
     }
@@ -73,7 +74,7 @@ public class EnemyFactory {
         int standThreshold = 3;
         String name = "Herobrine";
 
-        Entity enemy = new CombatEntity(name, hp, false);
+        Entity enemy = new CombatEntity(name, new Deck(), hp, false);
         Behavior behavior = new ThresholdBehavior(enemy, standThreshold);
         return new AIRecord(enemy, behavior);
     }

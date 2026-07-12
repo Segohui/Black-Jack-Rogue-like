@@ -1,16 +1,18 @@
-package blackjack.core.shop.items;
+package blackjack.core.shop.buyables;
 
 import blackjack.core.cards.Card;
-import blackjack.core.shop.ShopItem;
-import blackjack.entity.Entity;
+import blackjack.core.cards.Deck;
+import blackjack.core.shop.Buyable;
 
-public class CardItem implements ShopItem {
+public class CardBuyable implements Buyable {
     private final Card card;
     private final int cost;
+    private final Deck deck;
 
-    public CardItem(Card card, int cost) {
+    public CardBuyable(Card card, int cost, Deck deck) {
         this.card = card;
         this.cost = cost;
+        this.deck = deck;
     }
 
     @Override
@@ -20,7 +22,7 @@ public class CardItem implements ShopItem {
 
     @Override
     public String getDescription() {
-        return "Adds this card to your available cards";
+        return "Adds this card to your deck";
     }
 
     @Override
@@ -29,7 +31,7 @@ public class CardItem implements ShopItem {
     }
 
     @Override
-    public void apply(Entity player) {
-        player.addPurchasedCard(card);
+    public void buy() {
+        deck.addCard(card);
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.core.cards;
 
+import java.util.Objects;
+
 import blackjack.core.cards.enums.Rank;
 import blackjack.core.cards.enums.Suit;
 
@@ -28,5 +30,25 @@ public class Card {
     @Override
     public String toString() {
         return this.rank.toString() + " | " + this.suit.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Card other = (Card) o;
+        
+        return (other.rank == this.rank
+                && other.suit == this.suit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rank, suit);
     }
 }

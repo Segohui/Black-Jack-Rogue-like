@@ -29,6 +29,7 @@ public interface Entity {
     void spend(int cost);
     void addGold(int amount);
     boolean isPlayerControlled();
+    Card discardLastCardInHand();
 
     // Signals handling
 

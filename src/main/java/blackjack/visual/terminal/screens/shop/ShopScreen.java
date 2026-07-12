@@ -3,7 +3,6 @@ package blackjack.visual.terminal.screens.shop;
 import java.util.List;
 
 import blackjack.controller.ShopController;
-import blackjack.core.shop.Shop;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.ActionPrompter;
 import blackjack.visual.terminal.screens.Screen;
@@ -11,14 +10,12 @@ import blackjack.visual.terminal.screens.Screen;
 public class ShopScreen implements Screen {
     private final InputOutput io;
     private final ShopController controller;
-    private final Shop shop;
 
     private boolean shopping = true;
 
-    public ShopScreen(InputOutput io, ShopController controller, Shop shop) {
+    public ShopScreen(InputOutput io, ShopController controller) {
         this.io = io;
         this.controller = controller;
-        this.shop = shop;
     }
 
     @Override
@@ -30,10 +27,10 @@ public class ShopScreen implements Screen {
 
             ActionPrompter actionPrompter = new ActionPrompter(io);
 
-            List<String> items = controller.getShopItemLines(shop);
+            List<String> items = controller.getShopItemLines();
             for (int i = 0; i < items.size(); i++) {
                 int idx = i; // need this for the lambda
-                actionPrompter.addAction(items.get(i), () -> buyShopItem(shop, idx));
+                actionPrompter.addAction(items.get(i), () -> buyShopItem(idx));
             }
             actionPrompter.defineBottomAction("Leave shop", () -> shopping = false);
             
@@ -41,8 +38,8 @@ public class ShopScreen implements Screen {
         }
     }
 
-    private void buyShopItem(Shop shop, int index) {
-        boolean success = controller.buyShopItem(shop, index);
+    private void buyShopItem(int index) {
+        boolean success = controller.buyShopItem(index);
         io.printUpdate(success ? "Purchased!" : "Not enough gold.");
     }
 }
