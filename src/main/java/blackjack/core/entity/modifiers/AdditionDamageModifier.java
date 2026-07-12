@@ -1,4 +1,4 @@
-package blackjack.entity.modifiers;
+package blackjack.core.entity.modifiers;
 
 public class AdditionDamageModifier implements DamageModifier {
     private final int extra;

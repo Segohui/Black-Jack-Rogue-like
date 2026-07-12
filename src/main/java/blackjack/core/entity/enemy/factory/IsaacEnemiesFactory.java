@@ -1,20 +1,20 @@
-package blackjack.entity.enemy.factory;
+package blackjack.core.entity.enemy.factory;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 import blackjack.core.cards.Deck;
+import blackjack.core.entity.CombatEntity;
+import blackjack.core.entity.Entity;
+import blackjack.core.entity.enemy.blueprints.EnemyBlueprint;
+import blackjack.core.entity.enemy.blueprints.IsaacEnemies;
 import blackjack.core.inventory.Inventory;
 import blackjack.dtos.entity.AIRecordDTO;
-import blackjack.entity.CombatEntity;
-import blackjack.entity.Entity;
-import blackjack.entity.enemy.blueprints.MineEnemies;
-import blackjack.entity.enemy.blueprints.EnemyBlueprint;
 
-public class MineEnemiesFactory implements AbstractEnemyFactory {
+public class IsaacEnemiesFactory implements AbstractEnemyFactory {
 
     @Override
     public AIRecordDTO generateRandomEnemy(float difficultyMultiplier) {
-        MineEnemies[] enemyPool = MineEnemies.values();
+        IsaacEnemies[] enemyPool = IsaacEnemies.values();
         int randomIndex = ThreadLocalRandom.current().nextInt(enemyPool.length);
         EnemyBlueprint blueprint = enemyPool[randomIndex];
 

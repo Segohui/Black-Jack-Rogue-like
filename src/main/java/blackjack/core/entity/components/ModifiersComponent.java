@@ -1,4 +1,4 @@
-package blackjack.entity.components;
+package blackjack.core.entity.components;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import blackjack.core.cards.Card;
-import blackjack.entity.modifiers.DamageModifier;
+import blackjack.core.entity.modifiers.DamageModifier;
 
 public class ModifiersComponent {
     private final List<DamageModifier> outputModifiers = new ArrayList<>();

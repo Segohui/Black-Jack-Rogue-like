@@ -1,6 +1,6 @@
-package blackjack.entity.enemy.behaviors;
+package blackjack.core.entity.enemy.behaviors;
 
-import blackjack.entity.Entity;
+import blackjack.core.entity.Entity;
 
 public class ThresholdBehaviour implements Behavior {
     private final int standThreshold;

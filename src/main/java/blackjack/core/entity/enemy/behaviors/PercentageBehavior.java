@@ -1,7 +1,9 @@
-package blackjack.entity.enemy.behaviors;
+package blackjack.core.entity.enemy.behaviors;
 
 import java.util.concurrent.ThreadLocalRandom;
-import blackjack.entity.Entity;
+
+import blackjack.core.entity.Entity;
+
 import java.lang.Math;
 
 public class PercentageBehavior implements Behavior {

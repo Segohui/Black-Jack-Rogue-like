@@ -7,6 +7,8 @@ import blackjack.core.battle.states.State;
 import blackjack.core.battle.states.StateFactory;
 import blackjack.core.cards.Card;
 import blackjack.core.cards.Deck;
+import blackjack.core.entity.Entity;
+import blackjack.core.entity.enemy.behaviors.Behavior;
 import blackjack.core.inventory.Inventory;
 import blackjack.core.signal.DataSignal;
 import blackjack.core.signal.EmptySignal;
@@ -14,8 +16,6 @@ import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.CombatOverDTO;
 import blackjack.dtos.core.battle.DamageEventDTO;
 import blackjack.dtos.entity.AIRecordDTO;
-import blackjack.entity.Entity;
-import blackjack.entity.enemy.behaviors.Behavior;
 
 public class BattleCore {
     private final EmptySignal playerTurn = new EmptySignal();

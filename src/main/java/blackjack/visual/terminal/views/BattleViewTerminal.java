@@ -1,4 +1,4 @@
-package blackjack.visual.terminal.view;
+package blackjack.visual.terminal.views;
 
 import blackjack.controller.BattleController;
 import blackjack.dtos.core.battle.CardDrawEventDTO;

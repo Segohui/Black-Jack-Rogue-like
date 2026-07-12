@@ -4,12 +4,12 @@ import java.util.function.Consumer;
 
 import blackjack.core.battle.BattleContextDTO;
 import blackjack.core.cards.Card;
+import blackjack.core.entity.Entity;
+import blackjack.core.entity.modifiers.MultDamageModifier;
 import blackjack.core.inventory.Item;
 import blackjack.core.inventory.ItemInfo;
 import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.items.ItemType;
-import blackjack.entity.Entity;
-import blackjack.entity.modifiers.MultDamageModifier;
 
 public class FaceSurgery implements Item {
     private final DataSignal<Item> triggered = new DataSignal<>();

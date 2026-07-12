@@ -1,6 +1,6 @@
-package blackjack.entity.enemy.blueprints;
+package blackjack.core.entity.enemy.blueprints;
 
-import blackjack.entity.enemy.behaviors.Behavior;
+import blackjack.core.entity.enemy.behaviors.Behavior;
 
 public interface EnemyBlueprint {
     String getName();

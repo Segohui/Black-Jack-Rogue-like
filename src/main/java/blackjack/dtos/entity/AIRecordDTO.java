@@ -1,7 +1,7 @@
 package blackjack.dtos.entity;
 
+import blackjack.core.entity.Entity;
+import blackjack.core.entity.enemy.behaviors.Behavior;
 import blackjack.core.inventory.Inventory;
-import blackjack.entity.Entity;
-import blackjack.entity.enemy.behaviors.Behavior;
 
 public record AIRecordDTO(Entity entity, Behavior behavior, Inventory inventory) {}

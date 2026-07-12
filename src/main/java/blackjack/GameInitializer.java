@@ -3,13 +3,13 @@ package blackjack;
 import blackjack.controller.ControllerFactory;
 import blackjack.core.battle.BattleCore;
 import blackjack.core.cards.Deck;
+import blackjack.core.entity.CombatEntity;
+import blackjack.core.entity.Entity;
 import blackjack.core.inventory.Inventory;
 import blackjack.core.inventory.ItemRegistry;
 import blackjack.core.shop.Shop;
-import blackjack.entity.CombatEntity;
-import blackjack.entity.Entity;
 import blackjack.visual.InputOutput;
-import blackjack.visual.terminal.view.ViewRouter;
+import blackjack.visual.terminal.views.ViewRouter;
 
 public class GameInitializer {
     private final InputOutput io; 

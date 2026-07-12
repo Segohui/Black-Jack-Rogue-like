@@ -1,7 +1,7 @@
-package blackjack.entity.enemy.blueprints;
+package blackjack.core.entity.enemy.blueprints;
 
-import blackjack.entity.enemy.behaviors.Behavior;
-import blackjack.entity.enemy.behaviors.ThresholdBehaviour;
+import blackjack.core.entity.enemy.behaviors.Behavior;
+import blackjack.core.entity.enemy.behaviors.ThresholdBehaviour;
 
 public enum MineEnemies implements EnemyBlueprint {  
     VILLAGER("Villager", 20, 5, new ThresholdBehaviour(6)),

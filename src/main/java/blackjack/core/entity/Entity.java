@@ -1,12 +1,12 @@
-package blackjack.entity;
+package blackjack.core.entity;
 
 import java.util.List;
 import java.util.function.Consumer;
 
 import blackjack.core.cards.Card;
+import blackjack.core.entity.modifiers.DamageModifier;
 import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.DamageEventDTO;
-import blackjack.entity.modifiers.DamageModifier;
 
 public interface Entity {
     String getName();

@@ -1,4 +1,4 @@
-package blackjack.visual.terminal.view;
+package blackjack.visual.terminal.views;
 
 import blackjack.controller.ShopController;
 import blackjack.visual.InputOutput;

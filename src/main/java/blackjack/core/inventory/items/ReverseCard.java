@@ -8,9 +8,9 @@ import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.items.ItemType;
 import blackjack.core.battle.BattleContextDTO;
 import blackjack.core.cards.Card;
+import blackjack.core.entity.Entity;
 import blackjack.core.inventory.Item;
 import blackjack.core.inventory.ItemInfo;
-import blackjack.entity.Entity;
 import blackjack.exceptions.DeadItemException;
 
 public class ReverseCard implements Item {

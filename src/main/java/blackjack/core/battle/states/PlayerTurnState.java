@@ -1,7 +1,7 @@
 package blackjack.core.battle.states;
 
-import blackjack.entity.Entity;
 import blackjack.core.battle.BattleCore;
+import blackjack.core.entity.Entity;
 import blackjack.core.inventory.Inventory;
 
 public class PlayerTurnState implements State {

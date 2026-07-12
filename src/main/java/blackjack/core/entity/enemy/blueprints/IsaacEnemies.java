@@ -1,9 +1,9 @@
-package blackjack.entity.enemy.blueprints;
+package blackjack.core.entity.enemy.blueprints;
 
 import java.util.function.Supplier;
 
-import blackjack.entity.enemy.behaviors.Behavior;
-import blackjack.entity.enemy.behaviors.PercentageBehavior;
+import blackjack.core.entity.enemy.behaviors.Behavior;
+import blackjack.core.entity.enemy.behaviors.PercentageBehavior;
 
 public enum IsaacEnemies implements EnemyBlueprint {  
     DOPLE("Dople", 20, 5, () -> new PercentageBehavior(1.0)),

@@ -1,4 +1,4 @@
-package blackjack.entity.components;
+package blackjack.core.entity.components;
 
 import java.util.ArrayList;
 import java.util.Collections;
