@@ -27,7 +27,7 @@ public class MineEnemiesFactory implements AbstractEnemyFactory {
     private AIRecord buildEnemy(EnemyBlueprint blueprint, float multiplier) {
         int finalHp = (int) (blueprint.getBaseHp() * multiplier);
         
-        Entity enemyEntity = new CombatEntity(blueprint.getName(), blueprint.getBaseHp(), false);
+        Entity enemyEntity = new CombatEntity(blueprint.getName(), finalHp, false);
 
         enemyEntity.addGold(blueprint.getGoldReward());
         

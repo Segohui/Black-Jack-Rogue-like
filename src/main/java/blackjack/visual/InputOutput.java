@@ -84,7 +84,7 @@ public class InputOutput {
     }
 
     public void printEntityState(EntityStateDTO entityData) {
-        printColored(entityData.name() + " 's hand (" + entityData.currentSum() + "): ", ConsoleColors.CYAN);
+        printColored(entityData.name() + "'s hand (" + entityData.currentSum() + "): ", ConsoleColors.CYAN);
         printColored("Hp: " + entityData.hp(), ConsoleColors.RED);
         printDivider("-");
         printMessage("Hand:");
