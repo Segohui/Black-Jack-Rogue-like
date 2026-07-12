@@ -22,6 +22,8 @@ public class CombatEntity implements Entity {
     private final DataSignal<String> entityStand = new DataSignal<>();
     private final DataSignal<DamageEventDTO> takeDamage = new DataSignal<>();
 
+    private boolean hasStand = false;
+
     public CombatEntity(String name, int maxHp, boolean isPlayerControlled) {
         this.name = name;
         this.isPlayerControlled = isPlayerControlled;
@@ -67,6 +69,7 @@ public class CombatEntity implements Entity {
     public void battleReset() {
         healthComponent.resetHp();
         cardsComponent.resetStack();
+        hasStand = false;
         roundReset();
     }
 
@@ -78,6 +81,7 @@ public class CombatEntity implements Entity {
 
     @Override
     public void stand() {
+        hasStand = true;
         emitEntityStand();
     }
 
@@ -88,6 +92,10 @@ public class CombatEntity implements Entity {
 
     @Override
     public void takeDamage(int damage) {
+        if (hasStand) {
+            damage = Math.ceilDiv(damage, 2);
+        }
+        
         healthComponent.takeDamage(damage);
         takeDamage.emit(createDamageEventData(damage));
     }

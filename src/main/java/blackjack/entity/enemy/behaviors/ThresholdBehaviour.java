@@ -1,29 +1,29 @@
-package blackjack.entity.behaviors;
+package blackjack.entity.enemy.behaviors;
 
-import blackjack.entity.Behavior;
 import blackjack.entity.Entity;
 
-public class ThresholdBehavior implements Behavior {
-    private final Entity entity;
+public class ThresholdBehaviour implements Behavior {
     private final int standThreshold;
-
-    public ThresholdBehavior(Entity entity, int standThreshold) {
-        this.entity = entity;
+    public ThresholdBehaviour(int standThreshold) {
         this.standThreshold = standThreshold;
     }
 
     @Override
-    public void playTurn(int globalStand) {
+    public void playTurn(Entity entity, int globalStand) {
         int standValue = calculateStandValue(globalStand);
         int handSum = entity.calculateHandSum();
+        
         if (handSum < standValue) {
             entity.hit();
+        } else {
+            entity.stand();
         }
     }
 
     @Override
-    public boolean hasStopped(int globalStand) {
-        return (calculateStandValue(globalStand) >= standThreshold);
+    public boolean hasStopped(Entity entity, int globalStand) {
+        int handSum = entity.calculateHandSum();
+        return (handSum >= calculateStandValue(globalStand));
     }
 
     private int calculateStandValue(int globalStand) {

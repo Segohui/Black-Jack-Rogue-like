@@ -10,7 +10,7 @@ import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.CombatOverDTO;
 import blackjack.dto.DamageEventDTO;
 import blackjack.dto.EntityStateDTO;
-import blackjack.entity.AIRecord;
+import blackjack.entity.enemy.AIRecord;
 
 public class BattleController {
     private final BattleCore core;

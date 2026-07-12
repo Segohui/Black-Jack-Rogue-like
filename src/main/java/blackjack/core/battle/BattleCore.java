@@ -11,15 +11,18 @@ import blackjack.core.cards.Card;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.CombatOverDTO;
 import blackjack.dto.DamageEventDTO;
-import blackjack.entity.AIRecord;
-import blackjack.entity.Behavior;
 import blackjack.entity.Entity;
+import blackjack.entity.enemy.AIRecord;
+import blackjack.entity.enemy.behaviors.Behavior;
 
 public class BattleCore {
     private final EmptySignal playerTurn = new EmptySignal();
 
     private final DataSignal<String> roundOverData = new DataSignal<>();
     private final DataSignal<CombatOverDTO> combatOverData = new DataSignal<>();
+    private final DataSignal<DamageEventDTO> enemyTakeDamageSignal = new DataSignal<>();
+    private final DataSignal<CardDrawEventDTO> enemyDrawCardSignal = new DataSignal<>();
+    private final DataSignal<String> enemyStandSignal = new DataSignal<>();
 
     private final Entity player;
     private int globalStand = 21; // may change with power ups
@@ -46,6 +49,9 @@ public class BattleCore {
     public void resetEnemy(AIRecord enemyRecord) {
         this.enemy = enemyRecord.entity();
         this.enemyBehavior = enemyRecord.behavior();
+        this.enemy.takeDamageConnect(this.enemyTakeDamageSignal::emit);
+        this.enemy.drawCardConnect(this.enemyDrawCardSignal::emit);
+        this.enemy.entityStandConnect(this.enemyStandSignal::emit);
     }
 
     public void playerHit() {
@@ -116,13 +122,12 @@ public class BattleCore {
     public void emitCombatOverData(String name, boolean isPlayerControlled, int goldReward) { combatOverData.emit(new CombatOverDTO(name, isPlayerControlled, goldReward)); }
     
     public void drawCardPlayerConnect(Consumer<CardDrawEventDTO> listerner) { player.drawCardConnect(listerner); }
-    public void drawCardEnemyConnect(Consumer<CardDrawEventDTO> listerner) { enemy.drawCardConnect(listerner); }
-
     public void playerStandConnect(Consumer<String> listener) { player.entityStandConnect(listener); }
-    public void enemyStandConnect(Consumer<String> listener) { enemy.entityStandConnect(listener); }
-
     public void playerTakeDamageConnect(Consumer<DamageEventDTO> listener) { player.takeDamageConnect(listener); }
-    public void enemyTakeDamageConnect(Consumer<DamageEventDTO> listener) { enemy.takeDamageConnect(listener); }
+
+    public void enemyTakeDamageConnect(Consumer<DamageEventDTO> listener) { enemyTakeDamageSignal.connect(listener); }
+    public void drawCardEnemyConnect(Consumer<CardDrawEventDTO> listener) { enemyDrawCardSignal.connect(listener); }
+    public void enemyStandConnect(Consumer<String> listener) { enemyStandSignal.connect(listener); }
 
     // Getters
 
