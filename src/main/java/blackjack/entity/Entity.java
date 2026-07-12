@@ -39,4 +39,7 @@ public interface Entity {
 
     void takeDamageConnect(Consumer<DamageEventDTO> listener);
     void emitTakeDamage(DamageEventDTO eventData);
+
+    Card peekNextCard();
+    List<Card> setHand(List<Card> newCards);
 }

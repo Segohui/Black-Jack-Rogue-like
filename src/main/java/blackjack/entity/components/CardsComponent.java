@@ -66,6 +66,16 @@ public class CardsComponent {
         return handEvaluator.calculateSum(hand.getCards());
     }
 
+    public Card peekNextCard() {
+        return stack.peekCard();
+    }
+
+    public List<Card> setHand(List<Card> newCards) {
+        List<Card> oldCards = new ArrayList<>(hand.getCards());
+        hand.setCards(newCards);
+        return oldCards;
+    }
+
     public List<Card> getCards() { return hand.getCards(); }
     public List<Card> getPurchasedCards() { return Collections.unmodifiableList(purchasedCards);}
 }

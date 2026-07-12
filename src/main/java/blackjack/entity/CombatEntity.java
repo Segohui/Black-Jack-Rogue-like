@@ -147,6 +147,16 @@ public class CombatEntity implements Entity {
         modifiersComponent.addCardModifier(card, modifier);
     }
 
+    @Override
+    public Card peekNextCard() {
+        return cardsComponent.peekNextCard();
+    }
+
+    @Override
+    public List<Card> setHand(List<Card> newCards) {
+        return cardsComponent.setHand(newCards);
+    }
+
     // Signals Handling
 
     @Override

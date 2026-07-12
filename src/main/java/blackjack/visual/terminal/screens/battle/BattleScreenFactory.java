@@ -39,4 +39,8 @@ public class BattleScreenFactory {
     public Screen createTakeDamageScreen(DamageEventDTO eventDTO) {
         return new TakeDamageScreen(io, eventDTO);
     }
+
+    public Screen createXRayScreen(String cardName){
+        return new XRayScreen(io, cardName);
+    }
 }
