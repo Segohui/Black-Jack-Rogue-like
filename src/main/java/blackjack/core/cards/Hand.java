@@ -22,4 +22,9 @@ public class Hand {
     public List<Card> getCards() {
         return Collections.unmodifiableList(cards);
     }
+
+    public void setCards(List<Card> newCards) {
+        cards.clear();
+        cards.addAll(newCards);
+    }
 }

@@ -27,6 +27,14 @@ public class Stack {
         return drawnCard;
     }
 
+    public Card peekCard() {
+        if (cards.isEmpty()) {
+            reset();
+        }
+
+        return cards.getLast();
+    }
+
     public void addCard(Card card) {
         if (card == null) {
             throw new NullPointerException("Card does not exist");

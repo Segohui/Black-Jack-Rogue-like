@@ -2,16 +2,25 @@ package blackjack.core.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
+import blackjack.core.cards.Card;
+import blackjack.core.signal.DataSignal;
 import blackjack.core.battle.BattleContextDTO;
+import blackjack.core.inventory.items.XRay;
 
 public class Inventory {
     private final List<Item> items = new ArrayList<>();
     private int goldAmount = 0;
+    private final DataSignal<String> itemPeeked = new DataSignal<>();
 
     public void addItem(Item item) {
         items.add(item);
         item.outOfUsesConnect(this::discardItem);
+
+        if (item instanceof XRay xray) {
+            xray.peekedConnect(itemPeeked::emit);
+        }
     }
 
     public void discardItem(Item item) {
@@ -65,5 +74,13 @@ public class Inventory {
 
     public int getGoldAmount() {
         return goldAmount;
+    }
+
+    public void itemPeekedConnect(Consumer<String> consumer) {
+        itemPeeked.connect(consumer);
+    }
+
+    public void clearItemPeekedConnections() {
+        itemPeeked.clearConnections();
     }
 }

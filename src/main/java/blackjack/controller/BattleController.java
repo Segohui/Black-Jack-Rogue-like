@@ -20,6 +20,7 @@ public class BattleController {
     public BattleController(BattleCore core, Inventory playerInventory) {
         this.core = core;
         this.playerInventory = playerInventory;
+        playerInventory.clearItemPeekedConnections();
     }
 
     public void prepareBattleStage(AIRecordDTO aiRecord) {
@@ -118,4 +119,8 @@ public class BattleController {
     public void combatOverDataConnect(Consumer<CombatOverDTO> listener) {
         core.combatOverDataConnect(listener);
     }
+
+    public void itemPeekedConnect(Consumer<String> listener) {
+        playerInventory.itemPeekedConnect(listener);
+    }       
 }
