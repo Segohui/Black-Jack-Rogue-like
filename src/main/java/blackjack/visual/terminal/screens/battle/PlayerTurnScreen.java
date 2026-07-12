@@ -2,7 +2,7 @@ package blackjack.visual.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
 import blackjack.core.inventory.ItemInfo;
-import blackjack.dto.EntityStateDTO;
+import blackjack.dtos.core.battle.EntityStateDTO;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.ActionPrompter;
 import blackjack.visual.terminal.screens.Screen;

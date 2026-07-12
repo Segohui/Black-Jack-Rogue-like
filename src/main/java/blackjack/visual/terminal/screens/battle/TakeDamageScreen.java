@@ -1,6 +1,6 @@
 package blackjack.visual.terminal.screens.battle;
 
-import blackjack.dto.DamageEventDTO;
+import blackjack.dtos.core.battle.DamageEventDTO;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
 

@@ -3,7 +3,7 @@ package blackjack.visual.terminal.screens.battle;
 import java.util.ArrayList;
 import java.util.List;
 
-import blackjack.dto.CombatOverDTO;
+import blackjack.dtos.core.battle.CombatOverDTO;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
 

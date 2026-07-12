@@ -1,4 +1,4 @@
-package blackjack.dto;
+package blackjack.dtos.core.battle;
 
 import java.util.List;
 

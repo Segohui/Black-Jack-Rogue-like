@@ -7,9 +7,9 @@ import java.util.function.Consumer;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.multiset.HashMultiSet;
 
-import blackjack.core.DataSignal;
 import blackjack.core.cards.enums.Rank;
 import blackjack.core.cards.enums.Suit;
+import blackjack.core.signal.DataSignal;
 
 public class Deck {
     private final DataSignal<Card> cardBurnt = new DataSignal<>();
