@@ -6,6 +6,7 @@ import blackjack.core.inventory.Inventory;
 import blackjack.core.shop.Shop;
 import blackjack.core.signal.EmptySignal;
 import blackjack.dtos.core.items.ShopItemDTO;
+import blackjack.exceptions.InsufficientGoldException;
 
 public class ShopController {
     private final EmptySignal shopEntered = new EmptySignal();
@@ -44,7 +45,7 @@ public class ShopController {
         return playerInventory.getGoldAmount();
     }
 
-    public boolean buyShopItem(int index) {
+    public boolean buyShopItem(int index) throws InsufficientGoldException{
         return shop.buy(index);
     }
 

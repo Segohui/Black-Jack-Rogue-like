@@ -4,6 +4,7 @@ import java.util.List;
 
 import blackjack.controller.ShopController;
 import blackjack.dtos.core.items.ShopItemDTO;
+import blackjack.exceptions.InsufficientGoldException;
 import blackjack.visual.ConsoleColors;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.ActionPrompter;
@@ -63,7 +64,12 @@ public class ShopScreen implements Screen {
     }
 
     private void buyShopItem(int index) {
-        boolean success = controller.buyShopItem(index);
-        io.printUpdate(success ? "Purchased!" : "Not enough gold.");
+        try {
+            boolean success = controller.buyShopItem(index);
+            io.printUpdate(success ? "Purchased!" : "Invalid Item.");
+
+        } catch (InsufficientGoldException e) {
+            io.printUpdate(e.getMessage());
+        }    
     }
 }
