@@ -6,6 +6,7 @@ import blackjack.controller.ControllerFactory;
 import blackjack.controller.MenuController;
 import blackjack.controller.ShopController;
 import blackjack.core.DataSignal;
+import blackjack.core.EmptySignal;
 import blackjack.dto.CombatOverDTO;
 import blackjack.entity.enemy.factory.AbstractEnemyFactory;
 import blackjack.entity.enemy.factory.CombinedEnemiesFactory;
@@ -14,6 +15,7 @@ public class GameManager {
     private final DataSignal<BattleController> battleStarted = new DataSignal<>();
     private final DataSignal<ShopController> shopStarted = new DataSignal<>();
     private final DataSignal<MenuController> menuStarted = new DataSignal<>();
+    private final EmptySignal restartGame = new EmptySignal();
     private final ControllerFactory controllerFactory;
 
     private AbstractEnemyFactory currentEnemyFactory;
@@ -46,7 +48,7 @@ public class GameManager {
         battleController.startBattle();
     }
 
-    public void startShopRoom() {
+    private void startShopRoom() {
         ShopController shopController = controllerFactory.createShop();
         
         shopController.shopExitedConnect(v -> startCombatRoom());
@@ -55,15 +57,15 @@ public class GameManager {
         shopController.openShop();
     }
 
-    public void playerLoseMenu() {
+    private void playerLoseMenu() {
         MenuController menuController = controllerFactory.createMenu();
-
-        menuController.playSelectedConnect(this::startCombatRoom);
-        menuController.quitSelectedConnect(this::exitGame);
-        
         menuStarted.emit(menuController);
-
+        menuController.restartGameConnect(this::restartGame);
         menuController.selectLose();
+    }
+
+    private void restartGame() {
+        restartGame.emit();
     }
 
     private void onBattleEnd(CombatOverDTO combatOverDTO) {
@@ -95,5 +97,9 @@ public class GameManager {
 
     public void menuStartedConnect(Consumer<MenuController> listener) {
         menuStarted.connect(listener);
+    }
+
+    public void restartGameConnect(Runnable runnable) {
+        restartGame.connect(runnable);
     }
 }

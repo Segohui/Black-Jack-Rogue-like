@@ -4,6 +4,7 @@ import blackjack.entity.Entity;
 
 public class ThresholdBehaviour implements Behavior {
     private final int standThreshold;
+
     public ThresholdBehaviour(int standThreshold) {
         this.standThreshold = standThreshold;
     }
