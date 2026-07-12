@@ -20,7 +20,7 @@ public class LoseScreen implements Screen {
         io.printMessage("\nWould you like to retry?");
         ActionPrompter actionPrompter = new ActionPrompter(io);
 
-        actionPrompter.addAction("yes", controller::startMenu);
+        actionPrompter.addAction("yes", controller::restartGame);
         actionPrompter.addAction("no", controller::selectQuit);
         actionPrompter.promptAndRun();
     }

@@ -12,7 +12,7 @@ public class BattleViewTerminal {
     private final BattleScreenFactory screenFactory;
     private final InputOutput io;
     private final BattleController controller;
-
+    
     public BattleViewTerminal(InputOutput io, BattleController controller) {
         this.io = io;
         this.controller = controller;
