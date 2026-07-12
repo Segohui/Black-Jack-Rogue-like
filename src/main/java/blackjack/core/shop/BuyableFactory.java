@@ -15,7 +15,7 @@ import blackjack.core.shop.buyables.CardBuyable;
 import blackjack.core.shop.buyables.ItemBuyable;
 
 public class BuyableFactory {
-    private static final int CARD_COST = 10;
+    private static final int CARD_COST = 3;
 
     private final Random random = new Random();
     private final Inventory inventory;
@@ -61,6 +61,6 @@ public class BuyableFactory {
 
     private Buyable generateRandomItemBuyable() {
         Item item = itemRegistry.createNextItem();
-        return new ItemBuyable(item, 12, inventory);
+        return new ItemBuyable(item, inventory);
     }
 }

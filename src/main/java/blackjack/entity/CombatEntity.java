@@ -9,13 +9,11 @@ import blackjack.core.cards.Deck;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.DamageEventDTO;
 import blackjack.entity.components.CardsComponent;
-import blackjack.entity.components.CurrencyComponent;
 import blackjack.entity.components.HealthComponent;
 
 public class CombatEntity implements Entity {
     private final CardsComponent cardsComponent;
     private final HealthComponent healthComponent;
-    private final CurrencyComponent currencyComponent;
     private final String name;
     private final boolean isPlayerControlled;
 
@@ -30,7 +28,6 @@ public class CombatEntity implements Entity {
         this.isPlayerControlled = isPlayerControlled;
         this.cardsComponent = new CardsComponent(deck);
         this.healthComponent = new HealthComponent(maxHp);
-        this.currencyComponent = new CurrencyComponent(0);
     }
 
     private CardDrawEventDTO createCardDrawEventData(Card card) {
@@ -116,46 +113,6 @@ public class CombatEntity implements Entity {
     @Override
     public boolean isAlive() {
         return (healthComponent.getCurrentHp() > 0);
-    }
-
-    @Override
-    public void addPurchasedCard(Card card) {
-        cardsComponent.addPurchasedCard(card);
-    }
-
-    @Override
-    public Card usePurchasedCard(int idx){
-        return cardsComponent.usePurchasedCard(idx);
-    }
-
-    @Override
-    public boolean hasPurchasedCards(){
-        return cardsComponent.hasPurchasedCards();
-    }
-
-    @Override
-    public List<Card> getPurchasedCards(){
-        return cardsComponent.getPurchasedCards();
-    }
-
-    @Override
-    public int getGold(){
-        return currencyComponent.getGold();
-    }
-
-    @Override
-    public boolean canAfford(int cost) {
-        return currencyComponent.canAfford(cost);
-    }
-
-    @Override
-    public void spend(int cost){
-        currencyComponent.spend(cost);
-    }
-
-    @Override
-    public void addGold(int amount){
-        currencyComponent.add(amount);
     }
 
     @Override

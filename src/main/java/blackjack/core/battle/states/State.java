@@ -14,7 +14,7 @@ public interface State {
         throw new InvalidTurnActionException("Invalid command");
     }
 
-    default void useBoughtCard(BattleCore core, int idx){
+    default void useItem(BattleCore core, int idx){
         throw new InvalidTurnActionException("Invalid command");
     }
 }

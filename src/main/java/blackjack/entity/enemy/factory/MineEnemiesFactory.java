@@ -3,6 +3,7 @@ package blackjack.entity.enemy.factory;
 import java.util.concurrent.ThreadLocalRandom;
 
 import blackjack.core.cards.Deck;
+import blackjack.core.inventory.Inventory;
 import blackjack.entity.CombatEntity;
 import blackjack.entity.Entity;
 import blackjack.entity.enemy.AIRecord;
@@ -31,8 +32,9 @@ public class MineEnemiesFactory implements AbstractEnemyFactory {
         Entity enemyEntity = new CombatEntity(
                 blueprint.getName(), new Deck(), finalHp, false);
 
-        enemyEntity.addGold(blueprint.getGoldReward());
+        Inventory enemyInventory = new Inventory();
+        enemyInventory.addGold(blueprint.getGoldReward());
         
-        return new AIRecord(enemyEntity, blueprint.getBehavior());
+        return new AIRecord(enemyEntity, blueprint.getBehavior(), enemyInventory);
     }
 }

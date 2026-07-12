@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import blackjack.core.battle.BattleCore;
 import blackjack.core.cards.Card;
+import blackjack.core.inventory.Inventory;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.CombatOverDTO;
 import blackjack.dto.DamageEventDTO;
@@ -13,9 +14,11 @@ import blackjack.entity.enemy.AIRecord;
 
 public class BattleController {
     private final BattleCore core;
+    private final Inventory playerInventory;
 
-    public BattleController(BattleCore core) {
+    public BattleController(BattleCore core, Inventory playerInventory) {
         this.core = core;
+        this.playerInventory = playerInventory;
     }
 
     public void initializeEnemy(AIRecord aiRecord) {
@@ -68,13 +71,17 @@ public class BattleController {
                 .toList();
     }
 
-    public void playerUseBoughtCard(int idx){
-        core.playerUsePurchasedCard(idx);
+    public boolean playerHasItems() {
+        return playerInventory.hasItems();
     }
 
-    public List<String> getPurchasedCardNames() {
-        return core.getPlayer().getPurchasedCards().stream()
-                .map(card -> card.toString())
+    public void playerUseItem(int idx) {
+        core.playerUseItem(idx);
+    }
+
+    public List<String> getItemLines() {
+        return playerInventory.getItemInfos().stream()
+                .map(info -> "%s - %s".formatted(info.name(), info.description()))
                 .toList();
     }
 

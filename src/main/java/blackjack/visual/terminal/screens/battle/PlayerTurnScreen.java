@@ -29,27 +29,25 @@ public class PlayerTurnScreen implements Screen {
         io.printDivider("=");
         io.printEntityState(playerData);
         io.printDivider("=");
-        
+
         ActionPrompter actionPrompter = new ActionPrompter(io);
         actionPrompter.addAction("hit", controller::playerHit);
         actionPrompter.addAction("stand", controller::playerStand);
-        
-        List<String> purchasedCards = controller.getPurchasedCardNames();
 
-        if(!purchasedCards.isEmpty()){
-            actionPrompter.addAction("use", this::promptPurchasedCard);
+        if (controller.playerHasItems()) {
+            actionPrompter.addAction("use item", this::promptPurchasedCard);
         }
 
         actionPrompter.promptAndRun();
     }
 
-    private void promptPurchasedCard(){
-        List<String> purchasedCards = controller.getPurchasedCardNames();
+    private void promptPurchasedCard() {
+        List<String> itemLines = controller.getItemLines();
         ActionPrompter cardPrompter = new ActionPrompter(io);
 
-        for(int i=0;i<purchasedCards.size();i++){
+        for (int i = 0; i < itemLines.size(); i++) {
             int idx = i;
-            cardPrompter.addAction(purchasedCards.get(i), () -> controller.playerUseBoughtCard(idx));
+            cardPrompter.addAction(itemLines.get(i), () -> controller.playerUseItem(idx));
         }
         cardPrompter.defineBottomAction("Go back", this::render);
         cardPrompter.promptAndRun();

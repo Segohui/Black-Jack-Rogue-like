@@ -6,12 +6,10 @@ import blackjack.core.shop.Buyable;
 
 public class ItemBuyable implements Buyable {
     private final Item item;
-    private final int cost;
     private final Inventory inventory;
 
-    public ItemBuyable(Item item, int cost, Inventory inventory) {
+    public ItemBuyable(Item item, Inventory inventory) {
         this.item = item;
-        this.cost = cost;
         this.inventory = inventory;
     }
 
@@ -22,12 +20,12 @@ public class ItemBuyable implements Buyable {
 
     @Override
     public String getDescription() {
-        return item.getItemInfo().name();
+        return item.getItemInfo().description();
     }
 
     @Override
     public int getCost() {
-        return cost;
+        return item.getItemInfo().baseCost();
     }
 
     @Override

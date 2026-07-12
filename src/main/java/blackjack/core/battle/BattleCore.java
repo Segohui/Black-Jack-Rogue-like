@@ -8,6 +8,8 @@ import blackjack.core.EmptySignal;
 import blackjack.core.battle.states.State;
 import blackjack.core.battle.states.StateFactory;
 import blackjack.core.cards.Card;
+import blackjack.core.cards.Deck;
+import blackjack.core.inventory.Inventory;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.CombatOverDTO;
 import blackjack.dto.DamageEventDTO;
@@ -22,15 +24,20 @@ public class BattleCore {
     private final DataSignal<CombatOverDTO> combatOverData = new DataSignal<>();
 
     private final Entity player;
+    private final Deck playerDeck;
+    private final Inventory playerInventory;
     private int globalStand = 21; // may change with power ups
 
     private Entity enemy;
     private Behavior enemyBehavior;
+    private Inventory enemyInventory;
     private StateFactory stateFactory;
     private State state;
 
-    public BattleCore(Entity player) {
+    public BattleCore(Entity player, Deck playerDeck, Inventory playerInventory) {
         this.player = player;
+        this.playerDeck = playerDeck;
+        this.playerInventory = playerInventory;
     }
 
     public void startCombat() {
@@ -40,12 +47,14 @@ public class BattleCore {
 
     private void resetCore() {
         this.state = null;
-        this.stateFactory = new StateFactory(player, enemy, enemyBehavior);
+        this.stateFactory = new StateFactory(player, enemy, enemyBehavior,
+                playerInventory, enemyInventory);
     }
 
     public void resetEnemy(AIRecord enemyRecord) {
         this.enemy = enemyRecord.entity();
         this.enemyBehavior = enemyRecord.behavior();
+        this.enemyInventory = enemyRecord.inventory();
     }
 
     public void playerHit() {
@@ -56,8 +65,8 @@ public class BattleCore {
         state.stand(this);
     }
 
-    public void playerUsePurchasedCard(int idx){
-        state.useBoughtCard(this, idx);
+    public void playerUseItem(int idx){
+        state.useItem(this, idx);
     }
 
     public int calculatePlayerSum() {
@@ -102,8 +111,6 @@ public class BattleCore {
         transitionTo(stateFactory.createEndGameState());
     }
 
-    
-
     // Signal Handling
 
     public void playerTurnConnect(Runnable runnable) { playerTurn.connect(runnable); }
@@ -132,5 +139,7 @@ public class BattleCore {
     public List<Card> getPlayerCards() { return player.getCards(); }
     public List<Card> getEnemyCards() { return enemy.getCards(); }
     public int getGlobalStand() { return globalStand; }
-    public Entity getPlayer() { return player; }
+    public BattleContextDTO getBattleContextDTO() {
+        return new BattleContextDTO(player, enemy, playerDeck);
+    }
 }

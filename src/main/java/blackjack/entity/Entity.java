@@ -20,14 +20,6 @@ public interface Entity {
     void takeDamage(int damage);
     void heal(int amount);
     boolean isAlive();
-    void addPurchasedCard(Card card);
-    Card usePurchasedCard(int idx);
-    boolean hasPurchasedCards();
-    List<Card> getPurchasedCards();
-    int getGold();
-    boolean canAfford(int cost);
-    void spend(int cost);
-    void addGold(int amount);
     boolean isPlayerControlled();
     Card discardLastCardInHand();
 

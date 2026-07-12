@@ -11,6 +11,11 @@ public class Inventory {
 
     public void addItem(Item item) {
         items.add(item);
+        item.outOfUsesConnect(this::discardItem);
+    }
+
+    public void discardItem(Item item) {
+        items.remove(item);
     }
 
     public List<ItemInfo> getItemInfos() {
@@ -23,7 +28,7 @@ public class Inventory {
         items.get(index).trigger(ctx);
     }
 
-    public void triggerAuto(BattleContextDTO ctx) {
+    public void triggerItemAuto(BattleContextDTO ctx) {
         for (Item item: items) {
             if (!item.isManual()) {
                 item.trigger(ctx);

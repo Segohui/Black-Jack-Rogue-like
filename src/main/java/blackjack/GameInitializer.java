@@ -22,9 +22,9 @@ public class GameInitializer {
         Deck playerDeck = new Deck();
         Inventory playerInventory = new Inventory();
         ItemRegistry itemRegistry = new ItemRegistry();
-        Entity player = new CombatEntity("Player", playerDeck, 1, true);
+        Entity player = new CombatEntity("Player", playerDeck, 50, true);
         Shop shop = new Shop(playerInventory, playerDeck, itemRegistry);
-        BattleCore core = new BattleCore(player);
+        BattleCore core = new BattleCore(player, playerDeck, playerInventory);
         
         ControllerFactory controllerFactory = new ControllerFactory(core, shop, playerInventory);
         GameManager gameManager = new GameManager(controllerFactory);

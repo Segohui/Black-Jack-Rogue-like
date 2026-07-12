@@ -18,10 +18,13 @@ public class Shop {
         this.buyableFactory = new BuyableFactory(inventory, deck, itemRegistry);
     }
 
-    public void populateWithItems(int amount) {
+    public void clearItems() {
         itemsForSale.clear();
-        itemsForSale.addAll(buyableFactory.generateCardBuyables(amount));
-        itemsForSale.addAll(buyableFactory.generateItemBuyables(amount));
+    }
+
+    public void populateWithItems() {
+        itemsForSale.addAll(buyableFactory.generateCardBuyables(3));
+        itemsForSale.addAll(buyableFactory.generateItemBuyables(3));
     }
 
     public List<Buyable> getItemsForSale() {

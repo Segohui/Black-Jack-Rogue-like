@@ -1,3 +1,3 @@
 package blackjack.core.inventory;
 
-public record ItemInfo(String name, String description) {}
+public record ItemInfo(String name, String description, int baseCost) {}

@@ -3,6 +3,7 @@ package blackjack.visual.terminal.screens.shop;
 import java.util.List;
 
 import blackjack.controller.ShopController;
+import blackjack.visual.ConsoleColors;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.ActionPrompter;
 import blackjack.visual.terminal.screens.Screen;
@@ -23,7 +24,7 @@ public class ShopScreen implements Screen {
         io.printHeader("Shop");
 
         while (shopping) {
-            io.printMessage("Gold: " + controller.getPlayerGold());
+            io.printColored("Gold: " + controller.getPlayerGold(), ConsoleColors.YELLOW);
 
             ActionPrompter actionPrompter = new ActionPrompter(io);
 
@@ -36,6 +37,8 @@ public class ShopScreen implements Screen {
             
             actionPrompter.promptAndRun();
         }
+
+        controller.exitShop();
     }
 
     private void buyShopItem(int index) {

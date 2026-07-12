@@ -21,7 +21,8 @@ public class FlintAndSteel implements Item {
     public ItemInfo getItemInfo() {
         return new ItemInfo(
             "Flint and STEEEL",
-            "When activated, permanently burns the last card in your hand."
+            "When activated, permanently burns the last card in your hand. (%d use(s))".formatted(uses),
+            4
         );
     }
 
@@ -46,7 +47,7 @@ public class FlintAndSteel implements Item {
         deck.burnCard(card);
         uses--;
         if (uses <= 0) {
-
+            outOfUses.emit(this);
         }
     }
 

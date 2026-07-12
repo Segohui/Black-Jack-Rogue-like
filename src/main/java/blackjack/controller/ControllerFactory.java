@@ -16,7 +16,7 @@ public class ControllerFactory {
     }
 
     public BattleController createBattle() {
-        return new BattleController(core);
+        return new BattleController(core, playerInventory);
     }
 
     public ShopController createShop() {
