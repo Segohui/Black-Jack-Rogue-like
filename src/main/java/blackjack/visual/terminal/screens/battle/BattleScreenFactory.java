@@ -3,6 +3,7 @@ package blackjack.visual.terminal.screens.battle;
 import blackjack.controller.BattleController;
 import blackjack.dto.CardDrawEventDTO;
 import blackjack.dto.CombatOverDTO;
+import blackjack.dto.DamageEventDTO;
 import blackjack.visual.InputOutput;
 import blackjack.visual.terminal.screens.Screen;
 
@@ -31,7 +32,11 @@ public class BattleScreenFactory {
         return new CardDrawScreen(io, controller, eventData);
     }
 
-    public Screen createNotificationScreen(String message) {
-        return new NotificationScreen(io, message);
+    public Screen createEntityStandScreen(String entityName) {
+        return new EntityStandScreen(io, entityName);
+    }
+
+    public Screen createTakeDamageScreen(DamageEventDTO eventDTO) {
+        return new TakeDamageScreen(io, eventDTO);
     }
 }

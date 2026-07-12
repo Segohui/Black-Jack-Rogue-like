@@ -21,6 +21,7 @@ public class TitleScreen implements Screen {
         ActionPrompter actionPrompter = new ActionPrompter(io);
         actionPrompter.addAction("Start Game", controller::selectPlay);
         actionPrompter.addAction("Exit", controller::selectQuit);
+        actionPrompter.addAction("Instructions", controller::selectInstructions);
         actionPrompter.promptAndRun();
     }
 }

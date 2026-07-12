@@ -16,4 +16,8 @@ public class MenuScreenFactory {
     public Screen createTitleScreen() {
         return new TitleScreen(io, controller);
     }
+
+    public Screen createInstructionsScreen() {
+        return new InstructionsScreen(io);
+    }
 }
