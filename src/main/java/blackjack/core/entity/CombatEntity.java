@@ -9,6 +9,7 @@ import blackjack.core.entity.components.CardsComponent;
 import blackjack.core.entity.components.HealthComponent;
 import blackjack.core.entity.components.ModifiersComponent;
 import blackjack.core.entity.modifiers.DamageModifier;
+import blackjack.core.entity.modifiers.SumModifier;
 import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.DamageEventDTO;
@@ -145,6 +146,12 @@ public class CombatEntity implements Entity {
     @Override
     public void addDamageCardModifier(Card card, DamageModifier modifier) {
         modifiersComponent.addCardModifier(card, modifier);
+    }
+
+    @Override
+    public void addSumModifier(SumModifier modifier) {
+        
+        cardsComponent.addSumModifier(modifier);
     }
 
     @Override

@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import blackjack.core.inventory.items.BallAndChain;
+import blackjack.core.inventory.items.Cannon;
 import blackjack.core.inventory.items.FaceSurgery;
 import blackjack.core.inventory.items.FlintAndSteel;
 import blackjack.core.inventory.items.ReverseCard;
@@ -27,6 +29,8 @@ public class ItemRegistry {
         baseItems.add(new FaceSurgery());
         baseItems.add(new XRay());
         baseItems.add(new ReverseCard());
+        baseItems.add(new BallAndChain());
+        baseItems.add(new Cannon());
         // add new items here
     }
 

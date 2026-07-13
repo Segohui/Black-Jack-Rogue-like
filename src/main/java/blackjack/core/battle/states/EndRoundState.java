@@ -35,7 +35,7 @@ public class EndRoundState implements State {
             if (!enemy.isAlive()) {
                 core.activateEndGameState();
             } else {
-                endRound(core, enemy.getName());
+                endRound(core, player.getName());
             }
         } else {
             enemyInventory.triggerItemsAuto(core.getBattleContextDTO());
