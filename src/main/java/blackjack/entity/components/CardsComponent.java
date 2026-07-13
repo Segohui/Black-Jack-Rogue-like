@@ -14,7 +14,6 @@ public class CardsComponent {
     private final Stack stack;
     private final Hand hand = new Hand();
     private final HandEvaluator handEvaluator = new HandEvaluator();
-    private final List<Card> purchasedCards = new ArrayList<>();
 
     public CardsComponent(Deck deck) {
         this.stack = new Stack(deck);
@@ -40,26 +39,8 @@ public class CardsComponent {
         return drawnCards;
     }
 
-    public void addPurchasedCard(Card card){
-        purchasedCards.add(card);
-    }
-
-    public Card usePurchasedCard(int idx){
-        if(idx < 0 || idx >= purchasedCards.size()){
-            throw new IllegalArgumentException("Invalid purchased card index");
-        }
-        
-        Card card = purchasedCards.remove(idx);
-        hand.addCard(card);
-        return card;
-    }
-
     public Card discardLastCardInHand() {
         return hand.discardLast();
-    }
-
-    public boolean hasPurchasedCards(){
-        return !purchasedCards.isEmpty();
     }
 
     public int calculateHandSum() {
@@ -77,5 +58,4 @@ public class CardsComponent {
     }
 
     public List<Card> getCards() { return hand.getCards(); }
-    public List<Card> getPurchasedCards() { return Collections.unmodifiableList(purchasedCards);}
 }
