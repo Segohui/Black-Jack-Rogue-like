@@ -4,13 +4,13 @@ import blackjack.core.battle.BattleCore;
 import blackjack.core.inventory.Inventory;
 import blackjack.entity.Entity;
 
-public class EndTurnState implements State {
+public class EndRoundState implements State {
     private final Entity player;
     private final Entity enemy;
     private final Inventory playerInventory;
     private final Inventory enemyInventory;
 
-    public EndTurnState(Entity player, Entity enemy,
+    public EndRoundState(Entity player, Entity enemy,
             Inventory playerInventory, Inventory enemyInventory) {
         this.player = player;
         this.enemy = enemy;
@@ -25,7 +25,7 @@ public class EndTurnState implements State {
         int globalStand = core.getGlobalStand();
 
         if (playerSum == enemySum) {
-            endTurn(core, null);
+            endRound(core, null);
             return;
         }
 
@@ -35,7 +35,7 @@ public class EndTurnState implements State {
             if (!enemy.isAlive()) {
                 core.activateEndGameState();
             } else {
-                endTurn(core, enemy.getName());
+                endRound(core, enemy.getName());
             }
         } else {
             enemyInventory.triggerItemsAuto(core.getBattleContextDTO());
@@ -43,12 +43,12 @@ public class EndTurnState implements State {
             if (!player.isAlive()) {
                 core.activateEndGameState();
             } else {
-                endTurn(core, enemy.getName());
+                endRound(core, enemy.getName());
             }
         }
     }
 
-    private void endTurn(BattleCore core, String winnerName) {
+    private void endRound(BattleCore core, String winnerName) {
         core.emitRoundOverData(winnerName);
         core.activateStartRoundState();
     }

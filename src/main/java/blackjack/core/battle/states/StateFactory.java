@@ -41,7 +41,7 @@ public class StateFactory {
     }
 
     public State createEndTurnState() {
-        return new EndTurnState(player, enemy, playerInventory, enemyInventory);
+        return new EndRoundState(player, enemy, playerInventory, enemyInventory);
     }
 
     public State createEndGameState() {
