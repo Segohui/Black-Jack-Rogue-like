@@ -2,14 +2,13 @@ package blackjack.core.inventory.items;
 
 import java.util.function.Consumer;
 
-
-import blackjack.core.battle.BattleContextDTO;
 import blackjack.core.cards.Card;
+import blackjack.core.entity.Entity;
 import blackjack.core.inventory.Item;
-import blackjack.core.inventory.ItemInfo;
 import blackjack.core.signal.DataSignal;
-import blackjack.dtos.core.items.ItemType;
-import blackjack.entity.Entity;
+import blackjack.dtos.core.battle.BattleContextDTO;
+import blackjack.dtos.core.items.ItemInfoDTO;
+import blackjack.dtos.core.items.ItemTypeDTO;
 import blackjack.exceptions.DeadItemException;
 
 public class XRay implements Item {
@@ -20,8 +19,8 @@ public class XRay implements Item {
     private int uses = 3;
 
     @Override
-    public ItemInfo getItemInfo() {
-        return new ItemInfo(
+    public ItemInfoDTO getItemInfo() {
+        return new ItemInfoDTO(
             "X-Ray",
             "When activated, peek at the next card in your stack. (%d use(s))".formatted(uses),
             5,
@@ -75,7 +74,7 @@ public class XRay implements Item {
     }
 
     @Override 
-    public ItemType getType(){
-        return ItemType.CONSUMABLE;
+    public ItemTypeDTO getType(){
+        return ItemTypeDTO.CONSUMABLE;
     }
 }

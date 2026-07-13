@@ -1,8 +1,8 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
+import blackjack.core.entity.Entity;
 import blackjack.core.inventory.Inventory;
-import blackjack.entity.Entity;
 
 public class EndGameState implements State {
     private final Entity player;

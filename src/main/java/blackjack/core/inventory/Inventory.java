@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import blackjack.core.cards.Card;
 import blackjack.core.signal.DataSignal;
-import blackjack.core.battle.BattleContextDTO;
+import blackjack.dtos.core.battle.BattleContextDTO;
+import blackjack.dtos.core.items.ItemInfoDTO;
 import blackjack.core.inventory.items.XRay;
 
 public class Inventory {
@@ -27,7 +27,7 @@ public class Inventory {
         items.remove(item);
     }
 
-    public List<ItemInfo> getItemInfos() {
+    public List<ItemInfoDTO> getItemInfos() {
         return items.stream()
                 .map(Item::getItemInfo)
                 .toList();

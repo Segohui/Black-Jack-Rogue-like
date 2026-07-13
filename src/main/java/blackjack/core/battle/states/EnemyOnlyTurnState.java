@@ -1,8 +1,8 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
-import blackjack.entity.Entity;
-import blackjack.entity.enemy.behaviors.Behavior;
+import blackjack.core.entity.Entity;
+import blackjack.core.entity.enemy.behaviors.Behavior;
 
 public class EnemyOnlyTurnState implements State {
     private final Entity enemy;

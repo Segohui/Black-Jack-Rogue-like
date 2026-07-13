@@ -6,11 +6,11 @@ import java.util.function.Consumer;
 import blackjack.core.battle.BattleCore;
 import blackjack.core.cards.Card;
 import blackjack.core.inventory.Inventory;
-import blackjack.core.inventory.ItemInfo;
 import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.CombatOverDTO;
 import blackjack.dtos.core.battle.DamageEventDTO;
 import blackjack.dtos.core.battle.EntityStateDTO;
+import blackjack.dtos.core.items.ItemInfoDTO;
 import blackjack.dtos.entity.AIRecordDTO;
 
 public class BattleController {
@@ -81,7 +81,7 @@ public class BattleController {
         core.playerUseItem(idx);
     }
 
-    public List<ItemInfo> getItemInfos() {
+    public List<ItemInfoDTO> getItemInfos() {
         return playerInventory.getItemInfos();
     }
 

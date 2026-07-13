@@ -1,0 +1,31 @@
+package blackjack.view.screens.menu;
+
+import blackjack.controller.MenuController;
+import blackjack.view.InputOutput;
+import blackjack.view.screens.Screen;
+
+public class MenuScreenFactory {
+    private final InputOutput io;
+    private final MenuController controller;
+
+    public MenuScreenFactory(InputOutput io, MenuController controller) {
+        this.io = io;
+        this.controller = controller;
+    }
+
+    public Screen createTitleScreen() {
+        return new TitleScreen(io, controller);
+    }
+
+    public Screen createInstructionsScreen() {
+        return new InstructionsScreen(io);
+    }
+
+    public Screen createQuitScreen() {
+        return new QuitScreen(io);
+    }
+
+    public Screen createLoseScreen() {
+        return new LoseScreen(io, controller);
+    }
+}

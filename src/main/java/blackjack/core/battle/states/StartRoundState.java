@@ -1,7 +1,7 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
-import blackjack.entity.Entity;
+import blackjack.core.entity.Entity;
 
 public class StartRoundState implements State {
     private final Entity player;

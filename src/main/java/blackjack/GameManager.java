@@ -5,11 +5,11 @@ import blackjack.controller.BattleController;
 import blackjack.controller.ControllerFactory;
 import blackjack.controller.MenuController;
 import blackjack.controller.ShopController;
+import blackjack.core.entity.enemy.factory.AbstractEnemyFactory;
+import blackjack.core.entity.enemy.factory.CombinedEnemiesFactory;
 import blackjack.core.signal.DataSignal;
 import blackjack.core.signal.EmptySignal;
 import blackjack.dtos.core.battle.CombatOverDTO;
-import blackjack.entity.enemy.factory.AbstractEnemyFactory;
-import blackjack.entity.enemy.factory.CombinedEnemiesFactory;
 
 public class GameManager {
     private final DataSignal<BattleController> battleStarted = new DataSignal<>();

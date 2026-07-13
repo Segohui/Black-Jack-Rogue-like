@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import blackjack.core.signal.DataSignal;
-import blackjack.dtos.core.items.ItemType;
-import blackjack.core.battle.BattleContextDTO;
+import blackjack.dtos.core.battle.BattleContextDTO;
+import blackjack.dtos.core.items.ItemInfoDTO;
+import blackjack.dtos.core.items.ItemTypeDTO;
 import blackjack.core.cards.Card;
+import blackjack.core.entity.Entity;
 import blackjack.core.inventory.Item;
-import blackjack.core.inventory.ItemInfo;
-import blackjack.entity.Entity;
 import blackjack.exceptions.DeadItemException;
 
 public class ReverseCard implements Item {
@@ -20,8 +20,8 @@ public class ReverseCard implements Item {
     private int uses = 1;
 
     @Override
-    public ItemInfo getItemInfo() {
-        return new ItemInfo(
+    public ItemInfoDTO getItemInfo() {
+        return new ItemInfoDTO(
             "Reverse Card",
             "When activated, change hands with your opponent. (%d use(s))".formatted(uses),
             7,
@@ -74,7 +74,7 @@ public class ReverseCard implements Item {
     }
 
     @Override 
-    public ItemType getType(){
-        return ItemType.CONSUMABLE;
+    public ItemTypeDTO getType(){
+        return ItemTypeDTO.CONSUMABLE;
     }
 }
