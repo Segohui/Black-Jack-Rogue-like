@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-import blackjack.core.cards.Card;
 import blackjack.core.signal.DataSignal;
 import blackjack.core.battle.BattleContextDTO;
 import blackjack.core.inventory.items.XRay;

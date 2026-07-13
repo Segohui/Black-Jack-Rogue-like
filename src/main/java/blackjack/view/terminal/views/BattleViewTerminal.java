@@ -7,7 +7,6 @@ import blackjack.dtos.core.battle.DamageEventDTO;
 import blackjack.view.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 import blackjack.view.terminal.screens.battle.BattleScreenFactory;
-import blackjack.core.cards.Card;
 
 public class BattleViewTerminal {
     private final InputOutput io;
