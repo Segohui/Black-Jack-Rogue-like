@@ -1,0 +1,26 @@
+package blackjack.view.terminal;
+
+import blackjack.controller.ShopController;
+import blackjack.view.InputOutput;
+import blackjack.view.screens.Screen;
+import blackjack.view.screens.shop.ShopScreenFactory;
+
+public class ShopViewTerminal {
+    private final InputOutput io;
+    private final ShopScreenFactory screenFactory;
+
+    public ShopViewTerminal(InputOutput io, ShopController shopController) {
+        this.io = io;
+        this.screenFactory = new ShopScreenFactory(io, shopController);
+        shopController.shopEnteredConnect(this::onShopEntered);
+    }
+
+    private void navigateToScreen(Screen newScreen) {
+        io.clearScreen();
+        newScreen.render();
+    }
+
+    public void onShopEntered() {
+        navigateToScreen(screenFactory.createShopScreen());
+    }
+}

@@ -2,16 +2,17 @@ package blackjack.core.inventory;
 
 import java.util.function.Consumer;
 
-import blackjack.core.battle.BattleContextDTO;
-import blackjack.dtos.core.items.ItemType;
+import blackjack.dtos.core.battle.BattleContextDTO;
+import blackjack.dtos.core.items.ItemInfoDTO;
+import blackjack.dtos.core.items.ItemTypeDTO;
 
 public interface Item {
-    ItemInfo getItemInfo();
+    ItemInfoDTO getItemInfo();
     boolean isManual();
     boolean isConsumable();
     void trigger(BattleContextDTO ctx);
     Item copy();
-    ItemType getType();
+    ItemTypeDTO getType();
 
     // Signal handling
 
