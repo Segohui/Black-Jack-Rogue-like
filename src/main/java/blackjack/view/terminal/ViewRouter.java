@@ -1,6 +1,6 @@
 package blackjack.view.terminal;
 
-import blackjack.GameManager;
+import blackjack.engine.GameManager;
 import blackjack.controller.BattleController;
 import blackjack.controller.MenuController;
 import blackjack.controller.ShopController;

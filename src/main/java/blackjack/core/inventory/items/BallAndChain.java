@@ -25,7 +25,8 @@ public class BallAndChain implements Item {
             "Ball and Chain",
             "When activated, your hand sum is halved for the rest of the round. (%d use(s))".formatted(uses),
             5,
-            isManual()
+            isManual(),
+            getType()
         );
 
     }

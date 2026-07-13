@@ -25,7 +25,8 @@ public class ReverseCard implements Item {
             "Reverse Card",
             "When activated, change hands with your opponent. (%d use(s))".formatted(uses),
             7,
-            isManual()
+            isManual(),
+            getType()
         );
     }
 

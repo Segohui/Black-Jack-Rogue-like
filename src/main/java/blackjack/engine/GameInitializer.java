@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.engine;
 
 import blackjack.controller.ControllerFactory;
 import blackjack.core.battle.BattleCore;

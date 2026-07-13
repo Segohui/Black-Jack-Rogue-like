@@ -25,7 +25,8 @@ public class Cannon implements Item {
             "Cannon",
             "When activated, your hand sum is doubled for the rest of the round. (%d use(s))".formatted(uses),
             6,
-            isManual()
+            isManual(),
+            getType()
         );
     
     }

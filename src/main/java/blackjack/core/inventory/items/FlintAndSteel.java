@@ -24,7 +24,8 @@ public class FlintAndSteel implements Item {
             "Flint and STEEEL",
             "When activated, permanently burns the last card in your hand. (%d use(s))".formatted(uses),
             4,
-            isManual()
+            isManual(),
+            getType()
         );
     }
 
