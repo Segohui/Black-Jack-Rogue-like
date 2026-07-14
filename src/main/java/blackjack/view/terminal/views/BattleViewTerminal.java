@@ -9,10 +9,21 @@ import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 import blackjack.view.terminal.screens.battle.BattleScreenFactory;
 
+/**
+ * Terminal view coordinator for battle interactions.
+ *
+ * <p>Listens to battle controller signals and routes them to battle screens.</p>
+ */
 public class BattleViewTerminal {
     private final InputOutput io;
     private final BattleScreenFactory screenFactory;
     
+    /**
+     * Creates a terminal battle view and binds controller events.
+     *
+     * @param io console I/O helper
+     * @param controller battle controller whose events are rendered
+     */
     public BattleViewTerminal(InputOutput io, BattleController controller) {
         this.io = io;
         this.screenFactory = new BattleScreenFactory(io, controller);
@@ -29,6 +40,11 @@ public class BattleViewTerminal {
         controller.combatOverConnect(this::onCombatOver);
     }
 
+    /**
+     * Clears the terminal and renders a new battle screen.
+     *
+     * @param newScreen screen to render
+     */
     private void navigateToScreen(Screen newScreen) {
         io.clearScreen();
         newScreen.render();

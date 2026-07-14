@@ -6,6 +6,9 @@ import java.util.Map;
 
 import blackjack.core.cards.enums.Rank;
 
+/**
+ * Calculates a hand total while handling aces as flexible values.
+ */
 public class HandEvaluator {
     private final Map<Rank, Integer> rankValues = new EnumMap<>(Rank.class);
 

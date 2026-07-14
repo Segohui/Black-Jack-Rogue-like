@@ -10,6 +10,9 @@ import blackjack.core.entity.enemy.blueprints.MineEnemies;
 import blackjack.core.inventory.Inventory;
 import blackjack.dtos.entity.AIRecordDTO;
 
+/**
+ * Builds enemy AI records for the mine-themed enemy pool.
+ */
 public class MineEnemiesFactory implements AbstractEnemyFactory {
 
     @Override

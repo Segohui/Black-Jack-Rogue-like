@@ -4,6 +4,9 @@ import blackjack.core.battle.BattleCore;
 import blackjack.core.entity.capabilities.ICardUser;
 import blackjack.core.inventory.Inventory;
 
+/**
+ * Handles the player's turn when the enemy is not acting in the same round phase.
+ */
 public class PlayerOnlyState implements State {
     private final ICardUser player;
     private final Inventory playerInventory;

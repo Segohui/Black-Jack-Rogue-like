@@ -13,9 +13,18 @@ import blackjack.core.entity.enemy.blueprints.MineEnemies;
 import blackjack.core.inventory.Inventory;
 import blackjack.dtos.entity.AIRecordDTO;
 
+/**
+ * Builds enemy AI records from a mixed pool of blueprint sets.
+ */
 public class CombinedEnemiesFactory implements AbstractEnemyFactory {
     private final List<EnemyBlueprint> blueprints = buildBlueprintPool();
 
+    /**
+     * Creates a random enemy using the combined blueprint pool.
+     *
+     * @param difficultyMultiplier scaling factor applied to enemy HP
+     * @return generated AI record for the enemy
+     */
     @Override
     public AIRecordDTO generateRandomEnemy(float difficultyMultiplier) {
         int randomIndex = ThreadLocalRandom.current().nextInt(blueprints.size());

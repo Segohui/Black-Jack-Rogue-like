@@ -1,5 +1,8 @@
 package blackjack.view.terminal.io;
 
+/**
+ * Shared ANSI color constants used by the terminal user interface.
+ */
 public class ConsoleColors {
     public static final String RESET = "\u001B[0m";
 

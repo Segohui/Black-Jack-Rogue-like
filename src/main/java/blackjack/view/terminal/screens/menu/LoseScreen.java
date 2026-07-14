@@ -5,6 +5,9 @@ import blackjack.view.terminal.io.ActionPrompter;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 
+/**
+ * Displays the defeat prompt and offers the player a retry or quit choice.
+ */
 public class LoseScreen implements Screen {
     private final InputOutput io;
     private final MenuController controller;

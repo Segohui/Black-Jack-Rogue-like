@@ -10,6 +10,9 @@ import blackjack.view.terminal.screens.Screen;
 
 import java.util.List;
 
+/**
+ * Presents the battle state and available actions during the player's turn.
+ */
 public class PlayerTurnScreen implements Screen {
     private final InputOutput io;
     private final BattleController controller;

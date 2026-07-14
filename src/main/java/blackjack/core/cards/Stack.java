@@ -3,6 +3,9 @@ package blackjack.core.cards;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Represents the draw stack for a combat entity.
+ */
 public class Stack {
     private List<Card> cards;
     private final Deck deck;

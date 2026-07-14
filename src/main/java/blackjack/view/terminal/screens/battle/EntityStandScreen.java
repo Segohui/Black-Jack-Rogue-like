@@ -3,6 +3,9 @@ package blackjack.view.terminal.screens.battle;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 
+/**
+ * Notifies the player that an entity chose to stand and will take reduced damage.
+ */
 public class EntityStandScreen implements Screen {
     private final InputOutput io;
     private final String entityName;

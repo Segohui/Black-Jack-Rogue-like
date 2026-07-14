@@ -6,6 +6,9 @@ import blackjack.dtos.core.battle.EntityStateDTO;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 
+/**
+ * Displays a card draw event and the updated entity state after the draw.
+ */
 public class CardDrawScreen implements Screen {
     private final InputOutput io;
     private final BattleController controller;

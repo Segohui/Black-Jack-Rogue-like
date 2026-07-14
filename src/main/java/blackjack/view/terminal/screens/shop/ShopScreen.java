@@ -10,6 +10,9 @@ import blackjack.view.terminal.io.ConsoleColors;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 
+/**
+ * Renders the shop UI and handles the purchase loop for available buyables.
+ */
 public class ShopScreen implements Screen {
     private final InputOutput io;
     private final ShopController controller;

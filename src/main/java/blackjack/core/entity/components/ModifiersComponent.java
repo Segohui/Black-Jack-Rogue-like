@@ -8,6 +8,9 @@ import java.util.Map;
 import blackjack.core.cards.Card;
 import blackjack.core.entity.modifiers.DamageModifier;
 
+/**
+ * Stores damage modifiers that affect card-based attacks.
+ */
 public class ModifiersComponent {
     private final List<DamageModifier> outputModifiers = new ArrayList<>();
     private final Map<Card, List<DamageModifier>> cardModifiers = new HashMap<>();

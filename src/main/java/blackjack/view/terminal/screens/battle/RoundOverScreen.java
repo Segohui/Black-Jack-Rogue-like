@@ -4,6 +4,9 @@ import blackjack.controller.BattleController;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 
+/**
+ * Displays the result of a completed round and advances the flow accordingly.
+ */
 public class RoundOverScreen implements Screen {
     private final InputOutput io;
     private final BattleController controller;

@@ -1,6 +1,8 @@
 package blackjack.core.entity.components;
 
-
+/**
+ * Tracks the current and maximum hit points for an entity.
+ */
 public class HealthComponent {
     private int maxHp;
     private int currentHp;

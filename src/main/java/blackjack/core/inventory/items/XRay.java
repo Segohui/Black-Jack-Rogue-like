@@ -11,6 +11,9 @@ import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
 import blackjack.exceptions.DeadItemException;
 
+/**
+ * Consumable item that reveals the next card in the player's draw stack.
+ */
 public class XRay implements Item {
     private final DataSignal<Item> triggered = new DataSignal<>();
     private final DataSignal<Item> outOfUses = new DataSignal<>();

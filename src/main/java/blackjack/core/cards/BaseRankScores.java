@@ -5,6 +5,9 @@ import java.util.Map;
 
 import blackjack.core.cards.enums.Rank;
 
+/**
+ * Provides the base point values used by card ranks.
+ */
 public class BaseRankScores {
     private static final Map<Rank, Integer> rankScores = new EnumMap<>(Map.ofEntries(
         Map.entry(Rank.RANK_2, 2),

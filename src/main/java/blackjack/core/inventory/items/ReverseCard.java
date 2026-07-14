@@ -13,6 +13,9 @@ import blackjack.core.inventory.Item;
 import blackjack.core.inventory.ItemType;
 import blackjack.exceptions.DeadItemException;
 
+/**
+ * Consumable item that swaps the player's and opponent's hands.
+ */
 public class ReverseCard implements Item {
     private final DataSignal<Item> triggered = new DataSignal<>();
     private final DataSignal<Item> outOfUses = new DataSignal<>();

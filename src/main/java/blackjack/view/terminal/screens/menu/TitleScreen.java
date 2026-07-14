@@ -5,6 +5,9 @@ import blackjack.view.terminal.io.ActionPrompter;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 
+/**
+ * Renders the title screen and routes the player to the main menu actions.
+ */
 public class TitleScreen implements Screen {
     private final InputOutput io;
     private final MenuController controller;

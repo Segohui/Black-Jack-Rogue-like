@@ -4,6 +4,9 @@ import blackjack.core.battle.BattleCore;
 import blackjack.core.entity.capabilities.ICardUser;
 import blackjack.core.inventory.Inventory;
 
+/**
+ * Handles the player's turn during combat.
+ */
 public class PlayerTurnState implements State {
     private final ICardUser player;
     private final Inventory playerInventory;

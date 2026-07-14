@@ -6,6 +6,9 @@ import blackjack.core.entity.capabilities.ICardUser;
 
 import java.lang.Math;
 
+/**
+ * Chooses to stand based on a probability derived from the current hand sum.
+ */
 public class PercentageBehavior implements Behavior {
     private final double standPercentage;
     private boolean stopped = false;

@@ -3,6 +3,9 @@ package blackjack.view.terminal.screens.menu;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 
+/**
+ * Renders the game instructions and rules for new players.
+ */
 public class InstructionsScreen implements Screen {
     private final InputOutput io;
 

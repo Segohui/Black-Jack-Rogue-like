@@ -11,13 +11,28 @@ import blackjack.core.shop.Shop;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.views.ViewRouter;
 
+/**
+ * Initializes the game domain and prepares the first session.
+ *
+ * <p>This class assembles the player, inventory, shop, battle core, controller
+ * factory, game manager, and terminal view router for the application.</p>
+ */
 public class GameInitializer {
     private final InputOutput io; 
 
+    /**
+     * Creates a new game initializer with the default terminal I/O provider.
+     */
     public GameInitializer() {
         this.io = new InputOutput();
     }
 
+    /**
+     * Constructs the game objects and begins execution at the main menu.
+     *
+     * <p>This method wires the domain-level objects and connects the game
+     * manager to the terminal view router.</p>
+     */
     public void startNewGame() {
         Deck playerDeck = new Deck();
         Entity player = new CombatEntity("Player", playerDeck, 50, true);

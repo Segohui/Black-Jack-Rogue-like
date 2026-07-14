@@ -4,6 +4,9 @@ import blackjack.core.battle.BattleCore;
 import blackjack.core.entity.capabilities.ICardUser;
 import blackjack.core.entity.enemy.behaviors.Behavior;
 
+/**
+ * Handles the enemy's normal turn during combat.
+ */
 public class EnemyTurnState implements State {
     private final ICardUser enemy;
     private final Behavior enemyBehavior;

@@ -1,5 +1,8 @@
 package blackjack.core.entity.modifiers;
 
+/**
+ * Adds a fixed amount of damage to the computed attack value.
+ */
 public class AdditionDamageModifier implements DamageModifier {
     private final int extra;
 

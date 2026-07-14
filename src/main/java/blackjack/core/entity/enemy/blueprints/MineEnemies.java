@@ -3,6 +3,9 @@ package blackjack.core.entity.enemy.blueprints;
 import blackjack.core.entity.enemy.behaviors.Behavior;
 import blackjack.core.entity.enemy.behaviors.ThresholdBehaviour;
 
+/**
+ * Defines the enemy blueprints used by the mine-themed encounter set.
+ */
 public enum MineEnemies implements EnemyBlueprint {  
     VILLAGER("Villager", 20, 5, new ThresholdBehaviour(6)),
     ZOMBIE("Zumbi", 40, 6, new ThresholdBehaviour(4)),

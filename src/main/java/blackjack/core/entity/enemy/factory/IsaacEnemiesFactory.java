@@ -10,6 +10,9 @@ import blackjack.core.entity.enemy.blueprints.IsaacEnemies;
 import blackjack.core.inventory.Inventory;
 import blackjack.dtos.entity.AIRecordDTO;
 
+/**
+ * Builds enemy AI records for the Isaac-themed enemy pool.
+ */
 public class IsaacEnemiesFactory implements AbstractEnemyFactory {
 
     @Override
