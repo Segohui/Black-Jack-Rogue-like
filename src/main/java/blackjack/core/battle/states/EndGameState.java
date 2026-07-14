@@ -1,16 +1,16 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.inventory.Inventory;
 
 public class EndGameState implements State {
-    private final Entity player;
-    private final Entity enemy;
+    private final IRoundParticipant player;
+    private final IRoundParticipant enemy;
     private final Inventory playerInventory;
     private final Inventory enemyInventory;
 
-    public EndGameState(Entity player, Entity enemy,
+    public EndGameState(IRoundParticipant player, IRoundParticipant enemy,
             Inventory playerInventory, Inventory enemyInventory) {
         this.player = player;
         this.enemy = enemy;
@@ -20,14 +20,18 @@ public class EndGameState implements State {
 
     @Override
     public void handle(BattleCore core) {
-        Entity winner = (player.isAlive()) ? player : enemy;
+        IRoundParticipant winner = (player.isAlive()) ? player : enemy;
         int goldReward = enemyInventory.getGoldAmount();
 
-        if(player.isAlive()) {
+        core.emitCombatOver(winner.getName(), winner.isPlayerControlled(), goldReward);
+
+        boolean playerAlive = player.isAlive();
+    
+        if(playerAlive) {
+            player.battleReset();
             playerInventory.addGold(goldReward);
         }
 
-        player.battleReset();
-        core.emitCombatOverData(winner.getName(), winner.isPlayerControlled(), goldReward);
+        core.emitGameOver(playerAlive);
     }
 }

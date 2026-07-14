@@ -1,13 +1,13 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.ICardUser;
 
 public class StartRoundState implements State {
-    private final Entity player;
-    private final Entity enemy;
+    private final ICardUser player;
+    private final ICardUser enemy;
 
-    public StartRoundState(Entity player, Entity enemy) {
+    public StartRoundState(ICardUser player, ICardUser enemy) {
         this.player = player;
         this.enemy = enemy;
     }

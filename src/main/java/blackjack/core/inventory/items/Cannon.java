@@ -2,7 +2,7 @@ package blackjack.core.inventory.items;
 
 import java.util.function.Consumer;
 
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.entity.modifiers.DoubleSumModifier;
 import blackjack.core.inventory.Item;
 import blackjack.core.signal.DataSignal;
@@ -49,7 +49,7 @@ public class Cannon implements Item {
             throw new DeadItemException("Tried triggering an item that should no longer exist");
         }
 
-        Entity player = ctx.player();
+        IRoundParticipant player = ctx.player();
         player.addSumModifier(new DoubleSumModifier());
 
         uses--;

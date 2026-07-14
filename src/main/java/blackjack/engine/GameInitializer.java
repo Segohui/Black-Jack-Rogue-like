@@ -4,7 +4,7 @@ import blackjack.controller.ControllerFactory;
 import blackjack.core.battle.BattleCore;
 import blackjack.core.cards.Deck;
 import blackjack.core.entity.CombatEntity;
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.Entity;
 import blackjack.core.inventory.Inventory;
 import blackjack.core.inventory.ItemRegistry;
 import blackjack.core.shop.Shop;

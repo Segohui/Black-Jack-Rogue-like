@@ -1,6 +1,6 @@
 package blackjack.core.battle.states;
 
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.Entity;
 import blackjack.core.entity.enemy.behaviors.Behavior;
 import blackjack.core.inventory.Inventory;
 

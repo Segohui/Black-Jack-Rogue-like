@@ -1,14 +1,14 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.ICardUser;
 import blackjack.core.inventory.Inventory;
 
 public class PlayerTurnState implements State {
-    private final Entity player;
+    private final ICardUser player;
     private final Inventory playerInventory;
 
-    public PlayerTurnState(Entity player, Inventory playerInventory) {
+    public PlayerTurnState(ICardUser player, Inventory playerInventory) {
         this.player = player;
         this.playerInventory = playerInventory;
     }

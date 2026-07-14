@@ -1,14 +1,14 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.ICardUser;
 import blackjack.core.entity.enemy.behaviors.Behavior;
 
 public class EnemyOnlyTurnState implements State {
-    private final Entity enemy;
+    private final ICardUser enemy;
     private final Behavior enemyBehavior;
 
-    public EnemyOnlyTurnState(Entity enemy, Behavior enemyBehavior) {
+    public EnemyOnlyTurnState(ICardUser enemy, Behavior enemyBehavior) {
         this.enemy = enemy;
         this.enemyBehavior = enemyBehavior;
     }

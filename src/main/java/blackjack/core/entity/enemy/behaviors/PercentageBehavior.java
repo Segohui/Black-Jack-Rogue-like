@@ -2,7 +2,7 @@ package blackjack.core.entity.enemy.behaviors;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.ICardUser;
 
 import java.lang.Math;
 
@@ -17,7 +17,7 @@ public class PercentageBehavior implements Behavior {
     }
 
     @Override
-    public void playTurn(Entity entity, int globalStand) {
+    public void playTurn(ICardUser entity, int globalStand) {
         stopped = false;
         lost = false;
 
@@ -32,7 +32,6 @@ public class PercentageBehavior implements Behavior {
         double standValue = calculateStandChance(handSum, globalStand);
         int roll = ThreadLocalRandom.current().nextInt(100);
 
-        // it was always 0 cause it was int division. Changed to 100.0
         if ((roll / 100.0) < standValue || handSum == globalStand) {
             stopped = true;
             entity.stand();
@@ -56,8 +55,6 @@ public class PercentageBehavior implements Behavior {
     }
 
     private double calculateStandChance(int handSum, int globalStand) {
-
-        // changed to double too
-        return Math.clamp( Math.pow(((double) (handSum - 10)/ (globalStand - 10)), standPercentage), 0.0, 1.0);
+        return Math.clamp( Math.pow(((double) (handSum - 11)/ (globalStand - 11)), standPercentage), 0.0, 1.0);
     }
 }
