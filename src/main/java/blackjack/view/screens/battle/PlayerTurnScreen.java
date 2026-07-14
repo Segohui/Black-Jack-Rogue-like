@@ -4,6 +4,7 @@ import blackjack.controller.BattleController;
 import blackjack.dtos.core.battle.EntityStateDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
 import blackjack.view.ActionPrompter;
+import blackjack.view.ConsoleColors;
 import blackjack.view.InputOutput;
 import blackjack.view.screens.Screen;
 
@@ -42,6 +43,20 @@ public class PlayerTurnScreen implements Screen {
         actionPrompter.promptAndRun();
     }
 
+
+    private String colorItemLine(ItemInfoDTO info) {
+
+        String typeColor = switch (info.itemType()) {
+            
+            case CONSUMABLE -> ConsoleColors.GREEN;
+            case ACTIVE -> ConsoleColors.CYAN;
+            case PASSIVE -> ConsoleColors.PURPLE;
+
+        };
+
+        return "%s%s%s - %s".formatted(typeColor, info.name(), ConsoleColors.RESET, info.description());
+    }
+
     private void promptItems() {
         List<ItemInfoDTO> itemInfos = controller.getItemInfos();
         io.printMessage("[PASSIVE ITEMS]");
@@ -53,16 +68,19 @@ public class PlayerTurnScreen implements Screen {
         io.printLine();
         io.printMessage("[TRIGGERABLE ITEMS]");
         
-        List<String> usableItemLines = itemInfos.stream()
+        List<ItemInfoDTO> usableItems = itemInfos.stream()
                 .filter(info -> info.isManual())
-                .map(info -> "%s - %s".formatted(info.name(), info.description()))
                 .toList();
+
         ActionPrompter cardPrompter = new ActionPrompter(io);
 
-        for (int i = 0; i < usableItemLines.size(); i++) {
+        for (int i = 0; i < usableItems.size(); i++) {
+            
             int idx = i;
-            cardPrompter.addAction(usableItemLines.get(i), () -> controller.playerUseItem(idx));
+            cardPrompter.addAction(colorItemLine(usableItems.get(i)), () -> controller.playerUseItem(idx));
+        
         }
+        
         cardPrompter.defineBottomAction("Go back", this::render);
         cardPrompter.promptAndRun();
     }

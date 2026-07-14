@@ -1,33 +1,34 @@
 package blackjack.core.inventory.items;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Consumer;
 
+import blackjack.core.entity.Entity;
+import blackjack.core.entity.modifiers.HalveSumModifier;
+import blackjack.core.inventory.Item;
 import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
 import blackjack.dtos.core.items.ItemTypeDTO;
-import blackjack.core.cards.Card;
-import blackjack.core.entity.Entity;
-import blackjack.core.inventory.Item;
 import blackjack.exceptions.DeadItemException;
 
-public class ReverseCard implements Item {
+public class BallAndChain implements Item {
+
     private final DataSignal<Item> triggered = new DataSignal<>();
     private final DataSignal<Item> outOfUses = new DataSignal<>();
 
-    private int uses = 1;
+    private int uses = 2;
 
     @Override
     public ItemInfoDTO getItemInfo() {
+
         return new ItemInfoDTO(
-            "Reverse Card",
-            "When activated, change hands with your opponent. (%d use(s))".formatted(uses),
-            7,
+            "Ball and Chain",
+            "When activated, your hand sum is halved for the rest of the round. (%d use(s))".formatted(uses),
+            5,
             isManual(),
             getType()
         );
+
     }
 
     @Override
@@ -37,23 +38,22 @@ public class ReverseCard implements Item {
 
     @Override
     public boolean isConsumable() {
+
         return true;
     }
 
     @Override
     public void trigger(BattleContextDTO ctx) {
+
         if (uses <= 0) {
             throw new DeadItemException("Tried triggering an item that should no longer exist");
         }
         Entity player = ctx.player();
-        Entity enemy = ctx.enemy();
-
-        List<Card> enemyCards = enemy.setHand(new ArrayList<>());
-        List<Card> playerCards = player.setHand(enemyCards);
-        enemy.setHand(playerCards);
+        player.addSumModifier(new HalveSumModifier());
 
         uses--;
         triggered.emit(this);
+
         if (uses <= 0) {
             outOfUses.emit(this);
         }
@@ -61,7 +61,7 @@ public class ReverseCard implements Item {
 
     @Override
     public Item copy() {
-        return new ReverseCard();
+        return new BallAndChain();
     }
 
     @Override
@@ -74,8 +74,10 @@ public class ReverseCard implements Item {
         outOfUses.connect(consumer);
     }
 
-    @Override 
-    public ItemTypeDTO getType(){
+    @Override
+    public ItemTypeDTO getType() {
         return ItemTypeDTO.CONSUMABLE;
+        
     }
+
 }

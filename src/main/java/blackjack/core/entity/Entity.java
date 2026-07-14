@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import blackjack.core.cards.Card;
 import blackjack.core.entity.modifiers.DamageModifier;
+import blackjack.core.entity.modifiers.SumModifier;
 import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.DamageEventDTO;
 
@@ -26,6 +27,7 @@ public interface Entity {
     int calculateAttackDamage();
     void addDamageOutputModifier(DamageModifier modifier);
     void addDamageCardModifier(Card card, DamageModifier modifier);
+    void addSumModifier(SumModifier modifier);
 
     // Signals handling
 

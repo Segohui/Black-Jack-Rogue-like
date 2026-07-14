@@ -1,4 +1,4 @@
-package blackjack;
+package blackjack.engine;
 
 import java.util.function.Consumer;
 import blackjack.controller.BattleController;

@@ -24,7 +24,8 @@ public class XRay implements Item {
             "X-Ray",
             "When activated, peek at the next card in your stack. (%d use(s))".formatted(uses),
             5,
-            isManual()
+            isManual(),
+            getType()
         );
     }
 
@@ -40,15 +41,18 @@ public class XRay implements Item {
 
     @Override
     public void trigger(BattleContextDTO ctx) {
+
         if (uses <= 0) {
             throw new DeadItemException("Tried triggering an item that should no longer exist");
         }
+
         Entity player = ctx.player();
         Card card = player.peekNextCard();
         peeked.emit(card.toString());
 
         uses--;
         triggered.emit(this);
+        
         if (uses <= 0) {
             outOfUses.emit(this);
         }

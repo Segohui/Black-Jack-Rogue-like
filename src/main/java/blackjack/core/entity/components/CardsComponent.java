@@ -8,11 +8,13 @@ import blackjack.core.cards.Deck;
 import blackjack.core.cards.Hand;
 import blackjack.core.cards.HandEvaluator;
 import blackjack.core.cards.Stack;
+import blackjack.core.entity.modifiers.SumModifier;
 
 public class CardsComponent {
     private final Stack stack;
     private final Hand hand = new Hand();
     private final HandEvaluator handEvaluator = new HandEvaluator();
+    private int sumOffset = 0;
 
     public CardsComponent(Deck deck) {
         this.stack = new Stack(deck);
@@ -20,6 +22,7 @@ public class CardsComponent {
 
     public void resetHand() {
         hand.reset();
+        sumOffset = 0;
     }
 
     public void resetStack() {
@@ -42,8 +45,18 @@ public class CardsComponent {
         return hand.discardLast();
     }
 
+    public void addSumModifier(SumModifier modifier){
+
+        int currentSum = calculateHandSum();
+        int newSum = modifier.apply(currentSum);
+
+        sumOffset += (newSum - currentSum);
+    }
+
     public int calculateHandSum() {
-        return handEvaluator.calculateSum(hand.getCards());
+        
+        return handEvaluator.calculateSum(hand.getCards()) + sumOffset;
+
     }
 
     public Card peekNextCard() {

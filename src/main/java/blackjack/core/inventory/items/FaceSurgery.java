@@ -20,7 +20,8 @@ public class FaceSurgery implements Item {
             "Face Surgery",
             "Scored face cards deal twice as much damage.",
             6,
-            isManual()
+            isManual(),
+            getType()
         );
     }
 
