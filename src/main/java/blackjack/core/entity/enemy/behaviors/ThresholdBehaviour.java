@@ -1,6 +1,6 @@
 package blackjack.core.entity.enemy.behaviors;
 
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.ICardUser;
 
 public class ThresholdBehaviour implements Behavior {
     private final int standThreshold;
@@ -12,7 +12,7 @@ public class ThresholdBehaviour implements Behavior {
     }
 
     @Override
-    public void playTurn(Entity entity, int globalStand) {
+    public void playTurn(ICardUser entity, int globalStand) {
         stopped = false;
         lost = false;
 

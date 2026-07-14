@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import blackjack.core.cards.Card;
 import blackjack.core.cards.Deck;
+import blackjack.core.entity.capabilities.Entity;
 import blackjack.core.entity.components.CardsComponent;
 import blackjack.core.entity.components.HealthComponent;
 import blackjack.core.entity.components.ModifiersComponent;
@@ -93,7 +94,7 @@ public class CombatEntity implements Entity {
     @Override
     public void stand() {
         hasStanded = true;
-        emitEntityStand();
+        emitEntityStand(name);
     }
 
     @Override
@@ -176,7 +177,7 @@ public class CombatEntity implements Entity {
     public void entityStandConnect(Consumer<String> listener) { entityStand.connect(listener); }
 
     @Override
-    public void emitEntityStand() { entityStand.emit(name); }
+    public void emitEntityStand(String name) { entityStand.emit(name); }
     
     @Override
     public void takeDamageConnect(Consumer<DamageEventDTO> listener) { takeDamage.connect(listener); }

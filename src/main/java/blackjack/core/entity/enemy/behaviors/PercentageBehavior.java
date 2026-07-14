@@ -2,7 +2,7 @@ package blackjack.core.entity.enemy.behaviors;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.ICardUser;
 
 import java.lang.Math;
 
@@ -17,7 +17,7 @@ public class PercentageBehavior implements Behavior {
     }
 
     @Override
-    public void playTurn(Entity entity, int globalStand) {
+    public void playTurn(ICardUser entity, int globalStand) {
         stopped = false;
         lost = false;
 
@@ -58,6 +58,6 @@ public class PercentageBehavior implements Behavior {
     private double calculateStandChance(int handSum, int globalStand) {
 
         // changed to double too
-        return Math.clamp( Math.pow(((double) (handSum - 10)/ (globalStand - 10)), standPercentage), 0.0, 1.0);
+        return Math.clamp( Math.pow(((double) (handSum - 11)/ (globalStand - 11)), standPercentage), 0.0, 1.0);
     }
 }

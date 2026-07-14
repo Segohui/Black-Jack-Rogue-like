@@ -4,7 +4,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import blackjack.core.cards.Deck;
 import blackjack.core.entity.CombatEntity;
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.Entity;
 import blackjack.core.entity.enemy.blueprints.EnemyBlueprint;
 import blackjack.core.entity.enemy.blueprints.IsaacEnemies;
 import blackjack.core.inventory.Inventory;

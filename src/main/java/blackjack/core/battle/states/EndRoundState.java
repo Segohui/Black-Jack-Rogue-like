@@ -1,16 +1,16 @@
 package blackjack.core.battle.states;
 
 import blackjack.core.battle.BattleCore;
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.inventory.Inventory;
 
 public class EndRoundState implements State {
-    private final Entity player;
-    private final Entity enemy;
+    private final IRoundParticipant player;
+    private final IRoundParticipant enemy;
     private final Inventory playerInventory;
     private final Inventory enemyInventory;
 
-    public EndRoundState(Entity player, Entity enemy,
+    public EndRoundState(IRoundParticipant player, IRoundParticipant enemy,
             Inventory playerInventory, Inventory enemyInventory) {
         this.player = player;
         this.enemy = enemy;

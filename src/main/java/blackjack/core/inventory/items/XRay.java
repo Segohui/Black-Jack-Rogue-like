@@ -3,7 +3,7 @@ package blackjack.core.inventory.items;
 import java.util.function.Consumer;
 
 import blackjack.core.cards.Card;
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.Entity;
 import blackjack.core.inventory.Item;
 import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.BattleContextDTO;

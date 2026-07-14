@@ -9,7 +9,7 @@ import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
 import blackjack.dtos.core.items.ItemTypeDTO;
 import blackjack.core.cards.Card;
-import blackjack.core.entity.Entity;
+import blackjack.core.entity.capabilities.Entity;
 import blackjack.core.inventory.Item;
 import blackjack.exceptions.DeadItemException;
 
