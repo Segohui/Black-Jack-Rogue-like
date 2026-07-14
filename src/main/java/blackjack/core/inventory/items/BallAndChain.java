@@ -5,10 +5,10 @@ import java.util.function.Consumer;
 import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.entity.modifiers.HalveSumModifier;
 import blackjack.core.inventory.Item;
+import blackjack.core.inventory.ItemType;
 import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
-import blackjack.dtos.core.items.ItemTypeDTO;
 import blackjack.exceptions.DeadItemException;
 
 public class BallAndChain implements Item {
@@ -24,6 +24,7 @@ public class BallAndChain implements Item {
         return new ItemInfoDTO(
             "Ball and Chain",
             "When activated, your hand sum is halved for the rest of the round. (%d use(s))".formatted(uses),
+            "Equipped Ball and Chain! Your sum is halved for this round. (%d use(s) left)".formatted(uses),
             5,
             isManual(),
             getType()
@@ -75,8 +76,8 @@ public class BallAndChain implements Item {
     }
 
     @Override
-    public ItemTypeDTO getType() {
-        return ItemTypeDTO.CONSUMABLE;
+    public ItemType getType() {
+        return ItemType.CONSUMABLE;
         
     }
 

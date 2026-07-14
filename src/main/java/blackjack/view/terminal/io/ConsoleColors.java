@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.terminal.io;
 
 public class ConsoleColors {
     public static final String RESET = "\u001B[0m";

@@ -1,4 +1,4 @@
-package blackjack.view;
+package blackjack.view.terminal.io;
 
 import java.util.List;
 import java.util.Scanner;

@@ -4,7 +4,6 @@ import java.util.function.Consumer;
 
 import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
-import blackjack.dtos.core.items.ItemTypeDTO;
 
 public interface Item {
     ItemInfoDTO getItemInfo();
@@ -12,7 +11,7 @@ public interface Item {
     boolean isConsumable();
     void trigger(BattleContextDTO ctx);
     Item copy();
-    ItemTypeDTO getType();
+    ItemType getType();
 
     // Signal handling
 

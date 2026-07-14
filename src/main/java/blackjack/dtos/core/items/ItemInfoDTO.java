@@ -1,4 +1,12 @@
 package blackjack.dtos.core.items;
 
-public record ItemInfoDTO(String name, String description, int baseCost,
-        boolean isManual, ItemTypeDTO itemType) {}
+import blackjack.core.inventory.ItemType;
+
+public record ItemInfoDTO(
+        String name,
+        String description,
+        String actionText,
+        int baseCost,
+        boolean isManual,
+        ItemType itemType
+    ) {}

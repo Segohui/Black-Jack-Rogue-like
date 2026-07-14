@@ -1,8 +1,10 @@
 package blackjack.dtos.core.items;
 
+import blackjack.core.inventory.ItemType;
+
 public record ShopItemDTO(
-    String name,
-    ItemTypeDTO itemType,
-    String description,
-    int price
-) {}
+        String name,
+        ItemType itemType,
+        String description,
+        int price
+    ) {}

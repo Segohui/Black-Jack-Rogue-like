@@ -5,10 +5,10 @@ import java.util.function.Consumer;
 import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.entity.modifiers.DoubleSumModifier;
 import blackjack.core.inventory.Item;
+import blackjack.core.inventory.ItemType;
 import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
-import blackjack.dtos.core.items.ItemTypeDTO;
 import blackjack.exceptions.DeadItemException;
 
 public class Cannon implements Item {
@@ -24,6 +24,7 @@ public class Cannon implements Item {
         return new ItemInfoDTO(
             "Cannon",
             "When activated, your hand sum is doubled for the rest of the round. (%d use(s))".formatted(uses),
+            "Equipped Cannon! Your sum is doubled for this round. (%d use(s) left)".formatted(uses),
             6,
             isManual(),
             getType()
@@ -77,7 +78,7 @@ public class Cannon implements Item {
     }
 
     @Override
-    public ItemTypeDTO getType() {
-        return ItemTypeDTO.CONSUMABLE;
+    public ItemType getType() {
+        return ItemType.CONSUMABLE;
     }
 }

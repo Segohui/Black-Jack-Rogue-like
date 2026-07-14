@@ -1,7 +1,7 @@
-package blackjack.view.screens.battle;
+package blackjack.view.terminal.screens.battle;
 
-import blackjack.view.InputOutput;
-import blackjack.view.screens.Screen;
+import blackjack.view.terminal.io.InputOutput;
+import blackjack.view.terminal.screens.Screen;
 
 public class EntityStandScreen implements Screen {
     private final InputOutput io;

@@ -1,12 +1,12 @@
-package blackjack.view.screens.battle;
+package blackjack.view.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
 import blackjack.dtos.core.battle.EntityStateDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
-import blackjack.view.ActionPrompter;
-import blackjack.view.ConsoleColors;
-import blackjack.view.InputOutput;
-import blackjack.view.screens.Screen;
+import blackjack.view.terminal.io.ActionPrompter;
+import blackjack.view.terminal.io.ConsoleColors;
+import blackjack.view.terminal.io.InputOutput;
+import blackjack.view.terminal.screens.Screen;
 
 import java.util.List;
 

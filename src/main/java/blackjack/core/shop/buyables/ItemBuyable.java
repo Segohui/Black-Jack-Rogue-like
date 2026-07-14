@@ -2,8 +2,8 @@ package blackjack.core.shop.buyables;
 
 import blackjack.core.inventory.Inventory;
 import blackjack.core.inventory.Item;
+import blackjack.core.inventory.ItemType;
 import blackjack.core.shop.Buyable;
-import blackjack.dtos.core.items.ItemTypeDTO;
 
 public class ItemBuyable implements Buyable {
     private final Item item;
@@ -35,7 +35,7 @@ public class ItemBuyable implements Buyable {
     }
 
     @Override
-    public ItemTypeDTO getItemType() {
+    public ItemType getItemType() {
         return item.getType();
     }
 }
