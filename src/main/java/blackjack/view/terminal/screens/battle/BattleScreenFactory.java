@@ -1,11 +1,11 @@
-package blackjack.view.screens.battle;
+package blackjack.view.terminal.screens.battle;
 
 import blackjack.controller.BattleController;
 import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.CombatOverDTO;
 import blackjack.dtos.core.battle.DamageEventDTO;
-import blackjack.view.InputOutput;
-import blackjack.view.screens.Screen;
+import blackjack.view.terminal.io.InputOutput;
+import blackjack.view.terminal.screens.Screen;
 
 public class BattleScreenFactory {
     private final InputOutput io;
@@ -40,7 +40,7 @@ public class BattleScreenFactory {
         return new TakeDamageScreen(io, eventDTO);
     }
 
-    public Screen createXRayScreen(String cardName){
-        return new XRayScreen(io, cardName);
+    public Screen createActionNotificationScreen(String actionText) {
+        return new ActionNotificationScreen(io, actionText);
     }
 }

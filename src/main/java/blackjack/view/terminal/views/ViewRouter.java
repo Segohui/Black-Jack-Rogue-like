@@ -1,10 +1,10 @@
-package blackjack.view.terminal;
+package blackjack.view.terminal.views;
 
 import blackjack.engine.GameManager;
+import blackjack.view.terminal.io.InputOutput;
 import blackjack.controller.BattleController;
 import blackjack.controller.MenuController;
 import blackjack.controller.ShopController;
-import blackjack.view.InputOutput;
 
 public class ViewRouter {
     private final InputOutput io;

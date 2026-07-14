@@ -9,6 +9,7 @@ import blackjack.core.inventory.items.BallAndChain;
 import blackjack.core.inventory.items.Cannon;
 import blackjack.core.inventory.items.FaceSurgery;
 import blackjack.core.inventory.items.FlintAndSteel;
+import blackjack.core.inventory.items.FortunePickaxe;
 import blackjack.core.inventory.items.ReverseCard;
 import blackjack.core.inventory.items.XRay;
 
@@ -31,6 +32,7 @@ public class ItemRegistry {
         baseItems.add(new ReverseCard());
         baseItems.add(new BallAndChain());
         baseItems.add(new Cannon());
+        baseItems.add(new FortunePickaxe());
         // add new items here
     }
 

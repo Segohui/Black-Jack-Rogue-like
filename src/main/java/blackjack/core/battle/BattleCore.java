@@ -71,12 +71,6 @@ public class BattleCore {
         this.enemyInventory = enemyRecord.inventory();
     }
 
-    private void clearSignals() {
-        playerTurn.clearConnections();
-        roundOverData.clearConnections();
-        combatOverData.clearConnections();
-    }
-
     public void playerHit() {
         state.hit(this);
     }

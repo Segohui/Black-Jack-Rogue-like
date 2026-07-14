@@ -1,12 +1,13 @@
-package blackjack.view.terminal;
+package blackjack.view.terminal.views;
 
 import blackjack.controller.BattleController;
 import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.CombatOverDTO;
 import blackjack.dtos.core.battle.DamageEventDTO;
-import blackjack.view.InputOutput;
-import blackjack.view.screens.Screen;
-import blackjack.view.screens.battle.BattleScreenFactory;
+import blackjack.dtos.core.items.ItemInfoDTO;
+import blackjack.view.terminal.io.InputOutput;
+import blackjack.view.terminal.screens.Screen;
+import blackjack.view.terminal.screens.battle.BattleScreenFactory;
 
 public class BattleViewTerminal {
     private final InputOutput io;
@@ -19,7 +20,7 @@ public class BattleViewTerminal {
         // Notifications
         controller.takeDamageConnect(this::onTakeDamage);
         controller.entityStandConnect(this::onEntityStand);
-        controller.itemPeekedConnect(this::onItemPeeked);
+        controller.itemTriggeredConnect(this::onItemTriggered);
 
         // Screens
         controller.drawCardConnect(this::onDrawCard);
@@ -58,7 +59,7 @@ public class BattleViewTerminal {
         navigateToScreen(screenFactory.createEntityStandScreen(entityName));
     }
 
-    private void onItemPeeked(String cardName) {
-        navigateToScreen(screenFactory.createXRayScreen(cardName));
+    private void onItemTriggered(ItemInfoDTO itemInfo) {
+        navigateToScreen(screenFactory.createActionNotificationScreen(itemInfo.actionText()));
     }
 }

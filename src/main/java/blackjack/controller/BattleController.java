@@ -19,7 +19,7 @@ public class BattleController {
     public BattleController(BattleCore core, Inventory playerInventory) {
         this.core = core;
         this.playerInventory = playerInventory;
-        playerInventory.clearItemPeekedConnections();
+        playerInventory.clearItemTriggeredConnections();
     }
 
     public void startBattle() {
@@ -95,7 +95,7 @@ public class BattleController {
         core.gameOverConnect(listener);
     }
 
-    public void itemPeekedConnect(Consumer<String> listener) {
-        playerInventory.itemPeekedConnect(listener);
-    }       
+    public void itemTriggeredConnect(Consumer<ItemInfoDTO> listener) {
+        playerInventory.itemTriggeredConnect(listener);
+    }
 }

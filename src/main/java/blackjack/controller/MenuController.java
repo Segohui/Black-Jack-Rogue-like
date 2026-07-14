@@ -10,8 +10,6 @@ public class MenuController {
     private final EmptySignal startMenu = new EmptySignal();
     private final EmptySignal restartGame = new EmptySignal();
 
-    private final EmptySignal optionsSelected = new EmptySignal(); // If we add options (clear screen on/off)
-
     public void startMenu() {
         startMenu.emit();
     }

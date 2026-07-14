@@ -6,19 +6,24 @@ import blackjack.core.cards.Card;
 import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.entity.modifiers.MultDamageModifier;
 import blackjack.core.inventory.Item;
+import blackjack.core.inventory.ItemType;
 import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
-import blackjack.dtos.core.items.ItemTypeDTO;
 
 public class FaceSurgery implements Item {
     private final DataSignal<Item> triggered = new DataSignal<>();
+
+    private final int MULT = 2;
+
+    private Card affectedCard;
 
     @Override
     public ItemInfoDTO getItemInfo() {
         return new ItemInfoDTO(
             "Face Surgery",
             "Scored face cards deal twice as much damage.",
+            "Face Surgery: %dx damage to %s".formatted(MULT, affectedCard),
             6,
             isManual(),
             getType()
@@ -41,6 +46,8 @@ public class FaceSurgery implements Item {
         for (Card card : player.getCards()) {
             if (card.isFaceCard()) {
                 player.addDamageCardModifier(card, new MultDamageModifier(2));
+                affectedCard = card;
+                triggered.emit(this);
             }
         }
     }
@@ -56,7 +63,7 @@ public class FaceSurgery implements Item {
     }
 
     @Override
-    public ItemTypeDTO getType() {
-        return ItemTypeDTO.PASSIVE;
+    public ItemType getType() {
+        return ItemType.PASSIVE;
     }
 }

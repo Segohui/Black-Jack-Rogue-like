@@ -7,20 +7,17 @@ import java.util.function.Consumer;
 import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
-import blackjack.core.inventory.items.XRay;
 
 public class Inventory {
+    private final DataSignal<ItemInfoDTO> itemTriggered = new DataSignal<>();
+
     private final List<Item> items = new ArrayList<>();
     private int goldAmount = 0;
-    private final DataSignal<String> itemPeeked = new DataSignal<>();
 
     public void addItem(Item item) {
         items.add(item);
+        item.triggeredConnect(t -> itemTriggered.emit(t.getItemInfo()));
         item.outOfUsesConnect(this::discardItem);
-
-        if (item instanceof XRay xray) {
-            xray.peekedConnect(itemPeeked::emit);
-        }
     }
 
     public void discardItem(Item item) {
@@ -76,11 +73,11 @@ public class Inventory {
         return goldAmount;
     }
 
-    public void itemPeekedConnect(Consumer<String> consumer) {
-        itemPeeked.connect(consumer);
+    public void itemTriggeredConnect(Consumer<ItemInfoDTO> consumer) {
+        itemTriggered.connect(consumer);
     }
 
-    public void clearItemPeekedConnections() {
-        itemPeeked.clearConnections();
+    public void clearItemTriggeredConnections() {
+        itemTriggered.clearConnections();
     }
 }
