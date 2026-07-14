@@ -3,7 +3,7 @@ package blackjack.core.inventory.items;
 import java.util.function.Consumer;
 
 import blackjack.core.cards.Card;
-import blackjack.core.entity.capabilities.Entity;
+import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.entity.modifiers.MultDamageModifier;
 import blackjack.core.inventory.Item;
 import blackjack.core.signal.DataSignal;
@@ -37,7 +37,7 @@ public class FaceSurgery implements Item {
 
     @Override
     public void trigger(BattleContextDTO ctx) {
-        Entity player = ctx.player();
+        IRoundParticipant player = ctx.player();
         for (Card card : player.getCards()) {
             if (card.isFaceCard()) {
                 player.addDamageCardModifier(card, new MultDamageModifier(2));

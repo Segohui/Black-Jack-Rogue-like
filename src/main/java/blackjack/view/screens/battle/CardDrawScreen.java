@@ -19,7 +19,7 @@ public class CardDrawScreen implements Screen {
 
     @Override
     public void render() {
-        EntityStateDTO entityData = controller.getEntityStateDataByName(eventData.entityName());
+        EntityStateDTO entityData = controller.getEntityDataByName(eventData.entityName());
         String entityName = eventData.entityName();
 
         io.printHeader(entityName + " Turn");

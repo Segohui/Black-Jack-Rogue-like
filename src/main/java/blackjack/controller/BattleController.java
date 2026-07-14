@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import blackjack.core.battle.BattleCore;
-import blackjack.core.cards.Card;
 import blackjack.core.inventory.Inventory;
 import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.CombatOverDTO;
@@ -23,40 +22,24 @@ public class BattleController {
         playerInventory.clearItemPeekedConnections();
     }
 
-    public void prepareBattleStage(AIRecordDTO aiRecord) {
-        core.prepareForNewBattle(aiRecord);
-    }
-
     public void startBattle() {
         core.startCombat();
     }
 
+    public void prepareBattleStage(AIRecordDTO aiRecord) {
+        core.prepareForNewBattle(aiRecord);
+    }
+
     public EntityStateDTO getEnemyData() {
-        return new EntityStateDTO(core.getEnemyName(),
-                core.calculateEnemySum(),
-                convertCardsToNames(core.getEnemyCards()), core.getEnemyCurrentHp());
+        return core.getEnemyData();
     }
 
     public EntityStateDTO getPlayerData() {
-        return new EntityStateDTO(core.getPlayerName(),
-                core.calculatePlayerSum(),
-                convertCardsToNames(core.getPlayerCards()), core.getPlayerCurrentHp());
+        return core.getPlayerData();
     }
 
-    public EntityStateDTO getEntityStateDataByName(String entityName) {
-        if (entityName.isEmpty() || entityName.isBlank()) {
-            throw new IllegalArgumentException();
-        }
-
-        if (entityName.equals(core.getPlayerName())) {
-            return getPlayerData();
-        } else {
-            return getEnemyData();
-        }
-    }
-
-    public String getPlayerName() {
-        return core.getPlayerName();
+    public EntityStateDTO getEntityDataByName(String name) {
+        return core.getEntityStateDataByName(name);
     }
 
     public void playerHit() {
@@ -65,12 +48,6 @@ public class BattleController {
 
     public void playerStand() {
         core.playerStand();
-    }
-
-    private List<String> convertCardsToNames(List<Card> cards) {
-        return cards.stream()
-                .map(card -> card.toString())
-                .toList();
     }
 
     public boolean playerHasItems() {
@@ -83,12 +60,6 @@ public class BattleController {
 
     public List<ItemInfoDTO> getItemInfos() {
         return playerInventory.getItemInfos();
-    }
-
-    public List<String> getItemLines() {
-        return playerInventory.getItemInfos().stream()
-                .map(info -> "%s - %s".formatted(info.name(), info.description()))
-                .toList();
     }
 
     // Connects

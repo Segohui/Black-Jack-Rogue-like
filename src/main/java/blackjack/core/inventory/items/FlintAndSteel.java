@@ -4,7 +4,7 @@ import java.util.function.Consumer;
 
 import blackjack.core.cards.Card;
 import blackjack.core.cards.Deck;
-import blackjack.core.entity.capabilities.Entity;
+import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.inventory.Item;
 import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.BattleContextDTO;
@@ -44,7 +44,7 @@ public class FlintAndSteel implements Item {
         if (uses <= 0) {
             throw new DeadItemException("Tried triggering an item that should no longer exist");
         }
-        Entity player = ctx.player();
+        IRoundParticipant player = ctx.player();
         Deck deck = ctx.playerDeck();
         Card card = player.discardLastCardInHand();
         deck.burnCard(card);

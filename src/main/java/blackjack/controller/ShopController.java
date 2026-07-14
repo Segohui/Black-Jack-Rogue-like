@@ -31,14 +31,7 @@ public class ShopController {
     }
 
     public List<ShopItemDTO> getShopItems() {
-        return shop.getItemsForSale().stream()
-                .map(buyable -> new ShopItemDTO(
-                        buyable.getName(), 
-                        buyable.getItemType(), 
-                        buyable.getDescription(), 
-                        buyable.getCost()
-                ))
-                .toList();
+        return shop.getShopItems();
     }
 
     public int getPlayerGold() {

@@ -6,6 +6,7 @@ import java.util.List;
 import blackjack.core.cards.Deck;
 import blackjack.core.inventory.Inventory;
 import blackjack.core.inventory.ItemRegistry;
+import blackjack.dtos.core.items.ShopItemDTO;
 import blackjack.exceptions.InsufficientGoldException;
 
 public class Shop {
@@ -28,10 +29,6 @@ public class Shop {
         itemsForSale.addAll(buyableFactory.generateItemBuyables(3));
     }
 
-    public List<Buyable> getItemsForSale() {
-        return itemsForSale;
-    }
-
     public boolean buy(int index) throws InsufficientGoldException {
         if (index < 0 || index >= itemsForSale.size()) {
             return false;
@@ -46,5 +43,16 @@ public class Shop {
         item.buy();
         itemsForSale.remove(index);
         return true;
+    }
+
+    public List<ShopItemDTO> getShopItems() {
+        return itemsForSale.stream()
+                .map(buyable -> new ShopItemDTO(
+                        buyable.getName(), 
+                        buyable.getItemType(), 
+                        buyable.getDescription(), 
+                        buyable.getCost()
+                ))
+                .toList();
     }
 }

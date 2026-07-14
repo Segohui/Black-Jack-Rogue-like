@@ -1,8 +1,6 @@
 package blackjack.core.battle;
 
-import java.util.List;
 import java.util.function.Consumer;
-
 import blackjack.core.battle.states.State;
 import blackjack.core.battle.states.StateFactory;
 import blackjack.core.cards.Card;
@@ -16,6 +14,7 @@ import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.battle.CardDrawEventDTO;
 import blackjack.dtos.core.battle.CombatOverDTO;
 import blackjack.dtos.core.battle.DamageEventDTO;
+import blackjack.dtos.core.battle.EntityStateDTO;
 import blackjack.dtos.entity.AIRecordDTO;
 
 public class BattleCore {
@@ -147,14 +146,39 @@ public class BattleCore {
 
     // Getters
 
-    public String getPlayerName() { return player.getName(); }
-    public String getEnemyName() { return enemy.getName(); }
-    public int getPlayerCurrentHp() { return player.getCurrentHp(); }
-    public int getEnemyCurrentHp() { return enemy.getCurrentHp(); }
-    public List<Card> getPlayerCards() { return player.getCards(); }
-    public List<Card> getEnemyCards() { return enemy.getCards(); }
     public int getGlobalStand() { return globalStand; }
+
     public BattleContextDTO getBattleContextDTO() {
         return new BattleContextDTO(player, enemy, playerDeck);
+    }
+
+    public EntityStateDTO getPlayerData() {
+        return new EntityStateDTO(
+            player.getName(),
+            player.calculateHandSum(),
+            player.getCards().stream().map(Card::toString).toList(),
+            player.getCurrentHp()
+        );
+    }
+
+    public EntityStateDTO getEnemyData() {
+        return new EntityStateDTO(
+            enemy.getName(),
+            enemy.calculateHandSum(),
+            enemy.getCards().stream().map(Card::toString).toList(),
+            enemy.getCurrentHp()
+        );
+    }
+
+    public EntityStateDTO getEntityStateDataByName(String entityName) {
+        if (entityName.isEmpty() || entityName.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        if (entityName.equals(player.getName())) {
+            return getPlayerData();
+        } else {
+            return getEnemyData();
+        }
     }
 }

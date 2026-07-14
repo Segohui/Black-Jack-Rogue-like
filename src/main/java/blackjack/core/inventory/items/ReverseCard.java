@@ -9,7 +9,7 @@ import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
 import blackjack.dtos.core.items.ItemTypeDTO;
 import blackjack.core.cards.Card;
-import blackjack.core.entity.capabilities.Entity;
+import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.inventory.Item;
 import blackjack.exceptions.DeadItemException;
 
@@ -45,8 +45,8 @@ public class ReverseCard implements Item {
         if (uses <= 0) {
             throw new DeadItemException("Tried triggering an item that should no longer exist");
         }
-        Entity player = ctx.player();
-        Entity enemy = ctx.enemy();
+        IRoundParticipant player = ctx.player();
+        IRoundParticipant enemy = ctx.enemy();
 
         List<Card> enemyCards = enemy.setHand(new ArrayList<>());
         List<Card> playerCards = player.setHand(enemyCards);
