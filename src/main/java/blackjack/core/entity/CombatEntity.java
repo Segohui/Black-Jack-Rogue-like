@@ -70,13 +70,6 @@ public class CombatEntity implements Entity {
         return new DamageEventDTO(name, damageTaken);
     }
 
-    @Override 
-    public void clearSignals() {
-        drawCard.clearConnections();
-        entityStand.clearConnections();
-        takeDamage.clearConnections();
-    }
-
     /**
      * Clears any connected event listeners of this entity.
      */

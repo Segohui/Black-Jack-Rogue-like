@@ -36,14 +36,6 @@ public class Deck {
         this.cards = cards;
     }
 
-    public List<Card> copyDeckCards() {
-        List<Card> copy = new ArrayList<>();
-        for (Card card : cards) {
-            copy.add(new Card(card));
-        }
-        return copy;
-    }
-
     /**
      * Returns a copy of the cards currently in the deck.
      *
