@@ -12,6 +12,9 @@ import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
 
+/**
+ * Passive item that adds extra damage to cards of the diamond suit.
+ */
 public class FortunePickaxe implements Item {
     private final DataSignal<Item> triggered = new DataSignal<>();
 

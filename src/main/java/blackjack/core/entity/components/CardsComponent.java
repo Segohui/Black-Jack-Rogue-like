@@ -10,6 +10,9 @@ import blackjack.core.cards.HandEvaluator;
 import blackjack.core.cards.Stack;
 import blackjack.core.entity.modifiers.SumModifier;
 
+/**
+ * Stores an entity's hand, draw stack, and sum modifiers.
+ */
 public class CardsComponent {
     private final Stack stack;
     private final Hand hand = new Hand();

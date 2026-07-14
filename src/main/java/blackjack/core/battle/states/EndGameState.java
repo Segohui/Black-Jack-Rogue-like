@@ -4,6 +4,9 @@ import blackjack.core.battle.BattleCore;
 import blackjack.core.entity.capabilities.IRoundParticipant;
 import blackjack.core.inventory.Inventory;
 
+/**
+ * Resolves the end of combat and emits the final battle outcome.
+ */
 public class EndGameState implements State {
     private final IRoundParticipant player;
     private final IRoundParticipant enemy;

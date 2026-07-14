@@ -11,6 +11,9 @@ import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
 import blackjack.exceptions.DeadItemException;
 
+/**
+ * Temporary consumable item that doubles the player's current hand sum.
+ */
 public class Cannon implements Item {
 
     private final DataSignal<Item> triggered = new DataSignal<>();

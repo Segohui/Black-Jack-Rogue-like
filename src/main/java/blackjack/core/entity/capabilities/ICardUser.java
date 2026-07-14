@@ -5,6 +5,9 @@ import java.util.List;
 import blackjack.core.cards.Card;
 import blackjack.core.entity.modifiers.SumModifier;
 
+/**
+ * Defines the card-hand behavior expected from a combat participant.
+ */
 public interface ICardUser {
     List<Card> getCards();
     int calculateHandSum();

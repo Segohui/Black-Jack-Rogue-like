@@ -2,6 +2,9 @@ package blackjack.core.entity.enemy.behaviors;
 
 import blackjack.core.entity.capabilities.ICardUser;
 
+/**
+ * Chooses to stand once the hand exceeds a threshold-based target value.
+ */
 public class ThresholdBehaviour implements Behavior {
     private final int standThreshold;
     private boolean stopped;

@@ -7,10 +7,19 @@ import blackjack.dtos.core.battle.DamageEventDTO;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 
+/**
+ * Factory that creates battle screens for the terminal UI.
+ */
 public class BattleScreenFactory {
     private final InputOutput io;
     private final BattleController controller;
 
+    /**
+     * Creates a factory for battle screens.
+     *
+     * @param io terminal I/O helper
+     * @param controller battle controller used by the screens
+     */
     public BattleScreenFactory(InputOutput io, BattleController controller) {
         this.io = io;
         this.controller = controller;

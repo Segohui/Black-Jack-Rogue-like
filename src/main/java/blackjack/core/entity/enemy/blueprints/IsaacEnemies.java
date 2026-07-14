@@ -5,6 +5,9 @@ import java.util.function.Supplier;
 import blackjack.core.entity.enemy.behaviors.Behavior;
 import blackjack.core.entity.enemy.behaviors.PercentageBehavior;
 
+/**
+ * Defines the enemy blueprints used by the Isaac-themed encounter set.
+ */
 public enum IsaacEnemies implements EnemyBlueprint {  
     DOPLE("Dople", 20, 5, () -> new PercentageBehavior(1.0)),
     TERATOMA("Teratoma", 40, 6, () -> new PercentageBehavior(0.3)),

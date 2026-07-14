@@ -7,6 +7,9 @@ import blackjack.dtos.core.battle.CombatOverDTO;
 import blackjack.view.terminal.io.InputOutput;
 import blackjack.view.terminal.screens.Screen;
 
+/**
+ * Shows the outcome of a combat encounter, including rewards when applicable.
+ */
 public class CombatOverScreen implements Screen {
     private final InputOutput io;
     private final CombatOverDTO winnerDataDTO;

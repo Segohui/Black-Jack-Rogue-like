@@ -5,6 +5,9 @@ import blackjack.core.inventory.Item;
 import blackjack.core.inventory.ItemType;
 import blackjack.core.shop.Buyable;
 
+/**
+ * Shop buyable that grants a new item to the player inventory.
+ */
 public class ItemBuyable implements Buyable {
     private final Item item;
     private final Inventory inventory;

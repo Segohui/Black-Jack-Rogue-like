@@ -12,6 +12,9 @@ import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
 import blackjack.exceptions.DeadItemException;
 
+/**
+ * Consumable item that permanently burns the last card from the player's hand.
+ */
 public class FlintAndSteel implements Item {
     private final DataSignal<Item> triggered = new DataSignal<>();
     private final DataSignal<Item> outOfUses = new DataSignal<>();

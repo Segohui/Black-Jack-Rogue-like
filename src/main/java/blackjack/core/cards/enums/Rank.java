@@ -1,5 +1,8 @@
 package blackjack.core.cards.enums;
 
+/**
+ * Enumerates the card ranks used by the game deck.
+ */
 public enum Rank {
     RANK_2,
     RANK_3,

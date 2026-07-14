@@ -5,6 +5,9 @@ import blackjack.core.cards.Deck;
 import blackjack.core.inventory.ItemType;
 import blackjack.core.shop.Buyable;
 
+/**
+ * Shop buyable that adds a card to the player's deck.
+ */
 public class CardBuyable implements Buyable {
     private final Card card;
     private final int cost;

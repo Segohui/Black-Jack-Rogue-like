@@ -11,6 +11,9 @@ import blackjack.core.signal.DataSignal;
 import blackjack.dtos.core.battle.BattleContextDTO;
 import blackjack.dtos.core.items.ItemInfoDTO;
 
+/**
+ * Passive item that amplifies damage dealt by face cards.
+ */
 public class FaceSurgery implements Item {
     private final DataSignal<Item> triggered = new DataSignal<>();
 
