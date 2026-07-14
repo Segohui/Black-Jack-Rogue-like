@@ -70,9 +70,6 @@ public class GameManager {
     /**
      * Enters the shop room once a combat has finished successfully.
      */
-    /**
-     * Enters the shop room and emits the corresponding start signal.
-     */
     private void startShopRoom() {
         ShopController shopController = controllerFactory.createShop();
         
