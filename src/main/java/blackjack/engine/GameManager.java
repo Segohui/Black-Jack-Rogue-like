@@ -9,7 +9,6 @@ import blackjack.core.entity.enemy.factory.AbstractEnemyFactory;
 import blackjack.core.entity.enemy.factory.CombinedEnemiesFactory;
 import blackjack.core.signal.DataSignal;
 import blackjack.core.signal.EmptySignal;
-import blackjack.dtos.core.battle.CombatOverDTO;
 
 public class GameManager {
     private final DataSignal<BattleController> battleStarted = new DataSignal<>();
@@ -44,7 +43,7 @@ public class GameManager {
         
         battleController.prepareBattleStage(currentEnemyFactory.generateRandomEnemy(difficultyMultiplier));
         
-        battleController.combatOverDataConnect(this::onBattleEnd);
+        battleController.gameOverConnect(this::onBattleEnd);
         
         battleStarted.emit(battleController);
         
@@ -71,8 +70,8 @@ public class GameManager {
         restartGame.emit();
     }
 
-    private void onBattleEnd(CombatOverDTO combatOverDTO) {
-        if (combatOverDTO.isPlayerControlled()) {
+    private void onBattleEnd(boolean playerAlive) {
+        if (playerAlive) {
             // The enemies get stronger after 3 cleared
             if (combatsWon % 3 == 0) {
                 difficultyMultiplier += 0.2;

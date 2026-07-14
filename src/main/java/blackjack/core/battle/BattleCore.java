@@ -22,6 +22,8 @@ public class BattleCore {
 
     private final DataSignal<String> roundOverData = new DataSignal<>();
     private final DataSignal<CombatOverDTO> combatOverData = new DataSignal<>();
+    private final DataSignal<Boolean> gameOver = new DataSignal<>();
+
 
     private final Entity player;
     private final Deck playerDeck;
@@ -60,6 +62,10 @@ public class BattleCore {
     }
 
     private void resetEnemy(AIRecordDTO enemyRecord) {
+        if (enemy != null) {
+            enemy.clearSignals();
+        }
+
         this.enemy = enemyRecord.entity();
         this.enemyBehavior = enemyRecord.behavior();
         this.enemyInventory = enemyRecord.inventory();
@@ -128,13 +134,15 @@ public class BattleCore {
     // Signal Handling
 
     public void playerTurnConnect(Runnable runnable) { playerTurn.connect(runnable); }
+    public void roundOverConnect(Consumer<String> listener) { roundOverData.connect(listener); }
+    public void combatOverConnect(Consumer<CombatOverDTO> listener) { combatOverData.connect(listener); }
+    public void gameOverConnect(Consumer<Boolean> listener) { gameOver.connect(listener); }
+
     public void emitPlayerTurn() { playerTurn.emit(); }
-
-    public void roundOverDataConnect(Consumer<String> listener) { roundOverData.connect(listener); }
-    public void combatOverDataConnect(Consumer<CombatOverDTO> listener) { combatOverData.connect(listener); }
-
-    public void emitRoundOverData(String name) { roundOverData.emit(name); }
-    public void emitCombatOverData(String name, boolean isPlayerControlled, int goldReward) { combatOverData.emit(new CombatOverDTO(name, isPlayerControlled, goldReward)); }
+    public void emitRoundOver(String name) { roundOverData.emit(name); }
+    public void emitGameOver(boolean playerAlive) { gameOver.emit(playerAlive); }
+    public void emitCombatOver(String name, boolean isPlayerControlled, int goldReward) {
+                combatOverData.emit(new CombatOverDTO(name, isPlayerControlled, goldReward)); }
     
     public void drawCardPlayerConnect(Consumer<CardDrawEventDTO> listerner) { player.drawCardConnect(listerner); }
     public void playerStandConnect(Consumer<String> listener) { player.entityStandConnect(listener); }

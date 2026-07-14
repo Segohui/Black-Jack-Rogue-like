@@ -64,8 +64,8 @@ public class BattleController {
 
     // Connects
 
-    public void roundOverDataConnect(Consumer<String> listener) {
-        core.roundOverDataConnect(listener);
+    public void roundOverConnect(Consumer<String> listener) {
+        core.roundOverConnect(listener);
     }
 
     public void playerTurnConnect(Runnable runnable) {
@@ -87,8 +87,12 @@ public class BattleController {
         core.drawCardEnemyConnect(listener);
     }
 
-    public void combatOverDataConnect(Consumer<CombatOverDTO> listener) {
-        core.combatOverDataConnect(listener);
+    public void combatOverConnect(Consumer<CombatOverDTO> listener) {
+        core.combatOverConnect(listener);
+    }
+
+    public void gameOverConnect(Consumer<Boolean> listener) {
+        core.gameOverConnect(listener);
     }
 
     public void itemPeekedConnect(Consumer<String> listener) {

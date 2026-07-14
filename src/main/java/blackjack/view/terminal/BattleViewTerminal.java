@@ -23,9 +23,9 @@ public class BattleViewTerminal {
 
         // Screens
         controller.drawCardConnect(this::onDrawCard);
-        controller.roundOverDataConnect(this::onRoundOver);
+        controller.roundOverConnect(this::onRoundOver);
         controller.playerTurnConnect(this::onPlayerTurn);
-        controller.combatOverDataConnect(this::onCombatOver);
+        controller.combatOverConnect(this::onCombatOver);
     }
 
     private void navigateToScreen(Screen newScreen) {

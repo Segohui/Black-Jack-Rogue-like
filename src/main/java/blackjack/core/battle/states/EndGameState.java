@@ -23,11 +23,15 @@ public class EndGameState implements State {
         IRoundParticipant winner = (player.isAlive()) ? player : enemy;
         int goldReward = enemyInventory.getGoldAmount();
 
-        if(player.isAlive()) {
+        core.emitCombatOver(winner.getName(), winner.isPlayerControlled(), goldReward);
+
+        boolean playerAlive = player.isAlive();
+    
+        if(playerAlive) {
+            player.battleReset();
             playerInventory.addGold(goldReward);
         }
 
-        player.battleReset();
-        core.emitCombatOverData(winner.getName(), winner.isPlayerControlled(), goldReward);
+        core.emitGameOver(playerAlive);
     }
 }

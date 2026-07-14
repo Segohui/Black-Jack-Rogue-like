@@ -49,7 +49,7 @@ public class EndRoundState implements State {
     }
 
     private void endRound(BattleCore core, String winnerName) {
-        core.emitRoundOverData(winnerName);
+        core.emitRoundOver(winnerName);
         core.activateStartRoundState();
     }
 
